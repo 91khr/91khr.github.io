@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        $for(author-meta)$
+        <meta name="author" content="$author-meta$" />
+        $endfor$
+        $if(keywords)$
+        <meta name="keywords" content="$for(keywords)$$keywords$$sep$, $endfor$" />
+        $endif$
+        <title>$title$ - 91khr的刺猬洞</title>
+        $for(css)$
+        <link rel="stylesheet" type="text/css" href="$css$" />
+        $endfor$
+        <style>
+$styles.html()$
+        </style>
+        $if(math)$$math$$endif$
+    </head>
+    <body>
+        <header>
+            <h1>$title$</h1>
+            $if(keywords)$
+            <div id="keywords-list">
+                关键词:
+                $for(keywords)$
+                <span class="keyword-value">$keywords$</span>,
+                $endfor$
+            </div>
+            $endif$
+        </header>
+$body$
+    </body>
+</html>

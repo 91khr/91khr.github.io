@@ -1,0 +1,21 @@
+body {
+    width: 80%;
+    margin: 1em auto;
+    font-family: "Comic Sans MS";
+}
+
+::selection {
+    background-color: #B5D6FC;
+    font-color: auto;
+}
+
+header {
+    border: solid grey;
+    border-width: 0 0 2px;
+}
+
+header h1 {
+    font-size: 2.7em;
+    margin-bottom: 0.2em;
+}
+
