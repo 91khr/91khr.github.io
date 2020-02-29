@@ -1,19 +1,24 @@
 
-var indexctnt;
+var indexctnt, tmp_indexhint;
 var nowindex = 0, maxindex;
+
+function updateindex() {
+    tmp_indexhint.innerHTML = `一共有${maxindex}页, 现在在第${nowindex}页`;
+    fetchCtnt("index/" + nowindex + ".html", ctnt => indexctnt.innerHTML = ctnt);
+}
 
 function nextindex() {
     if (nowindex == maxindex)
         return;
     nowindex = nowindex + 1;
-    fetchCtnt("index/" + nowindex + ".html", ctnt => indexctnt.innerHTML = ctnt);
+    updateindex();
 }
 
 function previndex() {
     if (nowindex == 1)
         return;
     nowindex = nowindex - 1;
-    fetchCtnt("index/" + nowindex + ".html", ctnt => indexctnt.innerHTML = ctnt);
+    updateindex();
 }
 
 function initindex() {
@@ -21,7 +26,7 @@ function initindex() {
         fetchCtnt("index.count.txt", count => {
             maxindex = count
             // TODO: Init the index list
-            document.getElementById('index-control').innerHTML += '一共有' + maxindex + '页'
+            tmp_indexhint = document.getElementById('temp-index-hint')
             indexctnt = document.getElementById('index-content')
             nextindex();
         });

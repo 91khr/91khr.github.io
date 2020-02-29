@@ -12,9 +12,7 @@
         $for(css)$
         <link rel="stylesheet" type="text/css" href="$css$" />
         $endfor$
-        <style>
-$styles.html()$
-        </style>
+        <style>$styles.html()$</style>
         $if(math)$$math$$endif$
     </head>
     <body>
@@ -24,11 +22,17 @@ $styles.html()$
             <div id="keywords-list">
                 关键词:
                 $for(keywords)$
-                <span class="keyword-value">$keywords$</span>,
+                <span class="keyword-value">$keywords$</span>$sep$,
                 $endfor$
             </div>
             $endif$
         </header>
-$body$
+        <article>$body$</article>
+        <footer>
+            Special links:
+            $for(special_links)$
+            <a href="$special_links.addr$">$special_links.name$</a>
+            $endfor$
+        </footer>
     </body>
 </html>

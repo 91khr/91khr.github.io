@@ -1,8 +1,3 @@
---[[
---Tasks:
--- - Add the link to index.css to the document
--- - Write abstract to index
---]]
 local os = require('os')
 
 local indexSize = 1926
@@ -18,30 +13,70 @@ local baseLen = (function()
     return res
 end)()
 
-local function ptable(t)
+local function ptable(t, s)
+    print('ptable', s)
     for k, v in pairs(t) do
         print(k, v)
     end
+    print('end ptable')
+end
+
+local function procindex(meta)
+    local maxindex = io.input("out/index.count.txt"):read("*n")
+    local oristr = io.input(string.format("index/%d.md", maxindex)):read("*a")
+    local nowdesc = string.format("# [%s](%s)\n",
+    meta.title[1].text, basePath:gsub('.md$', '.html'))
+    local function pdesc(desc)
+        if desc.text then
+            nowdesc = nowdesc .. desc.text
+        elseif desc.content then
+            for _, v in pairs(desc.content) do
+                pdesc(v)
+                nowdesc = nowdesc .. ' '
+            end
+        end
+    end
+    for _, v in pairs(meta.description) do
+        pdesc(v)
+        nowdesc = nowdesc .. ' '
+    end
+    nowdesc = nowdesc .. '\n\n'
+
+    if nowdesc:len() + oristr:len() > indexSize then
+        maxindex = maxindex + 1
+    end
+    local out = io.open(string.format("index/%d.md", maxindex), "w")
+    out:write(nowdesc)
+    out:write(oristr)
+    out:close()
 end
 
 function Pandoc(elem)
     local meta = elem.meta
+    local pathprefix = string.rep('../', baseLen)
+
     -- Append css
     meta.css = pandoc.MetaList({
-        pandoc.MetaString(string.rep('../', baseLen) .. "index.css")
+        pandoc.MetaString(pathprefix .. "index.css")
     })
-    -- Write to index
+
+    -- Write special links
     do
-        local maxindex = io.input("out/index.count.txt"):read("*n")
-        local oristr = io.input(string.format("index/%d.md", maxindex)):read("*a")
-        local nowabstract = string.format("# [%s](%s)\n%s\n\n",
-            meta.title[1].text, basePath:gsub('.md$', '.html'), meta.abstract[1].text);
-        if nowabstract:len() + oristr:len() > indexSize then maxindex = maxindex + 1 end
-        local out = io.open(string.format("index/%d.md", maxindex), "w")
-        out:write(nowabstract)
-        out:write(oristr)
-        out:close()
+        local special_links = {
+            self_intro = "关于Senioria",
+            friends = "友情链接",
+            index = "主页",
+        }
+        local res = {}
+        for k, v in pairs(special_links) do
+            table.insert(res, { addr = pathprefix .. k .. '.html', name = v })
+        end
+        meta.special_links = res
     end
+
+    -- Write to index
+    procindex(meta)
+
     return elem
 end
 

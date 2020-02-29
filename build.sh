@@ -1,8 +1,14 @@
 #!/bin/bash
 cd ${0%/*}
 
+function get_preserve() {
+    namelist=(index.html)
+    for name in $namelist; do
+        echo "-not -name $name"
+    done
+}
 if [[ $# -ge 1 && "$1" -eq "clean" ]]; then
-    flist=$(find out -type f -name '*.html' -and -not -name 'index.html')
+    flist=$(find out -type f -name '*.html' -and $(get_preserve))
     flist="$flist $(find index -type f)"
     [[ ! -z "$flist" ]] && rm $flist
     echo 1 > out/index.count.txt

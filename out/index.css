@@ -1,21 +1,57 @@
-body {
-    width: 80%;
-    margin: 1em auto;
-    font-family: "Comic Sans MS";
+/* Layout and very general styles for the document */
+html body {
 }
 
-::selection {
-    background-color: #B5D6FC;
-    font-color: auto;
+body {
+    width: 80%;
+    height: 100%;
+    margin: 0 auto;
+    font-family: "Comic Sans MS";
 }
 
 header {
     border: solid grey;
     border-width: 0 0 2px;
 }
-
 header h1 {
     font-size: 2.7em;
     margin-bottom: 0.2em;
+}
+
+footer {
+    width: 100%;
+    height: auto;
+    margin: 0.1em 0 0;
+    padding: 0.5em 0.1em 2em;
+    background: #f5f5dc82;
+}
+
+
+/* Styles for specified elements */
+
+::selection {
+    background-color: #B5D6FC;
+    font-color: auto;
+}
+
+a {
+    text-decoration: none;
+    color: dimgray;
+}
+a:hover {
+    text-decoration: underline;
+}
+
+blockquote {
+    margin-left: 0;
+    border-left: 5px solid #959595;
+    background: #80808029;
+    padding: 0.5em 0 0.5em 1em;
+}
+blockquote *:first-child {
+    margin-top: 0;
+}
+blockquote *:last-child {
+    margin-bottom: 0;
 }
 
