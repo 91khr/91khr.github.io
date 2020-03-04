@@ -8,7 +8,7 @@ description: 就是一些朋友的blog之类的?(
 
 这里用的人称大概都是Senioria用来称呼她们的人称代词.
 
-- [清浔前辈](https://cmath.cc)
+- [清浔前辈](http://cmath.cc)
 - [Tirpitz](https://www.cnblogs.com/Tirpitz)
 
 ~~唔这就没了啊(~~
