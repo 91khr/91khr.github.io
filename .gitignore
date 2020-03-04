@@ -2,3 +2,7 @@
 .*.swp
 # Indices
 index/*
+# Build executable
+build
+# Editor configs
+.vimrc

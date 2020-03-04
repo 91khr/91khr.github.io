@@ -1,12 +1,15 @@
-/* Layout and very general styles for the document */
-html body {
+/* {{{ Layout */
+html, body {
+    min-height: 100%;
+    height: 100%;
 }
 
 body {
     width: 80%;
-    height: 100%;
     margin: 0 auto;
     font-family: "Comic Sans MS";
+    display: flex;
+    flex-direction: column;
 }
 
 header {
@@ -18,6 +21,15 @@ header h1 {
     margin-bottom: 0.2em;
 }
 
+main {
+    flex-grow: 2;
+}
+
+section.footnotes hr:first-child {
+    width: 100%;
+    border-width: 1.3px;
+}
+
 footer {
     width: 100%;
     height: auto;
@@ -25,10 +37,9 @@ footer {
     padding: 0.5em 0.1em 2em;
     background: #f5f5dc82;
 }
+/* }}} End layout */
 
-
-/* Styles for specified elements */
-
+/* {{{ General themes */
 ::selection {
     background-color: #B5D6FC;
     font-color: auto;
@@ -40,6 +51,16 @@ a {
 }
 a:hover {
     text-decoration: underline;
+}
+
+main h1 {
+    border-bottom: 3px solid lightgray;
+}
+
+main hr {
+    width: 70%;
+    height: 0;
+    border: 1px solid pink;
 }
 
 blockquote {
@@ -54,4 +75,6 @@ blockquote *:first-child {
 blockquote *:last-child {
     margin-bottom: 0;
 }
+/* }}} End general themes */
 
+/* vim: set fdm=marker : */

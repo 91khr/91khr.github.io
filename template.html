@@ -9,10 +9,11 @@
         <meta name="keywords" content="$for(keywords)$$keywords$$sep$, $endfor$" />
         $endif$
         <title>$title$ - 91khr的刺猬洞</title>
+        <link rel="stylesheet" type="text/css" href="/out/index.css" />
+        <link rel="stylesheet" type="text/css" href="/out/highlight.css" />
         $for(css)$
         <link rel="stylesheet" type="text/css" href="$css$" />
         $endfor$
-        <style>$styles.html()$</style>
         $if(math)$$math$$endif$
     </head>
     <body>
@@ -27,12 +28,12 @@
             </div>
             $endif$
         </header>
-        <article>$body$</article>
+        <main>$body$</main>
         <footer>
             Special links:
-            $for(special_links)$
-            <a href="$special_links.addr$">$special_links.name$</a>
-            $endfor$
+            <a href="/out/index.html">主页</a>
+            <a href="/out/self_intro.html">关于Senioria</a>
+            <a href="/out/friends.html">友情链接</a>
         </footer>
     </body>
 </html>

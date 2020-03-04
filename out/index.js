@@ -3,7 +3,7 @@ var indexctnt, tmp_indexhint;
 var nowindex = 0, maxindex;
 
 function updateindex() {
-    tmp_indexhint.innerHTML = `一共有${maxindex}页, 现在在第${nowindex}页`;
+    tmp_indexhint.innerHTML = `([page ${nowindex}] [maxpage ${maxindex}])`;
     fetchCtnt("index/" + nowindex + ".html", ctnt => indexctnt.innerHTML = ctnt);
 }
 

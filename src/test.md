@@ -30,6 +30,18 @@ int main()
 }
 ```
 
+数学: $i + j = k$
+
+$$
+\because i^2 = 2\sum_{j=1}^i j - i \\
+\begin{aligned}
+\therefore \sum_{i=1}^n i^2 &= 2\sum_{i=1}^n\sum{j=1}^i j - \sum_{i=1}^n i \\
+&= 2\sum_{i=1}^n i(n + 1 - i) - \sum_{i=1}^n i \\
+&= 2(n+1)\sum_{i=1}^n i - 2\sum_{i=1}^n i^2 - \sum_{i=1}^n i
+\end{aligned} \\
+\therefore 3\sum_{i=1}^n i^2 = (2n+1)\sum_{i=1}^n i
+$$
+
 # 对元素的测试
 
 [链接](https://example.com)

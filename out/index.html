@@ -1,12 +1,19 @@
 <!DOCTYPE html>
 <html>
-    <!-- 啊前辈居然看到这里了吗ww 告诉前辈一个秘密哦, 这个index页面全部都是我手写的呢ww -->
+    <!--
+        啊前辈居然看到这里了吗ww 告诉前辈一个秘密哦, 这个index页面全部都是我手写的呢ww
+        (丢人东西居然还有脸说(捂脸
+    -->
     <head>
         <meta charset="utf-8" />
         <meta name="author" content="Senioria" />
         <title>91khr的刺猬洞</title>
         <link rel="stylesheet" type="text/css" href="index.css" />
         <style>
+html, body {
+    height: auto;
+    margin-bottom: 2em;
+}
 #index-content h1 a {
     text-decoration: none;
     color: inherit;
@@ -14,6 +21,10 @@
 #index-control {
     display: flex;
     flex-direction: row;
+}
+#index-control .page-control {
+    cursor: default;
+    background-color: rgba(255, 192, 203, 0.4);
 }
         </style>
         <script src="index.js" onload="initindex()"></script>
@@ -32,11 +43,12 @@
         <div id="index-content">
         </div>
         <div id="index-control">
-            <button onclick="previndex()">&lt;</button>
-            <ul id="index-index">
-            </ul>
-            <button onclick="nextindex()">&gt;</button>
-            <span id="temp-index-hint"></span>
+            <code>
+            (let <span id="temp-index-hint"></span> (select
+            <span class="page-control" onclick="previndex()">(prev)</span>
+            <span class="page-control" onclick="nextindex()">(next)</span>))
+            </code>
         </div>
+        ;; EOF
     </body>
 </html>
