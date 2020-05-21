@@ -8,13 +8,14 @@
         $if(keywords)$
         <meta name="keywords" content="$for(keywords)$$keywords$$sep$, $endfor$" />
         $endif$
-        <title>$title$ - 91khr的刺猬洞</title>
-        <link rel="stylesheet" type="text/css" href="/out/index.css" />
-        <link rel="stylesheet" type="text/css" href="/out/highlight.css" />
+        <title>$title$ - Senioria的刺猬洞</title>
+        <link rel="stylesheet" type="text/css" href="/etc/main.css" />
+        <link rel="stylesheet" type="text/css" href="/etc/highlight.css" />
         $for(css)$
         <link rel="stylesheet" type="text/css" href="$css$" />
         $endfor$
         $if(math)$$math$$endif$
+        $if(linenumber-len)$<style>body { --linenumber-len: $linenumber-len$; }</style>$endif$
     </head>
     <body>
         <header>

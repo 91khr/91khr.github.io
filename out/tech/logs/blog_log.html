@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+                <meta name="author" content="Senioria" />
+                        <title>Blog Log - Senioria的刺猬洞</title>
+        <link rel="stylesheet" type="text/css" href="/etc/main.css" />
+        <link rel="stylesheet" type="text/css" href="/etc/highlight.css" />
+                
+        
+    </head>
+    <body>
+        <header>
+            <h1>Blog Log</h1>
+                    </header>
+        <main><p><del>有预感这些logs迟早都会成为日记</del> (<del>其实已经是了</del>)</p>
+<h1 id="section">2020-05-21</h1>
+<p>昨天520呢, 没去要糖好可惜(逃</p>
+<p>今天实际上没有提交&gt;&lt;</p>
+<hr />
+<p>Review了一下<a href="/build.cpp"><code>build.cpp</code></a>的代码, 感觉… 好乱… 不愧是Senioria一个下午边查文档边用C++糊出来的东西(逃</p>
+<p>但是… 因为<a href="../../about.html">介绍里说过</a>, 所以似乎只能用C++来糊(lua糊就更乱了呢). 所以打算以后重构.</p>
+<p>下次重构<code>build.cpp</code>打算做的事情:</p>
+<ul>
+<li>把index的生成换成直接生成html代码(这个需要<code>filter.lua</code>配合)</li>
+<li>加入对catalog的支持(对每个目录, 读取它下面的<code>index.md</code>, 并根据index的模板来生成对应的文档) 这实际上也解决了到目前为止index.html仍然有很大的手写成分的问题(((</li>
+</ul>
+<p>然后, 重构index界面也在日程之中了. 整体的界面风格不打算变, 具体的风格的话… 想加点lisp元素… 但是直接加会有点丑所以还在设计中…</p>
+<h1 id="section-1">2020-05-23</h1>
+<p>commit log:</p>
+<blockquote>
+<p>Add code block &amp; basic catalog support</p>
+</blockquote>
+<p>诶居然这么快就摸完了呀(((</p>
+<hr />
+<p><a href="#section">上次</a><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>画的饼都做完了w Scheme风格的index排版有点丑… 但是看起来还不错w</p>
+<p>少女感什么的… 色弱的Senioria做不到… qwq</p>
+<section class="footnotes" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1" role="doc-endnote"><p>明明就在上面x<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></main>
+        <footer>
+            Special links:
+            <a href="/out/index.html">主页</a>
+            <a href="/out/self_intro.html">关于Senioria</a>
+            <a href="/out/friends.html">友情链接</a>
+        </footer>
+    </body>
+</html>

@@ -1,0 +1,66 @@
+/* Styles for index.html */
+html, body {
+    height: auto;
+    margin-bottom: 2em;
+}
+
+#index-control {
+    display: flex;
+    flex-direction: row;
+}
+.page-control {
+    cursor: default;
+    background-color: rgba(255, 192, 203, 0.4);
+    border: none;
+    padding: 0;
+}
+.page-control:focus {
+    border: 1px solid darkgrey;
+}
+
+#index-content > article {
+    margin: 0.9em 0;
+}
+#index-content .article-title {
+    display: block;
+    margin: 0 0 0.2em;
+}
+#index-content .article-title > a:first-child {
+    font-size: 1.8em;
+    color: inherit;
+}
+#index-content .article-title::before {
+    content: "'(#:title ";
+    color: #6c6c6c;
+}
+#index-content .article-description::before {
+    content: "#:description ";
+    color: #666;
+}
+#index-content .article-description::after {
+    content: ")";
+    color: #666;
+}
+
+.index-lispframe {
+    display: inline-block;
+    position: relative;
+}
+.index-lispframe:before {
+    content: "> ";
+    color: #666;
+    position: absolute;
+    display: inline-block;
+    width: 2em;
+    left: -1em;
+}
+
+body > div::before, .index-nil-introduction::before {
+    content: "'(";
+    color: #666;
+}
+body > div::after, .index-nil-introduction::after {
+    content: ")";
+    color: #666;
+}
+

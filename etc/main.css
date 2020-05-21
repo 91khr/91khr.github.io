@@ -1,0 +1,142 @@
+/* {{{ Layout */
+html, body {
+    min-height: 100%;
+    height: 100%;
+}
+
+body {
+    width: 80%;
+    margin: 0 auto;
+    font-family: "Comic Sans MS";
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    border: solid grey;
+    border-width: 0 0 2px;
+}
+header h1 {
+    font-size: 2.7em;
+    margin-bottom: 0.2em;
+}
+
+main {
+    flex-grow: 2;
+}
+
+section.footnotes hr:first-child {
+    width: 100%;
+    border-width: 1.3px;
+}
+
+footer {
+    width: 100%;
+    height: auto;
+    margin: 0.1em 0 0;
+    padding: 0.5em 0.1em 2em;
+    background: #f5f5dc82;
+}
+/* }}} End layout */
+
+/* {{{ General themes */
+::selection {
+    background-color: #B5D6FC;
+}
+
+/* {{{ Links */
+a {
+    text-decoration: none;
+    color: dimgray;
+}
+a:hover {
+    text-decoration: underline;
+}
+/* }}} End links */
+
+/* {{{ Headers */
+main h1 {
+    border-bottom: 3px solid lightgray;
+}
+main h2 {
+    border-bottom: 1.7px solid lightgray;
+}
+/* }}} End headers */
+
+hr {
+    width: 70%;
+    height: 0;
+    border: 1px solid pink;
+}
+
+/* {{{ Blockquote */
+blockquote {
+    margin-left: 0;
+    border-left: 5px solid #959595;
+    background: #80808029;
+    padding: 0.5em 0 0.5em 1em;
+}
+blockquote *:first-child {
+    margin-top: 0;
+}
+blockquote *:last-child {
+    margin-bottom: 0;
+}
+/* }}} End blockquote */
+
+/* {{{ Code themes */
+pre.sourceCode {
+    margin: 0;
+    padding: 0.4em;
+}
+.sourceCode, code {
+    background-color: #FDF6E3;
+    font-family: "Consolas", "Monaco", monospace;
+}
+
+/* {{{ Line numbers */
+pre.sourceCode {
+    padding-left: 4px;
+    margin-left: calc(var(--linenumber-len) * 1em);
+    border-left: 1px solid #aaa;
+    counter-reset: line-number 0;
+}
+
+.sourceCode > span {
+    position: relative;
+    left: calc(var(--linenumber-len) * -1em);
+    counter-increment: line-number;
+}
+.sourceCode > span > a:first-child * {
+    display: none;
+}
+.sourceCode > span > a:first-child::before {
+    content: counter(line-number);
+    position: relative;
+    left: -1em;
+    text-align: right;
+    vertical-align: baseline;
+    border: none;
+    display: inline-block;
+    user-select: none;
+    padding: 0 4px;
+    width: calc(1em * var(--linenumber-len));
+}
+/* }}} End line numbers */
+
+.sourceCode .kw { color: #2876AC; }
+.sourceCode .dt { color: #A84F57; }
+
+.sourceCode .dv, .sourceCode .bn, .sourceCode .fl { color: #B32469; }
+.sourceCode .ch { color: #DC322F; }
+.sourceCode .st { color: #2AA198; }
+.sourceCode .co { color: #0B7373; }
+.sourceCode .ot { color: #A57800; }
+.sourceCode .al { color: #CB4B16; font-weight: bold; }
+.sourceCode .fu { color: #286997; }
+.sourceCode .re { }
+.sourceCode .er { color: #D30102; font-weight: bold; }
+/* }}} End code themes */
+/* }}} End general themes */
+
+/* vim: set fdm=marker : */
