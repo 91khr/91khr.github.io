@@ -4,30 +4,31 @@
         <meta charset="utf-8" />
         <meta name="author" content="Senioria" />
         <title>tech/ - Senioria的刺猬洞</title>
-        <link rel="stylesheet" type="text/css" href="/assets/main.css" />
-        <link rel="stylesheet" type="text/css" href="/assets/index.css" />
-        <script src="/assets/index.js" onload="initindex()"></script>
+        <link rel="stylesheet" type="text/css" href="/etc/main.css" />
+        <link rel="stylesheet" type="text/css" href="/etc/index.css" />
+        <script src="/etc/index.js" onload="initindex()"></script>
     </head>
     <body>
         <header><h1>tech/</h1></header>
-        <pre><code class="index-lispframe">(display introduction)</code></pre>
+        <pre><code class="lisp-frame">(display introduction)</code></pre>
         <section id="introduction">
-<div class="index-nil-introduction">
+<div class="lispized-content">
 
 </div>
         </section>
 
-        <pre><code class="index-lispframe">(for ([l '(<button class="page-control" onclick="set_index_type('index')">timeline</button> <button class="page-control" onclick="set_index_type('catalog')">catalog</button>)]) (display l))</code></pre>
-        <div id="index-content">
+        <pre><code class="lisp-frame">(for ([l '(<button class="page-control" onclick="set_index_type('index')" id=control-set-to-index>timeline</button> <button class="page-control" onclick="set_index_type('catalog')" id=control-set-to-catalog>catalog</button>)]) (display l))</code></pre>
+        <div id="index-content" class="lispized-content">
         </div>
-        <pre><code class="index-lispframe">(display controls max-pages)</code></pre>
-        <div id="index-control">
+        <pre><code class="lisp-frame">(display controls max-pages)</code></pre>
+        <div id="index-control" class="lispized-content">
             <code>'(<button class="page-control" onclick="previndex()">prev</button> <button class="page-control" onclick="nextindex()">next</button>) <span id="temp-index-hint"></span></code></div>
-    <pre><code class="index-lispframe">(display links)</code></pre>
-    <div>
+    <pre><code class="lisp-frame">(display links)</code></pre>
+    <div class="lispized-content">
         <a href="/">主页</a>
         <a href="/out/friends.html">友情链接</a>
+        <a href="..">上一页</a>
     </div>
-    <pre><code class="index-lispframe"></code></pre>
+    <pre><code class="lisp-frame"></code></pre>
     </body>
 </html>

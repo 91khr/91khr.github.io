@@ -1,7 +1,7 @@
 ---
 title: 关于Senioria
 author: Senioria
-description: 大概是个自我介绍吧 \~\~ms的输入法为什么会有自我结婚这种东西???\~\~
+description: 大概是个自我介绍吧 ~~ms的输入法为什么会有自我结婚这种东西???~~
 ---
 
 唔... Senioria该说什么呢... 不如, 一起来猜个哑谜吧.

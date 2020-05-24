@@ -137,6 +137,45 @@ pre.sourceCode {
 .sourceCode .re { }
 .sourceCode .er { color: #D30102; font-weight: bold; }
 /* }}} End code themes */
+
+/* {{{ Lisp-styled themes */
+.lisp-frame {
+    display: inline-block;
+    position: relative;
+}
+.lisp-frame:before {
+    content: "> ";
+    color: #666;
+    position: absolute;
+    display: inline-block;
+    width: 2em;
+    left: -1em;
+}
+
+.lispized-content::before {
+    content: "'(";
+    color: #666;
+}
+.lispized-content::after {
+    content: ")";
+    color: #666;
+}
+/* }}} End lisp-styled themes */
 /* }}} End general themes */
+
+/* {{{ Special elements */
+#meta-info-author::before {
+    content: "#:author ";
+    color: #666;
+}
+#meta-info-keywords::before {
+    content: "#:keywords ";
+    color: #666;
+}
+#meta-info-description::before {
+    content: "#:description ";
+    color: #666;
+}
+/* }}} End special elements */
 
 /* vim: set fdm=marker : */

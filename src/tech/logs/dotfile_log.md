@@ -1,7 +1,7 @@
 ---
 title: Dotfile Log
 author: 91khr
-description: 大概是\<a href="https://github.com/91khr/dotfile"\>配置\</a\>的开发感想(((
+description: 大概是[配置](https://github.com/91khr/dotfile)的开发感想(((
 ...
 
 正如description所说, 这篇文章对应的repo是这个: <https://github.com/91khr/dotfile>.

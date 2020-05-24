@@ -13,9 +13,13 @@ html, body {
     background-color: rgba(255, 192, 203, 0.4);
     border: none;
     padding: 0;
+    font-family: inherit;
 }
 .page-control:focus {
     border: 1px solid darkgrey;
+}
+.page-control-active {
+    background-color: rgba(200, 150, 170, 0.4);
 }
 
 #index-content > article {
@@ -38,28 +42,6 @@ html, body {
     color: #666;
 }
 #index-content .article-description::after {
-    content: ")";
-    color: #666;
-}
-
-.index-lispframe {
-    display: inline-block;
-    position: relative;
-}
-.index-lispframe:before {
-    content: "> ";
-    color: #666;
-    position: absolute;
-    display: inline-block;
-    width: 2em;
-    left: -1em;
-}
-
-body > div::before, .index-nil-introduction::before {
-    content: "'(";
-    color: #666;
-}
-body > div::after, .index-nil-introduction::after {
     content: ")";
     color: #666;
 }

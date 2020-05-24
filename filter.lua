@@ -16,23 +16,45 @@ end)()
 
 -- {{{ Helpers
 local function catstr(elem)
-    local function runinto(elem)
-        if elem.text then
-            return elem.text
-        elseif elem.content then
-            local res = ''
-            for _, v in pairs(elem.content) do
-                res  = res .. catstr(v) .. ' '
-            end
-            return res
-        end
-    end
-    if type(elem) == type('') then
+    if type(elem) ~= 'table' then
         return elem
     end
+    local function escape(s, in_attribute)
+        return (type(s) == 'table' and s.text or s):gsub("[<>&\"']",
+        function(x)
+            if x == '<' then
+                return '&lt;'
+            elseif x == '>' then
+                return '&gt;'
+            elseif x == '&' then
+                return '&amp;'
+            elseif x == '"' then
+                return '&quot;'
+            elseif x == "'" then
+                return '&#39;'
+            else
+                return x
+            end
+        end)
+    end
     local res = ''
-    for _, v in pairs(elem or {}) do
-        res = res .. (runinto(v) or '') .. ' '
+    for k, v in pairs(elem) do
+        local last = { t='nil' }
+        res = res .. (pandoc.walk_inline(pandoc.Span {v}, {
+            Emph = function(s) return pandoc.Str('<em>' .. catstr(s.content) .. '</em>') end,
+            Link = function(s)
+                return pandoc.Str("<a href='" .. escape(s.target,true) .. "'>" .. catstr(s.content) .. "</a>")
+            end,
+            Strikeout = function(s) return pandoc.Str('<del>' .. catstr(s.content) .. '</del>') end,
+            Strong = function(s) return pandoc.Str("<strong>" .. catstr(s.content) .. "</strong>") end,
+            Subscript = function(s) return pandoc.Str("<sub>" .. catstr(s.content) .. "</sub>") end,
+            Superscript = function(s) return pandoc.Str("<sup>" .. catstr(s.content) .. "</sup>") end,
+            SmallCaps = function(s)
+                return pandoc.Str('<span style="font-variant: small-caps;">' .. catstr(s.content) .. '</span>')
+            end,
+            Str = function(s) return pandoc.Str(escape(s)) end,
+            Space = function() return pandoc.Str(" ") end,
+        }).content[1].text or '')
     end
     return res
 end
@@ -49,9 +71,12 @@ function Pandoc(elem)
         elseif os.getenv("alterIndex") then  -- Alternative index
             meta.title = basePath:gsub('[^/]*$', '')
             local placeholder = pandoc.Div({pandoc.Null()})
-            placeholder.classes = { "index-nil-introduction" }
+            placeholder.classes = { "lispized-content" }
             elem.blocks:insert(placeholder)
         end
+    end
+    if not meta.description then
+        meta.description = '<span class="lispized-content"></span>'
     end
 
     -- Write to index

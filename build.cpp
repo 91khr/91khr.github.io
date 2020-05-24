@@ -85,7 +85,7 @@ output compiled result and other generated information to out/.
 -f, --force    forcely regenerate all files
 -h, --help     print this message
 )";
-const std::string build_args = R"(--standalone --lua-filter=filter.lua -t html --katex --template=etc/)";
+const std::string build_args = R"(--toc --standalone --lua-filter=filter.lua -t html --katex --template=etc/)";
 const int max_index_size = 1926;
 const auto ignored_files = ([] () -> std::set<fs::path> {
     std::vector<fs::path> res = {
@@ -337,7 +337,7 @@ void ProcFileHandle::finish()
         {
             printf("Creating alternative index for %s\n", it.first.c_str());
             auto index_out = "out" / it.first / "index.html";
-            if (!fs::exists(index_out))
+            if (!fs::exists(index_out) || env::is_force)
                 helper::pandoc(devnull, index_out,
                         env::build_args + "index_template.html -f markdown",
                         { { "basePath", it.first / "index.html" }, { "alterIndex", "1" } });

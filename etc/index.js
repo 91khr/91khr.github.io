@@ -2,6 +2,7 @@
 var indexctnt, tmp_indexhint;
 var nowindex = 0, maxindex;
 var indextype = 'index'
+var active_controls = new Object
 
 function get_index_path() {
     let basepath = (new URL(document.URL)).pathname.replace(/[^/]*$/, '')
@@ -11,6 +12,8 @@ function get_index_path() {
 function set_index_type(type) {
     if (type == indextype)
         return;
+    active_controls[indextype].classList.remove('page-control-active')
+    active_controls[type].classList.add('page-control-active')
     indextype = type;
     nowindex = 0;
     init_index_content();
@@ -46,10 +49,16 @@ function init_index_content() {
     });
 }
 function initindex() {
-    if (document.readyState != 'loading'){
+    function init() {
+        active_controls.index = document.getElementById('control-set-to-index')
+        active_controls.catalog = document.getElementById('control-set-to-catalog')
+        active_controls.index.classList.add('page-control-active')
         init_index_content();
+    }
+    if (document.readyState != 'loading'){
+        init();
     } else {
-        document.addEventListener('DOMContentLoaded', init_index_content);
+        document.addEventListener('DOMContentLoaded', init);
     }
 }
 
