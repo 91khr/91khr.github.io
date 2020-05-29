@@ -38,23 +38,31 @@ local function catstr(elem)
         end)
     end
     local res = ''
+    local filter = {
+        Emph = function(s) return pandoc.Str('<em>' .. catstr(s.content) .. '</em>') end,
+        Link = function(s)
+            return pandoc.Str("<a href='" .. escape(s.target,true) .. "'>" .. catstr(s.content) .. "</a>")
+        end,
+        Strikeout = function(s) return pandoc.Str('<del>' .. catstr(s.content) .. '</del>') end,
+        Strong = function(s) return pandoc.Str("<strong>" .. catstr(s.content) .. "</strong>") end,
+        Subscript = function(s) return pandoc.Str("<sub>" .. catstr(s.content) .. "</sub>") end,
+        Superscript = function(s) return pandoc.Str("<sup>" .. catstr(s.content) .. "</sup>") end,
+        SmallCaps = function(s)
+            return pandoc.Str('<span style="font-variant: small-caps;">' .. catstr(s.content) .. '</span>')
+        end,
+        Str = function(s) return pandoc.Str(escape(s)) end,
+        Space = function() return pandoc.Str(" ") end,
+        Span = function(s)
+            local res = '<span class="'
+            for _, v in pairs(s.classes) do
+                res = res .. ' ' .. v
+            end
+            res = res .. '">' .. catstr(s.content) .. '</span>'
+            return pandoc.Str(res)
+        end,
+    }
     for k, v in pairs(elem) do
-        local last = { t='nil' }
-        res = res .. (pandoc.walk_inline(pandoc.Span {v}, {
-            Emph = function(s) return pandoc.Str('<em>' .. catstr(s.content) .. '</em>') end,
-            Link = function(s)
-                return pandoc.Str("<a href='" .. escape(s.target,true) .. "'>" .. catstr(s.content) .. "</a>")
-            end,
-            Strikeout = function(s) return pandoc.Str('<del>' .. catstr(s.content) .. '</del>') end,
-            Strong = function(s) return pandoc.Str("<strong>" .. catstr(s.content) .. "</strong>") end,
-            Subscript = function(s) return pandoc.Str("<sub>" .. catstr(s.content) .. "</sub>") end,
-            Superscript = function(s) return pandoc.Str("<sup>" .. catstr(s.content) .. "</sup>") end,
-            SmallCaps = function(s)
-                return pandoc.Str('<span style="font-variant: small-caps;">' .. catstr(s.content) .. '</span>')
-            end,
-            Str = function(s) return pandoc.Str(escape(s)) end,
-            Space = function() return pandoc.Str(" ") end,
-        }).content[1].text or '')
+        res = res .. (pandoc.walk_inline(pandoc.Span {v}, filter).content[1].text or '')
     end
     return res
 end
@@ -76,7 +84,9 @@ function Pandoc(elem)
         end
     end
     if not meta.description then
-        meta.description = '<span class="lispized-content"></span>'
+        local placeholder = pandoc.Span({pandoc.Str(" ")})
+        placeholder.classes = { "lispized-content" }
+        meta.description = pandoc.MetaInlines({placeholder})
     end
 
     -- Write to index

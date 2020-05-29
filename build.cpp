@@ -90,6 +90,7 @@ const int max_index_size = 1926;
 const auto ignored_files = ([] () -> std::set<fs::path> {
     std::vector<fs::path> res = {
         "parallelized_trans",
+        "tech/quick_vim_tutor",
     };
     for (auto &i : res)
         i = ("src" / i).replace_extension(".md");
