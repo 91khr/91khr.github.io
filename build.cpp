@@ -20,10 +20,7 @@ namespace std
 template<>
 struct hash<fs::path>
 {
-    size_t operator()(const fs::path &s) const noexcept
-    {
-        return fs::hash_value(s);
-    }
+    size_t operator()(const fs::path &s) const noexcept { return fs::hash_value(s); }
 };
 }
 
@@ -89,8 +86,8 @@ const std::string build_args = R"(--toc --standalone --lua-filter=filter.lua -t 
 const int max_index_size = 1926;
 const auto ignored_files = ([] () -> std::set<fs::path> {
     std::vector<fs::path> res = {
-        "parallelized_trans",
-        "tech/quick_vim_tutor",
+        "novel/parallelized_trans",
+        "novel/sol_midnight",
     };
     for (auto &i : res)
         i = ("src" / i).replace_extension(".md");

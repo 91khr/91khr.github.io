@@ -10,6 +10,7 @@ description: 就是一些朋友的blog之类的?(
 
 - [清浔前辈](https://cmath.cc)
 - [Tirpitz](https://tirpitz.xyz)
+- [moi_mo](https://rain.moimo.me)
 
 ~~唔这就没了啊(~~
 

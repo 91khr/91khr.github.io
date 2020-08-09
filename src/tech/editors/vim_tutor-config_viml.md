@@ -88,3 +88,7 @@ senioria自己的设置是这样的: `:set bs=2 ts=4 sw=4 et is hls wmnu nocp`.
 
 - `'number'`(`'nu'`): 是否显示行号
 
+- `'showcmd'`(`'sc'`): 是否显示normal模式下输入的命令, 会显示在屏幕的右下角
+
+- `'textwidth'`(`'tw'`): 
+

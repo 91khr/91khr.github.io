@@ -14,17 +14,17 @@
         <header>
             <h1>Senioria的代码规范</h1>
                     </header>
-        <pre><code class="lisp-frame">(display meta-info)</code></pre>
-        <div class="lispized-content">
+        <pre><code class="repl-frame">(display meta-info)</code></pre>
+        <div class="replized-content">
             <span id="meta-info-author">Senioria</span>
             
             <span id="meta-info-description">(其实是给自己看的x</span>
         </div>
-        <pre><code class="lisp-frame">(display table-of-contents)</code></pre>
+        <pre><code class="repl-frame">(display table-of-contents)</code></pre>
 <ul>
 <li><a href="#c">C++</a></li>
 </ul>
-        <pre><code class="lisp-frame">(display content)</code></pre>
+        <pre><code class="repl-frame">(display content)</code></pre>
         <main><h1 id="c">C++</h1>
 <p><del>(其实很多比较早的代码都没有遵循这些</del></p>
 <ul>
@@ -36,7 +36,8 @@
 <li>局部变量/lambda: <code>nodelim</code>或者<code>snake_case</code></li>
 </ul>
 <p>模块和命名空间之类的东西一般会尽可能用复数, 比如<code>parsers</code>; 诸如<code>alisa_parser</code>这种特化的东西会用单数.</p>
-<p>类/概念的名称一般遵循对象+动词用作职业的名词这个形式, 比如<code>AlisaParser</code>; 或者类似<code>ParserInfo</code>这样的职业名词(作形容词)+名词的形式. 有些用作命名空间的类(比如<code>environments</code>)遵循命名空间的格式.</p>
+<p>类的名称一般遵循对象+动词用作职业的名词这个形式, 比如<code>AlisaParser</code>; 或者类似<code>ParserInfo</code>这样的职业名词(作形容词)+名词的形式. 有些用作命名空间的类(比如<code>environments</code>)遵循命名空间的格式.</p>
+<p>概念被用于描述一个对象所应该具有的性质, 正如其名称所述 (因此, 用于拓展的接口之类的会被做成类/接口/元类, 要求用户继承), 因此名称是用于描述状态的词, 比如<code>Sized</code>, <code>SizeChangable</code>.</p>
 <p>常量的名称大概是名词. 一个特例是header guard, 会遵循头文件名大写+<code>_INCLUDED</code>的名字.</p>
 <p>函数大概是Qt规则, 即动词+对象; get/set在不产生歧义的时候可能会被省略. 成员会尽量凑成名词/名词性短语.</p>
 <p>局部变量会放飞自我(((</p>
@@ -44,7 +45,7 @@
 <p>具体的规范的话:</p>
 <ul>
 <li>大括号换行</li>
-<li>控制语句的括号前空一格, <code>for</code>语句的分号后空格</li>
+<li>控制语句的括号前空一格, <code>for</code>语句和各种带init的控制语句的分号后空格</li>
 <li>一般来说, 二元(和三元)运算符的参数和运算符之间空格, 数组下标访问除外, 一元运算符不空格</li>
 <li>括号内不空格</li>
 <li>函数名和返回类型写在同一行, 如果有换行必要, 尽量换类型的行</li>

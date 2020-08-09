@@ -138,12 +138,12 @@ pre.sourceCode {
 .sourceCode .er { color: #D30102; font-weight: bold; }
 /* }}} End code themes */
 
-/* {{{ Lisp-styled themes */
-.lisp-frame {
+/* {{{ Repl-styled themes */
+.repl-frame {
     display: inline-block;
     position: relative;
 }
-.lisp-frame:before {
+.repl-frame:before {
     content: "> ";
     color: #666;
     position: absolute;
@@ -152,15 +152,15 @@ pre.sourceCode {
     left: -1em;
 }
 
-.lispized-content::before {
+.replized-content::before {
     content: "'(";
     color: #666;
 }
-.lispized-content::after {
+.replized-content::after {
     content: ")";
     color: #666;
 }
-/* }}} End lisp-styled themes */
+/* }}} End repl-styled themes */
 /* }}} End general themes */
 
 /* {{{ Special elements */

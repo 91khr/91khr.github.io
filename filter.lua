@@ -12,6 +12,14 @@ local baseLen = (function()
     until last == nil
     return res
 end)()
+local defaultVars = {
+    description = (function()
+        local elem = pandoc.Span({pandoc.Str(' ')})
+        elem.classes = { "replized-content" }
+        return pandoc.MetaInlines({elem})
+    end)(),
+    content_prompt = pandoc.MetaInlines({ pandoc.Str("(display content)") }),
+}
 -- }}}
 
 -- {{{ Helpers
@@ -22,33 +30,23 @@ local function catstr(elem)
     local function escape(s, in_attribute)
         return (type(s) == 'table' and s.text or s):gsub("[<>&\"']",
         function(x)
-            if x == '<' then
-                return '&lt;'
-            elseif x == '>' then
-                return '&gt;'
-            elseif x == '&' then
-                return '&amp;'
-            elseif x == '"' then
-                return '&quot;'
-            elseif x == "'" then
-                return '&#39;'
-            else
-                return x
-            end
+            return ({
+                ['>']='&gt;', ['<']='&lt;', ['&']='&amp;', ['"']='&quot;', ['\'']='&#39;'
+            })[x] or x
         end)
     end
     local res = ''
     local filter = {
         Emph = function(s) return pandoc.Str('<em>' .. catstr(s.content) .. '</em>') end,
-        Link = function(s)
-            return pandoc.Str("<a href='" .. escape(s.target,true) .. "'>" .. catstr(s.content) .. "</a>")
-        end,
         Strikeout = function(s) return pandoc.Str('<del>' .. catstr(s.content) .. '</del>') end,
         Strong = function(s) return pandoc.Str("<strong>" .. catstr(s.content) .. "</strong>") end,
         Subscript = function(s) return pandoc.Str("<sub>" .. catstr(s.content) .. "</sub>") end,
         Superscript = function(s) return pandoc.Str("<sup>" .. catstr(s.content) .. "</sup>") end,
         SmallCaps = function(s)
             return pandoc.Str('<span style="font-variant: small-caps;">' .. catstr(s.content) .. '</span>')
+        end,
+        Link = function(s)
+            return pandoc.Str("<a href='" .. escape(s.target,true) .. "'>" .. catstr(s.content) .. "</a>")
         end,
         Str = function(s) return pandoc.Str(escape(s)) end,
         Space = function() return pandoc.Str(" ") end,
@@ -79,14 +77,14 @@ function Pandoc(elem)
         elseif os.getenv("alterIndex") then  -- Alternative index
             meta.title = basePath:gsub('[^/]*$', '')
             local placeholder = pandoc.Div({pandoc.Null()})
-            placeholder.classes = { "lispized-content" }
+            placeholder.classes = { "replized-content" }
             elem.blocks:insert(placeholder)
         end
     end
-    if not meta.description then
-        local placeholder = pandoc.Span({pandoc.Str(" ")})
-        placeholder.classes = { "lispized-content" }
-        meta.description = pandoc.MetaInlines({placeholder})
+    for k, v in pairs(defaultVars) do
+        if not meta[k] then
+            meta[k] = v
+        end
     end
 
     -- Write to index

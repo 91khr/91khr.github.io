@@ -30,15 +30,15 @@
             </div>
             $endif$
         </header>
-        <pre><code class="lisp-frame">(display meta-info)</code></pre>
-        <div class="lispized-content">
+        <pre><code class="repl-frame">(display meta-info)</code></pre>
+        <div class="replized-content">
             $if(author)$<span id="meta-info-author">$for(author)$$author$$sep$, $endfor$</span>$endif$
             $if(keywords)$<span id="meta-info-keywords">$for(keywords)$$keywords$$sep$, $endfor$</span>$endif$
             $if(description)$<span id="meta-info-description">$for(description)$$description$$sep$, $endfor$</span>$endif$
         </div>
-        <pre><code class="lisp-frame">(display table-of-contents)</code></pre>
+        <pre><code class="repl-frame">(display table-of-contents)</code></pre>
 $if(toc)$$toc$$endif$
-        <pre><code class="lisp-frame">(display content)</code></pre>
+        <pre><code class="repl-frame">$content_prompt$</code></pre>
         <main>$body$</main>
         <footer>
             Special links:
