@@ -76,9 +76,6 @@ function Pandoc(elem)
             meta.title = 'Senioria的刺猬洞'
         elseif os.getenv("alterIndex") then  -- Alternative index
             meta.title = basePath:gsub('[^/]*$', '')
-            local placeholder = pandoc.Div({pandoc.Null()})
-            placeholder.classes = { "replized-content" }
-            elem.blocks:insert(placeholder)
         end
     end
     for k, v in pairs(defaultVars) do

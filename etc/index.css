@@ -6,6 +6,7 @@ html, body {
 
 #index-control {
     display: flex;
+    font-family: Monaco, Consolas, 'Courier New', Courier, monospace;
     flex-direction: row;
 }
 .page-control {
@@ -35,7 +36,7 @@ html, body {
 }
 #index-content .article-title::before {
     content: "'(#:title ";
-    color: #6c6c6c;
+    color: #666;
 }
 #index-content .article-description::before {
     content: "#:description ";

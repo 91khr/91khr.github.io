@@ -2,7 +2,7 @@
 var indexctnt, tmp_indexhint;
 var nowindex = 0, maxindex;
 var indextype = 'index'
-var active_controls = new Object
+var active_controls = {}
 
 function get_index_path() {
     let basepath = (new URL(document.URL)).pathname.replace(/[^/]*$/, '')
@@ -20,7 +20,7 @@ function set_index_type(type) {
 }
 
 function updateindex() {
-    tmp_indexhint.innerHTML = `'(#:page ${nowindex} #:maxpage ${maxindex})`;
+    tmp_indexhint.innerHTML = `'(${nowindex} #:in ${maxindex})`;
     fetch_ctnt(get_index_path() + nowindex + ".html", ctnt => indexctnt.innerHTML = ctnt);
 }
 
@@ -55,7 +55,7 @@ function initindex() {
         active_controls.index.classList.add('page-control-active')
         init_index_content();
     }
-    if (document.readyState != 'loading'){
+    if (document.readyState != 'loading') {
         init();
     } else {
         document.addEventListener('DOMContentLoaded', init);

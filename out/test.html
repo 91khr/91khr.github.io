@@ -8,39 +8,19 @@
                 <title>测试文档 - Senioria的刺猬洞</title>
         <link rel="stylesheet" type="text/css" href="/etc/main.css" />
         <link rel="stylesheet" type="text/css" href="/etc/highlight.css" />
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js"></script>
-<script>document.addEventListener("DOMContentLoaded", function () {
- var mathElements = document.getElementsByClassName("math");
- for (var i = 0; i < mathElements.length; i++) {
-  var texText = mathElements[i].firstChild;
-  if (mathElements[i].tagName == "SPAN") {
-   katex.render(texText.data, mathElements[i], {
-    displayMode: mathElements[i].classList.contains('display'),
-    throwOnError: false,
-    fleqn: false
-   });
-}}});
-</script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css" />
+                
         
         
     </head>
     <body>
-        <header>
-            <h1>测试文档</h1>
-                        <div id="keywords-list">
-                关键词:
-                                <span class="keyword-value">markdown</span>,
-                                <span class="keyword-value">测试</span>            </div>
-                    </header>
+        <header> <h1>测试文档</h1> </header>
         <pre><code class="repl-frame">(display meta-info)</code></pre>
-        <div class="replized-content">
-            <span id="meta-info-author">Virginia, Senioria</span>
-            <span id="meta-info-keywords">markdown, 测试</span>
-            <span id="meta-info-description">用来测试生成器是否正常的文档</span>
+        <div class="replized-content quoted-content">
+            <span class="meta-info" name=author>Virginia, Senioria</span>
+            <span class="meta-info" name=keywords>markdown, 测试</span>
+            <span class="meta-info" name=description>用来测试生成器是否正常的文档</span>
         </div>
-        <pre><code class="repl-frame">(display table-of-contents)</code></pre>
-<ul>
+        <pre><code class="repl-frame">(display table-of-contents)</code></pre><ul>
 <li><a href="#在第一个标题之后的内容应该不会被加入brief">在第一个标题之后的内容应该不会被加入brief</a></li>
 <li><a href="#对元素的测试">对元素的测试</a>
 <ul>
@@ -61,25 +41,27 @@
 <li>Third</li>
 </ul>
 <h1 id="在第一个标题之后的内容应该不会被加入brief">在第一个标题之后的内容应该不会被加入brief</h1>
-<p>加一段代码?(</p>
-<div class="sourceCode" id="cb1" style="--linenumber-len: 1;"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="co">// A hello world</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a><span class="pp">#include </span><span class="im">&lt;cstdio&gt;</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a><span class="dt">int</span> main()</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a>{</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a>    printf(<span class="st">&quot;Hello world!</span><span class="sc">\n</span><span class="st">&quot;</span>);</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a>    <span class="cf">return</span> <span class="dv">0</span>;</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true"></a>}</span></code></pre></div>
-<p>数学: <span class="math inline">i + j = k</span></p>
-<p><span class="math display">
-\because i^2 = 2\sum_{j=1}^i j - i \\
-\begin{aligned}
-\therefore \sum_{i=1}^n i^2 &amp;= 2\sum_{i=1}^n\sum{j=1}^i j - \sum_{i=1}^n i \\
-&amp;= 2\sum_{i=1}^n i(n + 1 - i) - \sum_{i=1}^n i \\
-&amp;= 2(n+1)\sum_{i=1}^n i - 2\sum_{i=1}^n i^2 - \sum_{i=1}^n i
-\end{aligned} \\
-\therefore 3\sum_{i=1}^n i^2 = (2n+1)\sum_{i=1}^n i
-</span></p>
+<p>加一段代码?( 以及<code>print(hello)</code>这样的行内代码.</p>
+<p>code <code>inside</code> same lang &gt;&lt;</p>
+<div class="sourceCode" id="cb1" style="--linenumber-len: 1;"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">// A hello world</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;cstdio&gt;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">&quot;Hello world!</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb2" style="--linenumber-len: 2;"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>数学: $i + j = k$</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>\because i^2 = 2\sum_{j=1}^i j - i \\</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>\begin{aligned}</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>\therefore \sum_{i=1}^n i^2 &amp;= 2\sum_{i=1}^n\sum{j=1}^i j - \sum_{i=1}^n i \\</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>&amp;= 2\sum_{i=1}^n i(n + 1 - i) - \sum_{i=1}^n i \\</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>&amp;= 2(n+1)\sum_{i=1}^n i - 2\sum_{i=1}^n i^2 - \sum_{i=1}^n i</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>\end{aligned} \\</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>\therefore 3\sum_{i=1}^n i^2 = (2n+1)\sum_{i=1}^n i</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>$$</span></code></pre></div>
 <h1 id="对元素的测试">对元素的测试</h1>
 <h2 id="标题测试">标题测试</h2>
 <h3 id="三级">三级…</h3>
@@ -158,10 +140,14 @@
 64<br />
 </p></main>
         <footer>
-            Special links:
-            <a href="/out/index.html">主页</a>
-            <a href="/out/self_intro.html">关于Senioria</a>
-            <a href="/out/friends.html">友情链接</a>
+            <span>
+                <a href="/out/index.html">主页</a>
+                <a href="/out/self_intro.html">关于Senioria</a>
+                <a href="/out/friends.html">Friends</a>
+            </span>
+            <span style="margin-left: auto; ">
+                Powered By <a href="https://pandoc.org">pandoc</a> and magic :)
+            </span>
         </footer>
     </body>
 </html>

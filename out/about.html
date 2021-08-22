@@ -11,17 +11,14 @@
         
     </head>
     <body>
-        <header>
-            <h1>关于这个blog</h1>
-                    </header>
+        <header> <h1>关于这个blog</h1> </header>
         <pre><code class="repl-frame">(display meta-info)</code></pre>
-        <div class="replized-content">
-            <span id="meta-info-author">Senioria</span>
+        <div class="replized-content quoted-content">
+            <span class="meta-info" name=author>Senioria</span>
             
-            <span id="meta-info-description">对这个blog使用的技术, 和开发心得的一些介绍</span>
+            <span class="meta-info" name=description>对这个blog使用的技术, 和开发心得的一些介绍</span>
         </div>
-        <pre><code class="repl-frame">(display table-of-contents)</code></pre>
-<ul>
+        <pre><code class="repl-frame">(display table-of-contents)</code></pre><ul>
 <li><a href="#实现">实现</a></li>
 <li><a href="#计划">计划</a></li>
 <li><a href="#吹水">吹水</a></li>
@@ -68,10 +65,14 @@
 <p>其实说起来, 写一个blog最重要的还是在上面写点东西, 而不是具体做出什么特别好的界面来. 把时间都花在好看的界面上之后, 在肝完东西之后的贤者时间里, 当初决定写blog的那种写文章的激情也会很快消去. 咕咕咕几天后, 等待这个漂亮的架构的就只有推倒重来的命运了. 还不如一开始随手搓一点, 等到有了好的文章之后, 再改进自己的架构和界面, 来适应blog里漂亮的文章.</p>
 <p><del>这个结尾好王垠啊</del></p></main>
         <footer>
-            Special links:
-            <a href="/out/index.html">主页</a>
-            <a href="/out/self_intro.html">关于Senioria</a>
-            <a href="/out/friends.html">友情链接</a>
+            <span>
+                <a href="/out/index.html">主页</a>
+                <a href="/out/self_intro.html">关于Senioria</a>
+                <a href="/out/friends.html">Friends</a>
+            </span>
+            <span style="margin-left: auto; ">
+                Powered By <a href="https://pandoc.org">pandoc</a> and magic :)
+            </span>
         </footer>
     </body>
 </html>

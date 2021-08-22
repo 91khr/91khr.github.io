@@ -11,17 +11,14 @@
         
     </head>
     <body>
-        <header>
-            <h1>大概是篇Vim入门教程(2): 配置和(基本的)Vimscript</h1>
-                    </header>
+        <header> <h1>大概是篇Vim入门教程(2): 配置和(基本的)Vimscript</h1> </header>
         <pre><code class="repl-frame">(display meta-info)</code></pre>
-        <div class="replized-content">
-            <span id="meta-info-author">Senioria</span>
+        <div class="replized-content quoted-content">
+            <span class="meta-info" name=author>Senioria</span>
             
-            <span id="meta-info-description">(非常非常基本(小声(((</span>
+            <span class="meta-info" name=description>(非常非常基本(小声(((</span>
         </div>
-        <pre><code class="repl-frame">(display table-of-contents)</code></pre>
-<ul>
+        <pre><code class="repl-frame">(display table-of-contents)</code></pre><ul>
 <li><a href="#helph"><code>:help</code>/<code>:h</code></a></li>
 <li><a href="#设置选项-set">设置选项: <code>:set</code></a></li>
 </ul>
@@ -32,7 +29,7 @@
 <ul>
 <li><code>.exrc</code>, 本来是ex/vi的配置文件, 因为兼容所以也可以被Vim读取, 在有vimrc的时候不会被读取;</li>
 <li><code>.vimrc</code>, “正统”的配置文件, 也是Vim读取优先级最高的;</li>
-<li><code>.vim/vimrc</code>, 另一个意义上的“正统”的配置文件, 在找不到上一个的时候会被读取.</li>
+<li><code>.vim/vimrc</code>, 另一个意义上的”正统”的配置文件, 在找不到上一个的时候会被读取.</li>
 </ul>
 <hr />
 <blockquote>
@@ -51,7 +48,7 @@
 <p>(其实直接<code>:h</code>一下然后往下看就能知道该怎么查帮助了</p>
 <h1 id="设置选项-set">设置选项: <code>:set</code></h1>
 <p>Vim自己的选项都在这个命令里了(虽然也只能设置Vim自己的选项). 语法是<code>:set option1 option2...</code>, 其中option1, option2都是选项, 可以有零个或多个这样的选项, 每一个的语法都是<code>name=value</code>或者<code>name</code>, 选项之间以空格分割; 如果选项的值里有空格, 用<code>\</code>来转义(相应的, 如果有<code>\</code>, 用<code>\\</code>来转义). 如果没有指定选项的话, 会列出所有被更改过的选项.</p>
-<p><code>name</code>形式的选项是布尔型的(i.e. 它们是“开关”), 可以用<code>name</code>来打开, 用<code>noname</code>(选项的名称前面加<code>no</code>)来关闭. <code>name=value</code>形式的选项就如同它的形式所暗示的一样, 是在设置一个选项的值; 对于这些选项, 也可以用<code>name+=value</code>或者<code>name-=value</code>来从一系列值中加上一个或者去掉一个. 可以用<code>:set name?</code>的形式(可以指定多个选项)来查询某个选项的值, 对于非布尔型的选项, 直接<code>:set name</code>也可以.</p>
+<p><code>name</code>形式的选项是布尔型的(i.e. 它们是”开关”), 可以用<code>name</code>来打开, 用<code>noname</code>(选项的名称前面加<code>no</code>)来关闭. <code>name=value</code>形式的选项就如同它的形式所暗示的一样, 是在设置一个选项的值; 对于这些选项, 也可以用<code>name+=value</code>或者<code>name-=value</code>来从一系列值中加上一个或者去掉一个. 可以用<code>:set name?</code>的形式(可以指定多个选项)来查询某个选项的值, 对于非布尔型的选项, 直接<code>:set name</code>也可以.</p>
 <p>常用(i.e. 让Vim最小限度的像个现代编辑器)的选项有这些:</p>
 <ul>
 <li><p><code>'backspace'</code>(<code>'bs'</code>): 设置backspace键的行为(默认的Vi行为不会真的有人用吧x), 一般直接<code>bs=3</code>就是一般编辑器的行为.</p></li>
@@ -76,10 +73,14 @@
 </ol>
 </section></main>
         <footer>
-            Special links:
-            <a href="/out/index.html">主页</a>
-            <a href="/out/self_intro.html">关于Senioria</a>
-            <a href="/out/friends.html">友情链接</a>
+            <span>
+                <a href="/out/index.html">主页</a>
+                <a href="/out/self_intro.html">关于Senioria</a>
+                <a href="/out/friends.html">Friends</a>
+            </span>
+            <span style="margin-left: auto; ">
+                Powered By <a href="https://pandoc.org">pandoc</a> and magic :)
+            </span>
         </footer>
     </body>
 </html>

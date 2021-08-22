@@ -1,6 +1,12 @@
 #if 0  // Self compile
-g++ -std=c++2a $0 -o build -lstdc++fs -fconcepts -g
-exit $?
+if [ `stat -c %Y $0` -lt `stat -c %Y build` ] ||
+    g++ -std=c++20 $0 -o build -lstdc++fs -fconcepts -g
+then
+    echo End compilation
+    exec ./build
+else
+    exit $?
+fi
 #endif
 #include <cstdio>
 #include <string>
@@ -167,7 +173,7 @@ int main(int argc, char **argv)
                         }
                         else
                         {
-                            printf("Error: unrecognized option %c in %s\n", *ch, *arg);
+                            printf("Error: unrecognized option %c in %s\n", *ch, arg);
                             help();
                             return 1;
                         }

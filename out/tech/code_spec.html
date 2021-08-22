@@ -11,17 +11,14 @@
         
     </head>
     <body>
-        <header>
-            <h1>Senioria的代码规范</h1>
-                    </header>
+        <header> <h1>Senioria的代码规范</h1> </header>
         <pre><code class="repl-frame">(display meta-info)</code></pre>
-        <div class="replized-content">
-            <span id="meta-info-author">Senioria</span>
+        <div class="replized-content quoted-content">
+            <span class="meta-info" name=author>Senioria</span>
             
-            <span id="meta-info-description">(其实是给自己看的x</span>
+            <span class="meta-info" name=description>(其实是给自己看的x</span>
         </div>
-        <pre><code class="repl-frame">(display table-of-contents)</code></pre>
-<ul>
+        <pre><code class="repl-frame">(display table-of-contents)</code></pre><ul>
 <li><a href="#c">C++</a></li>
 </ul>
         <pre><code class="repl-frame">(display content)</code></pre>
@@ -52,10 +49,14 @@
 <li>header guard的<code>#endif</code>后加注释表明guard, 命名空间的回括号后加上<code>End namespace xxx</code>, 对于匿名命名空间, 是<code>End anonymous namespace</code></li>
 </ul></main>
         <footer>
-            Special links:
-            <a href="/out/index.html">主页</a>
-            <a href="/out/self_intro.html">关于Senioria</a>
-            <a href="/out/friends.html">友情链接</a>
+            <span>
+                <a href="/out/index.html">主页</a>
+                <a href="/out/self_intro.html">关于Senioria</a>
+                <a href="/out/friends.html">Friends</a>
+            </span>
+            <span style="margin-left: auto; ">
+                Powered By <a href="https://pandoc.org">pandoc</a> and magic :)
+            </span>
         </footer>
     </body>
 </html>

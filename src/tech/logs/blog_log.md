@@ -84,3 +84,26 @@ Senioria... 太咕... qwq
 蛮好奇那些静态页面生成器是怎么做索引的...
 难道也要每篇文章都扫一遍? ><
 
+# 2021-08-22
+
+commit log:
+
+> Fixed style
+>
+> btw, add invokation to build.cpp
+
+稍微改了改修了修样式之类的, 希望能更阳间一点 qwq
+也顺便让`build.cpp`会自动运行了.
+
+唔嗯... 除掉高考咕掉的一年, 还咕了高考之后的大半个暑假... qwq >\_<
+想做tags支持, 但是tags支持的工作量... 想想就好大:
+
+- 在各种依靠collection的地方添加tags对应的collection;
+- 在filter里加上扫描, 处理和写入tags的代码;
+- 正确处理各种ignored和hidden.
+
+所以还是咕到下一次吧, 无论下一次是什么时候><(
+
+不过还是加了tags的branch.
+说起来, 这是senioria第一次用比较认真的态度加branch?
+

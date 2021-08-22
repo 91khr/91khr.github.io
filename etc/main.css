@@ -31,10 +31,11 @@ section.footnotes hr:first-child {
 }
 
 footer {
-    width: 100%;
     height: auto;
+    line-height: 1.5;
+    display: flex;
     margin: 0.1em 0 0;
-    padding: 0.5em 0.1em 2em;
+    padding: 0.7em 5% 2em;
     background: #f5f5dc82;
 }
 /* }}} End layout */
@@ -97,14 +98,14 @@ pre.sourceCode {
 /* {{{ Line numbers */
 pre.sourceCode {
     padding-left: 4px;
-    margin-left: calc(var(--linenumber-len) * 1em);
+    margin-left: calc(var(--linenumber-len) * 1ch + 1em);
     border-left: 1px solid #aaa;
     counter-reset: line-number 0;
 }
 
 .sourceCode > span {
     position: relative;
-    left: calc(var(--linenumber-len) * -1em);
+    left: calc(var(--linenumber-len) * -1ch - 0.3em);
     counter-increment: line-number;
 }
 .sourceCode > span > a:first-child * {
@@ -113,14 +114,14 @@ pre.sourceCode {
 .sourceCode > span > a:first-child::before {
     content: counter(line-number);
     position: relative;
-    left: -1em;
+    left: -1ch;
     text-align: right;
     vertical-align: baseline;
     border: none;
     display: inline-block;
     user-select: none;
     padding: 0 4px;
-    width: calc(1em * var(--linenumber-len));
+    width: calc(1ch * var(--linenumber-len));
 }
 /* }}} End line numbers */
 
@@ -140,9 +141,14 @@ pre.sourceCode {
 
 /* {{{ Repl-styled themes */
 .repl-frame {
-    display: inline-block;
+    display: block;
     position: relative;
+    padding: 2px;
 }
+.repl-frame:empty {
+    background-color: inherit;
+}
+
 .repl-frame:before {
     content: "> ";
     color: #666;
@@ -152,11 +158,11 @@ pre.sourceCode {
     left: -1em;
 }
 
-.replized-content::before {
+.replized-content:empty::before, .quoted-content::before {
     content: "'(";
     color: #666;
 }
-.replized-content::after {
+.replized-content:empty::after, .quoted-content::after {
     content: ")";
     color: #666;
 }
@@ -164,16 +170,8 @@ pre.sourceCode {
 /* }}} End general themes */
 
 /* {{{ Special elements */
-#meta-info-author::before {
-    content: "#:author ";
-    color: #666;
-}
-#meta-info-keywords::before {
-    content: "#:keywords ";
-    color: #666;
-}
-#meta-info-description::before {
-    content: "#:description ";
+.meta-info::before {
+    content: "#:" attr(name) " ";
     color: #666;
 }
 /* }}} End special elements */

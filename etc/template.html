@@ -19,32 +19,25 @@
         $if(extra-script)$<script>$extra-script$</script>$endif$
     </head>
     <body>
-        <header>
-            <h1>$title$</h1>
-            $if(keywords)$
-            <div id="keywords-list">
-                关键词:
-                $for(keywords)$
-                <span class="keyword-value">$keywords$</span>$sep$,
-                $endfor$
-            </div>
-            $endif$
-        </header>
+        <header> <h1>$title$</h1> </header>
         <pre><code class="repl-frame">(display meta-info)</code></pre>
-        <div class="replized-content">
-            $if(author)$<span id="meta-info-author">$for(author)$$author$$sep$, $endfor$</span>$endif$
-            $if(keywords)$<span id="meta-info-keywords">$for(keywords)$$keywords$$sep$, $endfor$</span>$endif$
-            $if(description)$<span id="meta-info-description">$for(description)$$description$$sep$, $endfor$</span>$endif$
+        <div class="replized-content quoted-content">
+            $if(author)$<span class="meta-info" name=author>$for(author)$$author$$sep$, $endfor$</span>$endif$
+            $if(keywords)$<span class="meta-info" name=keywords>$for(keywords)$$keywords$$sep$, $endfor$</span>$endif$
+            $if(description)$<span class="meta-info" name=description>$for(description)$$description$$sep$, $endfor$</span>$endif$
         </div>
-        <pre><code class="repl-frame">(display table-of-contents)</code></pre>
-$if(toc)$$toc$$endif$
+        <pre><code class="repl-frame">(display table-of-contents)</code></pre>$if(toc)$$toc$$endif$
         <pre><code class="repl-frame">$content_prompt$</code></pre>
         <main>$body$</main>
         <footer>
-            Special links:
-            <a href="/out/index.html">主页</a>
-            <a href="/out/self_intro.html">关于Senioria</a>
-            <a href="/out/friends.html">友情链接</a>
+            <span>
+                <a href="/out/index.html">主页</a>
+                <a href="/out/self_intro.html">关于Senioria</a>
+                <a href="/out/friends.html">Friends</a>
+            </span>
+            <span style="margin-left: auto; ">
+                Powered By <a href="https://pandoc.org">pandoc</a> and magic :)
+            </span>
         </footer>
     </body>
 </html>

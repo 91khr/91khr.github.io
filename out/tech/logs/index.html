@@ -11,22 +11,22 @@
     <body>
         <header><h1>Logs</h1></header>
         <pre><code class="repl-frame">(display introduction)</code></pre>
-        <section id="introduction">
-<p>放各种项目的理应是commit log的一部分但是不好意思写在里面的东西… <del>日记本</del></p>
-        </section>
-
+        <section id="introduction" class="replized-content"><p>放各种项目的理应是commit log的一部分但是不好意思写在里面的东西… <del>日记本</del></p></section>
         <pre><code class="repl-frame">(for ([l '(<button class="page-control" onclick="set_index_type('index')" id=control-set-to-index>timeline</button> <button class="page-control" onclick="set_index_type('catalog')" id=control-set-to-catalog>catalog</button>)]) (display l))</code></pre>
-        <div id="index-content" class="repl-content">
+        <div id="index-content" class="replized-content">
         </div>
         <pre><code class="repl-frame">(display controls max-pages)</code></pre>
-        <div id="index-control" class="repl-content">
-            <code>'(<button class="page-control" onclick="previndex()">prev</button> <button class="page-control" onclick="nextindex()">next</button>) <span id="temp-index-hint"></span></code></div>
-    <pre><code class="repl-frame">(display links)</code></pre>
-    <div class="repl-content">
-        <a href="/">主页</a>
-        <a href="/out/friends.html">友情链接</a>
-        <a href="..">上一页</a>
-    </div>
-    <pre><code class="repl-frame"></code></pre>
+        <div id="index-control" class="replized-content">
+            '(<button class="page-control" onclick="previndex()">prev</button> &nbsp;
+            <button class="page-control" onclick="nextindex()">next</button>) &nbsp;
+            <span id="temp-index-hint"></span>
+        </div>
+        <pre><code class="repl-frame">(display links)</code></pre>
+        <div class="replized-content quoted-content">
+            <a href="/">主页</a>
+            <a href="/out/friends.html">Friends</a>
+            <a href="..">上一页</a>
+        </div>
+        <pre><code class="repl-frame"></code></pre>
     </body>
 </html>

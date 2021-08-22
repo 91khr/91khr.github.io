@@ -18,6 +18,9 @@ description: 用来测试生成器是否正常的文档
 # 在第一个标题之后的内容应该不会被加入brief
 
 加一段代码?(
+以及`print(hello)`这样的行内代码.
+
+code `inside` same lang ><
 
 ```cpp
 // A hello world
@@ -30,6 +33,7 @@ int main()
 }
 ```
 
+```default
 数学: $i + j = k$
 
 $$
@@ -41,6 +45,7 @@ $$
 \end{aligned} \\
 \therefore 3\sum_{i=1}^n i^2 = (2n+1)\sum_{i=1}^n i
 $$
+```
 
 # 对元素的测试
 
