@@ -8,7 +8,22 @@
                 <title>测试文档 - Senioria的刺猬洞</title>
         <link rel="stylesheet" type="text/css" href="/etc/main.css" />
         <link rel="stylesheet" type="text/css" href="/etc/highlight.css" />
-                
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js"></script>
+<script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+</script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css" />
         
         
     </head>
@@ -43,25 +58,24 @@
 <h1 id="在第一个标题之后的内容应该不会被加入brief">在第一个标题之后的内容应该不会被加入brief</h1>
 <p>加一段代码?( 以及<code>print(hello)</code>这样的行内代码.</p>
 <p>code <code>inside</code> same lang &gt;&lt;</p>
-<div class="sourceCode" id="cb1" style="--linenumber-len: 1;"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">// A hello world</span></span>
+<div class="sourceCode" id="cb1" style="--linenumber-len: 1;"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">// A hello world: Comment</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;cstdio&gt;</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">&quot;Hello world!</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">&quot;Hello world! </span><span class="sc">%d\n</span><span class="st">&quot;</span><span class="op">,</span> <span class="bn">0x5f8700</span><span class="op">);</span></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
-<div class="sourceCode" id="cb2" style="--linenumber-len: 2;"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>数学: $i + j = k$</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>\because i^2 = 2\sum_{j=1}^i j - i \\</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>\begin{aligned}</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>\therefore \sum_{i=1}^n i^2 &amp;= 2\sum_{i=1}^n\sum{j=1}^i j - \sum_{i=1}^n i \\</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>&amp;= 2\sum_{i=1}^n i(n + 1 - i) - \sum_{i=1}^n i \\</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>&amp;= 2(n+1)\sum_{i=1}^n i - 2\sum_{i=1}^n i^2 - \sum_{i=1}^n i</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>\end{aligned} \\</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>\therefore 3\sum_{i=1}^n i^2 = (2n+1)\sum_{i=1}^n i</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>$$</span></code></pre></div>
+<p>数学: <span class="math inline">i + j = k</span></p>
+<p><span class="math display">
+\begin{alignedat}{2}
+\because{}&amp;&amp; i^2 &amp;= 2\sum_{j=1}^i j - i \\
+\therefore{}&amp;&amp; \sum_{i=1}^n i^2 &amp;= 2\sum_{i=1}^n\sum{j=1}^i j - \sum_{i=1}^n i \\
+    &amp;&amp; &amp;= 2\sum_{i=1}^n i(n + 1 - i) - \sum_{i=1}^n i \\
+    &amp;&amp; &amp;= 2(n+1)\sum_{i=1}^n i - 2\sum_{i=1}^n i^2 - \sum_{i=1}^n i \\
+\therefore{}&amp;&amp; 3\sum_{i=1}^n i^2 &amp;= (2n+1)\sum_{i=1}^n i
+\end{alignedat}
+</span></p>
 <h1 id="对元素的测试">对元素的测试</h1>
 <h2 id="标题测试">标题测试</h2>
 <h3 id="三级">三级…</h3>
@@ -72,6 +86,13 @@
 <hr />
 <blockquote>
 <p>引用, 和<a href="https://example.com">引用里的链接</a></p>
+<hr />
+<p>这是引用里的一个段落唔… &gt;&lt;</p>
+<blockquote>
+<p>引用里嵌入的引用</p>
+<hr />
+<p>(以及嵌入的另一个段落 x</p>
+</blockquote>
 </blockquote>
 <h1 id="对页面的测试">对页面的测试</h1>
 <p>1<br />

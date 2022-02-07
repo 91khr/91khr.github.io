@@ -3,7 +3,7 @@ if [ `stat -c %Y $0` -lt `stat -c %Y build` ] ||
     g++ -std=c++20 $0 -o build -lstdc++fs -fconcepts -g
 then
     echo End compilation
-    exec ./build
+    exec ./build $@
 else
     exit $?
 fi
@@ -88,7 +88,7 @@ output compiled result and other generated information to out/.
 -f, --force    forcely regenerate all files
 -h, --help     print this message
 )";
-const std::string build_args = R"(--toc --standalone --lua-filter=filter.lua -t html --katex --template=etc/)";
+const std::string build_args = R"(--toc --standalone --lua-filter=etc/filter.lua -t html --katex --template=etc/)";
 const int max_index_size = 1926;
 const auto ignored_files = ([] () -> std::set<fs::path> {
     std::vector<fs::path> res = {

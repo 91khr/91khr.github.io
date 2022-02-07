@@ -127,10 +127,11 @@ pre.sourceCode {
 
 .sourceCode .kw { color: #2876AC; }
 .sourceCode .dt { color: #A84F57; }
+.sourceCode .pp { color: #9C6600; }
+.sourceCode .st, .sourceCode .ch { color: #217E77; }
 
 .sourceCode .dv, .sourceCode .bn, .sourceCode .fl { color: #B32469; }
 .sourceCode .ch { color: #DC322F; }
-.sourceCode .st { color: #2AA198; }
 .sourceCode .co { color: #0B7373; }
 .sourceCode .ot { color: #A57800; }
 .sourceCode .al { color: #CB4B16; font-weight: bold; }

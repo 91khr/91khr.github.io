@@ -4,5 +4,3 @@
 index/*
 # Build executable
 build
-# Editor configs
-.vimrc

@@ -23,29 +23,27 @@ description: 用来测试生成器是否正常的文档
 code `inside` same lang ><
 
 ```cpp
-// A hello world
+// A hello world: Comment
 #include <cstdio>
 
 int main()
 {
-    printf("Hello world!\n");
+    printf("Hello world! %d\n", 0x5f8700);
     return 0;
 }
 ```
 
-```default
 数学: $i + j = k$
 
 $$
-\because i^2 = 2\sum_{j=1}^i j - i \\
-\begin{aligned}
-\therefore \sum_{i=1}^n i^2 &= 2\sum_{i=1}^n\sum{j=1}^i j - \sum_{i=1}^n i \\
-&= 2\sum_{i=1}^n i(n + 1 - i) - \sum_{i=1}^n i \\
-&= 2(n+1)\sum_{i=1}^n i - 2\sum_{i=1}^n i^2 - \sum_{i=1}^n i
-\end{aligned} \\
-\therefore 3\sum_{i=1}^n i^2 = (2n+1)\sum_{i=1}^n i
+\begin{alignedat}{2}
+\because{}&& i^2 &= 2\sum_{j=1}^i j - i \\
+\therefore{}&& \sum_{i=1}^n i^2 &= 2\sum_{i=1}^n\sum{j=1}^i j - \sum_{i=1}^n i \\
+    && &= 2\sum_{i=1}^n i(n + 1 - i) - \sum_{i=1}^n i \\
+    && &= 2(n+1)\sum_{i=1}^n i - 2\sum_{i=1}^n i^2 - \sum_{i=1}^n i \\
+\therefore{}&& 3\sum_{i=1}^n i^2 &= (2n+1)\sum_{i=1}^n i
+\end{alignedat}
 $$
-```
 
 # 对元素的测试
 
@@ -66,6 +64,16 @@ $$
 ----
 
 > 引用, 和[引用里的链接](https://example.com)
+>
+> ---
+>
+> 这是引用里的一个段落唔... ><
+>
+> > 引用里嵌入的引用
+> >
+> > ---
+> >
+> > (以及嵌入的另一个段落 x
 
 # 对页面的测试
 

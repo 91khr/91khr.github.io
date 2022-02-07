@@ -1,8 +1,9 @@
+"use strict";
 
-var indexctnt, tmp_indexhint;
-var nowindex = 0, maxindex;
-var indextype = 'index'
-var active_controls = {}
+let indexctnt, tmp_indexhint;
+let nowindex = 0, maxindex;
+let indextype = 'index'
+let active_controls = {}
 
 function get_index_path() {
     let basepath = (new URL(document.URL)).pathname.replace(/[^/]*$/, '')

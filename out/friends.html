@@ -17,23 +17,82 @@
             
             <span class="meta-info" name=description>就是一些朋友的blog之类的?(</span>
         </div>
-        <pre><code class="repl-frame">(display table-of-contents)</code></pre>
+        <pre><code class="repl-frame">(display table-of-contents)</code></pre><ul>
+<li><a href="#还可用的链接">还可用的链接</a></li>
+<li><a href="#已经淡出的链接">已经淡出的链接…</a></li>
+</ul>
         <pre><code class="repl-frame">(display content)</code></pre>
         <main><p>(小声: title好想写Senioriae</p>
 <p>唔感觉什么都不说也有点不好… qwq <del>嗯这就说了点什么了x</del></p>
-<p>这里用的人称大概都是Senioria用来称呼彼等的人称代词.</p>
+<p>这里用的人称大概都是Senioria用来称呼彼等的人称代词. (是随机排序的 x (超小声(被打死((((((</p>
 <style>
-li {
-    margin-top: 1em;
-    margin-bottom: 1em;
+.friend-list > ul {
+    padding-left: 0;
+}
+.friend-list > ul > li {
+    list-style: none;
+    margin: 1em auto;
+    background-color: #faebd752;
+    border: 0.2ch solid gray;
+}
+.friend-list > ul > li >:first-child {
+    padding: 0.5ch 0.7ch 0 0.7ch;
+    margin: 0 0 0.5em;
+    border-bottom: 1px solid gray;
+}
+.friend-list > ul > li >:first-child > a:first-child {
+    font-size: 1.05em;
+}
+.friend-list > ul > li >:nth-child(2) {
+    margin-top: 0;
+}
+.friend-list > ul > li >:nth-child(n+2) {
+    margin: auto 0.7ch;
+}
+.friend-list > ul > li >:last-child {
+    padding-bottom: 0.5ch;
+    margin-bottom: 0;
 }
 </style>
+<h2 id="还可用的链接">还可用的链接</h2>
+<div class="friend-list">
 <ul>
-<li><a href="https://tommy0103.github.io">Tommy</a></li>
-<li><a href="https://tirpitz.xyz">Tirpitz</a></li>
-<li><a href="https://cmath.cc">清浔</a></li>
-<li><a href="https://rain.moimo.me">moi</a></li>
-</ul></main>
+<li><p><a href="https://tirpitz.live">Tirpitz</a></p>
+<p>是最好的姐姐 w</p></li>
+<li><p><a href="https://lhcfl.github.io/">锦心</a></p>
+<p>可爱的leprechuan, 想要抱紧紧揉揉揉揉揉脑袋, <del>用Seniorious戳戳奈子x</del>. (超小声(</p>
+<p>希望能有一起吃羊肉卷, 喝加了蜂蜜的热牛奶的一天 &gt;&lt; (超小声(</p></li>
+<li><p><a href="https://blog.coelacanthus.moe">Coelacanthus</a></p>
+<blockquote>
+<p><del>c10s强强, c10s假假 (超小声(被打死(</del></p>
+</blockquote>
+<p>(但c10s可爱是真的, 嗯 x (超小声(</p></li>
+<li><p><a href="https://Clansty.com">Clansty Icaria</a></p>
+<p>Clansty姐强强, 赞美Clansty姐 x (超小声(</p></li>
+<li><p><a href="https://blog.rain.cx">秋雨落</a></p>
+<p>是可爱的橘猫 x (超小声(</p></li>
+<li><p><a href="https://tommy0103.github.io">Tomiya</a></p>
+<p>是日常发情的可爱猫猫 x (超小声(被打死(((((((((((((</p></li>
+</ul>
+</div>
+<h2 id="已经淡出的链接">已经淡出的链接…</h2>
+<div class="friend-list">
+<ul>
+<li><p><a href="https://cmath.cc">清浔</a> (似乎不可用了… 等什么时候去更新 qaq (超小声()))</p></li>
+<li><p><a href="https://rain.moimo.me">moi</a> (虽然不可用, 但友链不能删&gt;&lt;)</p></li>
+</ul>
+</div>
+<script>
+// Shuffle the friend list
+for (let friList of document.getElementsByClassName('friend-list'))
+{
+    let fri = friList.children[0];
+    fri.replaceChildren(...Array.from(fri.children)
+        .map(n => [Math.random(), n])
+        .sort((a, b) => a[0] < b[0])
+        .map(n => n[1]));
+}
+</script></main>
         <footer>
             <span>
                 <a href="/out/index.html">主页</a>
