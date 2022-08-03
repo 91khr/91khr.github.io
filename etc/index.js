@@ -20,9 +20,11 @@ function set_index_type(type) {
     init_index_content();
 }
 
-function updateindex() {
+async function updateindex() {
     tmp_indexhint.innerHTML = `'(${nowindex} #:in ${maxindex})`;
-    fetch_ctnt(get_index_path() + nowindex + ".html", ctnt => indexctnt.innerHTML = ctnt);
+    let ctnt = await fetch(`${get_index_path()}${nowindex}.html`);
+    if (ctnt.ok)
+        indexctnt.innerHTML = await ctnt.text();
 }
 
 function nextindex() {
@@ -39,21 +41,26 @@ function previndex() {
     updateindex();
 }
 
-function init_index_content() {
-    fetch_ctnt(get_index_path() + "count.txt", count => {
-        maxindex = Number(count)
-        nowindex = 0
-        // TODO: Init the index list
-        tmp_indexhint = document.getElementById('temp-index-hint')
-        indexctnt = document.getElementById('index-content')
-        nextindex();
-    });
+async function init_index_content() {
+    let ctnt = await fetch(`${get_index_path()}count.txt`);
+    if (!ctnt.ok) {
+        maxindex = 0;
+        nowindex = 0;
+    }
+    else {
+        maxindex = Number(await ctnt.text());
+        nowindex = 1;
+    }
+    tmp_indexhint = document.getElementById('temp-index-hint');
+    indexctnt = document.getElementById('index-content');
+    updateindex();
 }
+
 function initindex() {
     function init() {
-        active_controls.index = document.getElementById('control-set-to-index')
-        active_controls.catalog = document.getElementById('control-set-to-catalog')
-        active_controls.index.classList.add('page-control-active')
+        active_controls.index = document.getElementById('control-set-to-index');
+        active_controls.catalog = document.getElementById('control-set-to-catalog');
+        active_controls.index.classList.add('page-control-active');
         init_index_content();
     }
     if (document.readyState != 'loading') {
@@ -61,15 +68,5 @@ function initindex() {
     } else {
         document.addEventListener('DOMContentLoaded', init);
     }
-}
-
-function fetch_ctnt(url, callback) {
-    let request = new XMLHttpRequest()
-    request.open('GET', url)
-    request.responseType = 'text'
-    request.onload = function() {
-        callback(request.response)
-    }
-    request.send()
 }
 

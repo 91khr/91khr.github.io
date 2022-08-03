@@ -1,5 +1,5 @@
 #if 0  // Self compile
-if make -f - <<<"build: ; g++ -std=c++2a $0 -o build -g"; then
+if make -f - <<<"build: build.cpp; g++ -std=c++17 $0 -o build -g"; then
     echo End compilation
     exec ./build $@
 else
@@ -117,7 +117,7 @@ namespace helper {
 void clean();
 }
 
-int main(int argc, char **argv)
+int main(int, char **argv)
 {
     // cd to base path
     fs::current_path(fs::path(argv[0]).remove_filename());
