@@ -1,7 +1,5 @@
 #if 0  // Self compile
-if [ `stat -c %Y $0` -lt `stat -c %Y build` ] ||
-    g++ -std=c++2b $0 -o build -g
-then
+if make -f - <<<"build: ; g++ -std=c++2a $0 -o build -g"; then
     echo End compilation
     exec ./build $@
 else
@@ -19,6 +17,18 @@ fi
 #include <functional>
 using std::string_literals::operator""s;
 namespace fs = std::filesystem;
+
+#if __cplusplus < 200704L
+// Implement hash for fs::path
+namespace std
+{
+template<>
+struct hash<fs::path>
+{
+    size_t operator()(const fs::path &s) const noexcept { return fs::hash_value(s); }
+};
+}
+#endif  // __cplusplus
 
 struct FileIO
 {
