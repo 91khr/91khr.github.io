@@ -28,7 +28,7 @@ local function catstr(elem)
         return elem
     end
     local function escape(s, in_attribute)
-        return (type(s) == 'table' and s.text or s):gsub("[<>&\"']",
+        return (type(s) == "string" and s or s.text):gsub("[<>&\"']",
         function(x)
             return ({
                 ['>']='&gt;', ['<']='&lt;', ['&']='&amp;', ['"']='&quot;', ['\'']='&#39;'

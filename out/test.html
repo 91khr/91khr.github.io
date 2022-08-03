@@ -8,7 +8,8 @@
                 <title>测试文档 - Senioria的刺猬洞</title>
         <link rel="stylesheet" type="text/css" href="/etc/main.css" />
         <link rel="stylesheet" type="text/css" href="/etc/highlight.css" />
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js"></script>
+                <script defer=""
+src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
 <script>document.addEventListener("DOMContentLoaded", function () {
  var mathElements = document.getElementsByClassName("math");
  var macros = [];
@@ -23,7 +24,8 @@
    });
 }}});
 </script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css" />
+<link rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css" />
         
         
     </head>
@@ -36,18 +38,20 @@
             <span class="meta-info" name=description>用来测试生成器是否正常的文档</span>
         </div>
         <pre><code class="repl-frame">(display table-of-contents)</code></pre><ul>
-<li><a href="#在第一个标题之后的内容应该不会被加入brief">在第一个标题之后的内容应该不会被加入brief</a></li>
-<li><a href="#对元素的测试">对元素的测试</a>
+<li><a href="#在第一个标题之后的内容应该不会被加入brief"
+id="toc-在第一个标题之后的内容应该不会被加入brief">在第一个标题之后的内容应该不会被加入brief</a></li>
+<li><a href="#对元素的测试" id="toc-对元素的测试">对元素的测试</a>
 <ul>
-<li><a href="#标题测试">标题测试</a>
+<li><a href="#标题测试" id="toc-标题测试">标题测试</a>
 <ul>
-<li><a href="#三级">三级…</a></li>
+<li><a href="#三级" id="toc-三级">三级…</a></li>
 </ul></li>
 </ul></li>
-<li><a href="#对页面的测试">对页面的测试</a></li>
+<li><a href="#对页面的测试" id="toc-对页面的测试">对页面的测试</a></li>
 </ul>
         <pre><code class="repl-frame">(display content)</code></pre>
-        <main><p>这是一个测试文档, 用来检测我的这个生成器<del>发育得正不正常</del>是否工作正常.</p>
+        <main><p>这是一个测试文档,
+用来检测我的这个生成器<del>发育得正不正常</del>是否工作正常.</p>
 <p>然后, 加个段落用来测试段落支持.</p>
 <p>另外, 虽然我大概不会这么干, 但是试一下列表:</p>
 <ul>
@@ -55,10 +59,12 @@
 <li>Second</li>
 <li>Third</li>
 </ul>
-<h1 id="在第一个标题之后的内容应该不会被加入brief">在第一个标题之后的内容应该不会被加入brief</h1>
+<h1
+id="在第一个标题之后的内容应该不会被加入brief">在第一个标题之后的内容应该不会被加入brief</h1>
 <p>加一段代码?( 以及<code>print(hello)</code>这样的行内代码.</p>
 <p>code <code>inside</code> same lang &gt;&lt;</p>
-<div class="sourceCode" id="cb1" style="--linenumber-len: 1;"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">// A hello world: Comment</span></span>
+<div class="sourceCode" id="cb1" style="--linenumber-len: 1;"><pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">// A hello world: Comment</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;cstdio&gt;</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span></span>
@@ -70,9 +76,11 @@
 <p><span class="math display">
 \begin{alignedat}{2}
 \because{}&amp;&amp; i^2 &amp;= 2\sum_{j=1}^i j - i \\
-\therefore{}&amp;&amp; \sum_{i=1}^n i^2 &amp;= 2\sum_{i=1}^n\sum{j=1}^i j - \sum_{i=1}^n i \\
+\therefore{}&amp;&amp; \sum_{i=1}^n i^2 &amp;= 2\sum_{i=1}^n\sum{j=1}^i
+j - \sum_{i=1}^n i \\
     &amp;&amp; &amp;= 2\sum_{i=1}^n i(n + 1 - i) - \sum_{i=1}^n i \\
-    &amp;&amp; &amp;= 2(n+1)\sum_{i=1}^n i - 2\sum_{i=1}^n i^2 - \sum_{i=1}^n i \\
+    &amp;&amp; &amp;= 2(n+1)\sum_{i=1}^n i - 2\sum_{i=1}^n i^2 -
+\sum_{i=1}^n i \\
 \therefore{}&amp;&amp; 3\sum_{i=1}^n i^2 &amp;= (2n+1)\sum_{i=1}^n i
 \end{alignedat}
 </span></p>
@@ -81,7 +89,8 @@
 <h3 id="三级">三级…</h3>
 <h4 id="四级">四级…</h4>
 <p><a href="https://example.com">链接</a></p>
-<p><strong>加粗</strong> <em>斜体</em> <strong><em>粗斜体</em></strong> <del>划去</del> 上标?<sup>嗯</sup></p>
+<p><strong>加粗</strong> <em>斜体</em> <strong><em>粗斜体</em></strong>
+<del>划去</del> 上标?<sup>嗯</sup></p>
 <p>然后… 试一下分割线的样子?(</p>
 <hr />
 <blockquote>

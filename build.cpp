@@ -1,6 +1,6 @@
 #if 0  // Self compile
 if [ `stat -c %Y $0` -lt `stat -c %Y build` ] ||
-    g++ -std=c++20 $0 -o build -lstdc++fs -fconcepts -g
+    g++ -std=c++2b $0 -o build -g
 then
     echo End compilation
     exec ./build $@
@@ -19,16 +19,6 @@ fi
 #include <functional>
 using std::string_literals::operator""s;
 namespace fs = std::filesystem;
-
-// Implement hash for fs::path
-namespace std
-{
-template<>
-struct hash<fs::path>
-{
-    size_t operator()(const fs::path &s) const noexcept { return fs::hash_value(s); }
-};
-}
 
 struct FileIO
 {

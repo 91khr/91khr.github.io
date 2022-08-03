@@ -2,7 +2,8 @@
 <html>
     <head>
         <meta charset="utf-8" />
-                        <title>大概是篇Vim入门教程(1): 基本操作 - Senioria的刺猬洞</title>
+                        <title>大概是篇Vim入门教程(1):
+基本操作 - Senioria的刺猬洞</title>
         <link rel="stylesheet" type="text/css" href="/etc/main.css" />
         <link rel="stylesheet" type="text/css" href="/etc/highlight.css" />
                 
@@ -15,130 +16,374 @@
         <div class="replized-content quoted-content">
             
             
-            <span class="meta-info" name=description>比如移动, 插入, 和模式切换之类的</span>
+            <span class="meta-info" name=description>比如移动, 插入,
+和模式切换之类的</span>
         </div>
         <pre><code class="repl-frame">(display table-of-contents)</code></pre><ul>
-<li><a href="#模式">模式</a></li>
-<li><a href="#普通和插入模式">普通和插入模式</a></li>
-<li><a href="#命令模式">命令模式</a></li>
-<li><a href="#文本对象和可视模式">文本对象和可视模式</a></li>
-<li><a href="#寄存器和宏">寄存器和宏</a>
+<li><a href="#模式" id="toc-模式">模式</a></li>
+<li><a href="#普通和插入模式"
+id="toc-普通和插入模式">普通和插入模式</a></li>
+<li><a href="#命令模式" id="toc-命令模式">命令模式</a></li>
+<li><a href="#文本对象和可视模式"
+id="toc-文本对象和可视模式">文本对象和可视模式</a></li>
+<li><a href="#寄存器和宏" id="toc-寄存器和宏">寄存器和宏</a>
 <ul>
-<li><a href="#宏">宏</a></li>
+<li><a href="#宏" id="toc-宏">宏</a></li>
 </ul></li>
-<li><a href="#更多">更多</a>
+<li><a href="#更多" id="toc-更多">更多</a>
 <ul>
-<li><a href="#normal模式命令">Normal模式命令</a></li>
-<li><a href="#命令">命令</a></li>
-<li><a href="#搜索替换">搜索/替换</a></li>
+<li><a href="#normal模式命令"
+id="toc-normal模式命令">Normal模式命令</a></li>
+<li><a href="#命令" id="toc-命令">命令</a></li>
+<li><a href="#搜索替换" id="toc-搜索替换">搜索/替换</a></li>
 </ul></li>
 </ul>
         <pre><code class="repl-frame">(display content)</code></pre>
-        <main><p>虽然其实已经有了很多很好的Vim教程了… 但是… senioria也来试着写写吧…</p>
+        <main><p>虽然其实已经有了很多很好的Vim教程了… 但是…
+senioria也来试着写写吧…</p>
 <p>首先, 放一些senioria当年入门的时候看的教程:</p>
 <ul>
-<li><code>vimtutor</code>, 这个是随Vim安装的一篇小教程脚本, 在*NIX系统上可以在shell中键入命令<code>vimtutor</code>启动, 在Windows上(大概)可以在Vim的安装目录下找到<code>vimtutor.bat</code>.</li>
-<li><a href="https://coolshell.cn/articles/5426.html">coolshell上的教程</a></li>
+<li><code>vimtutor</code>, 这个是随Vim安装的一篇小教程脚本,
+在*NIX系统上可以在shell中键入命令<code>vimtutor</code>启动,
+在Windows上(大概)可以在Vim的安装目录下找到<code>vimtutor.bat</code>.</li>
+<li><a
+href="https://coolshell.cn/articles/5426.html">coolshell上的教程</a></li>
 </ul>
-<p><a href="https://cn.bing.com/search?q=vim+cheat+sheet">vim速查表什么的大概到处都可以找到</a>, 所以senioria就不放了(((</p>
-<p>安装的话, 绝大多数*NIX发行版的软件源里应该都有gvim或者类似的包; Windows上, <a href="https://www.vim.org/download.php">官网</a>里有一个32位的版本, <a href="https://github.com/vim/vim-win32-installer/releases">github</a>上有64位的. 一般来说, 除非实在没办法下载, 否则都建议用64位版本: 32位版本无法链接64位的python, lua之类的dll<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>, 所以要不就也用它们的32位版本, 要不就装一个vim用的版本, 一个自己用的版本…</p>
-<p>不过, 因为Vim和其它编辑器有点不同, 所以, 建议在读到senioria说去Vim里试试之前不要在vim里乱玩免得失去信心(((</p>
+<p><a
+href="https://cn.bing.com/search?q=vim+cheat+sheet">vim速查表什么的大概到处都可以找到</a>,
+所以senioria就不放了(((</p>
+<p>安装的话, 绝大多数*NIX发行版的软件源里应该都有gvim或者类似的包;
+Windows上, <a
+href="https://www.vim.org/download.php">官网</a>里有一个32位的版本, <a
+href="https://github.com/vim/vim-win32-installer/releases">github</a>上有64位的.
+一般来说, 除非实在没办法下载, 否则都建议用64位版本:
+32位版本无法链接64位的python, lua之类的dll<a href="#fn1"
+class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>,
+所以要不就也用它们的32位版本, 要不就装一个vim用的版本,
+一个自己用的版本…</p>
+<p>不过, 因为Vim和其它编辑器有点不同, 所以,
+建议在读到senioria说去Vim里试试之前不要在vim里乱玩免得失去信心(((</p>
 <h1 id="模式">模式</h1>
-<p>首先, Vim的一个基本思想是”模式”的划分. 在介绍Vim的模式系统之前, senioria想先介绍一下其它编辑器的”模式”(比如, Windows自带的那个记事本). 在默认的情况下, <del>拿脸</del>在键盘上滚一下, 我们可以看到编辑框里出现了一些字符. 然后, 我们按着ctrl不放<del>比如放块砖在上面之类的</del>, 会发现, 我们滚键盘的时候不会输入字符, 而是会触发一堆奇怪的操作了. 这样, 我们可以根据有没有按住ctrl来把记事本分成两种模式: 没打开的时候是插入模式, 打开的时候是操作模式.</p>
-<p>在平时的编辑之中, 我们会发现, 我们很多时候其实并不是在单纯的打字/浏览, 而是把光标移到一个地方, 删/加一点东西, 然后继续移光标. 然后我们会发现, 加一些用来移动光标的快捷键会很方便. 加了一堆这样的快捷键之后, 可以注意到的是, 我们实际上会有相当长的一段时间是按着ctrl的; 这样, 一个相当自然的想法是, 给编辑器加上一个类似”ctrl是否按下”的状态, 在这两个状态之间切换可以用很少的一些快捷键来完成, 这样就可以把我们的左手从ctrl键上解放出来了. 这个状态系统, 就是Vim的模式系统的一个简略的雏形.</p>
+<p>首先, Vim的一个基本思想是”模式”的划分. 在介绍Vim的模式系统之前,
+senioria想先介绍一下其它编辑器的”模式”(比如, Windows自带的那个记事本).
+在默认的情况下, <del>拿脸</del>在键盘上滚一下,
+我们可以看到编辑框里出现了一些字符. 然后,
+我们按着ctrl不放<del>比如放块砖在上面之类的</del>, 会发现,
+我们滚键盘的时候不会输入字符, 而是会触发一堆奇怪的操作了. 这样,
+我们可以根据有没有按住ctrl来把记事本分成两种模式:
+没打开的时候是插入模式, 打开的时候是操作模式.</p>
+<p>在平时的编辑之中, 我们会发现,
+我们很多时候其实并不是在单纯的打字/浏览, 而是把光标移到一个地方,
+删/加一点东西, 然后继续移光标. 然后我们会发现,
+加一些用来移动光标的快捷键会很方便. 加了一堆这样的快捷键之后,
+可以注意到的是, 我们实际上会有相当长的一段时间是按着ctrl的; 这样,
+一个相当自然的想法是, 给编辑器加上一个类似”ctrl是否按下”的状态,
+在这两个状态之间切换可以用很少的一些快捷键来完成,
+这样就可以把我们的左手从ctrl键上解放出来了. 这个状态系统,
+就是Vim的模式系统的一个简略的雏形.</p>
 <h1 id="普通和插入模式">普通和插入模式</h1>
-<p>我们上面构造的”按下ctrl”和”松开ctrl”两个状态, 就正好<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>对应着Vim的普通(Normal)模式和插入(Insert)模式. 而普通模式下的那些单字母的快捷键, 我们可以称为”命令”(因为它就是在”命令”Vim做一点事情). 进入Vim的时候, 我们是处于普通模式下的. Senioria先列出普通模式下的一些命令:</p>
+<p>我们上面构造的”按下ctrl”和”松开ctrl”两个状态, 就正好<a href="#fn2"
+class="footnote-ref" id="fnref2"
+role="doc-noteref"><sup>2</sup></a>对应着Vim的普通(Normal)模式和插入(Insert)模式.
+而普通模式下的那些单字母的快捷键,
+我们可以称为”命令”(因为它就是在”命令”Vim做一点事情). 进入Vim的时候,
+我们是处于普通模式下的. Senioria先列出普通模式下的一些命令:</p>
 <ul>
-<li><p>移动: 用来动光标的, <code>j</code>, <code>k</code>, <code>h</code>, <code>l</code>分别对应着向下, 向上, 向左, 向右. 用这么几个键并没有什么特殊的原因: 这几个按键是我们在(QWERTY)键盘上最方便按到的几个键, 所以就被用来执行这些非常常用的操作了.</p></li>
+<li><p>移动: 用来动光标的, <code>j</code>, <code>k</code>,
+<code>h</code>, <code>l</code>分别对应着向下, 向上, 向左, 向右.
+用这么几个键并没有什么特殊的原因:
+这几个按键是我们在(QWERTY)键盘上最方便按到的几个键,
+所以就被用来执行这些非常常用的操作了.</p></li>
 <li><p>插入: 用来从Normal模式进入Insert模式瞎写东西的.</p>
 <ul>
 <li><code>i</code>, <code>a</code>: 在当前光标之前/之后插入;</li>
-<li><code>o</code>, <code>O</code>: 在当前行之下/之上创建新行并插入.</li>
+<li><code>o</code>, <code>O</code>:
+在当前行之下/之上创建新行并插入.</li>
 </ul></li>
 <li><p>删除: <code>x</code>用来删掉当前光标下的字符.</p></li>
-<li><p>在插入模式下, 按Esc来回到普通模式(其实更常用的按键是<code>C-[</code>( 顺便说一下, Vim/Emacs中表示快捷键(一般叫”键绑定”)的方法是这样的: 先列出这个键的修饰键(ctrl, shift, meta/alt之类的, <code>C</code>表示ctrl, <code>S</code>表示shift, <code>M</code>/<code>A</code>表示meta/alt), 然后再写出这个键本身. 这些要一起按的键之间用<code>-</code>连接, 如果要依次按, 就在两个这样的键序列之间加上空格))</p>
-<p>一般来说, 要从其它模式回到普通模式, 按多几次Esc/<code>C-[</code>总是没错的.(</p></li>
+<li><p>在插入模式下,
+按Esc来回到普通模式(其实更常用的按键是<code>C-[</code>( 顺便说一下,
+Vim/Emacs中表示快捷键(一般叫”键绑定”)的方法是这样的:
+先列出这个键的修饰键(ctrl, shift, meta/alt之类的,
+<code>C</code>表示ctrl, <code>S</code>表示shift,
+<code>M</code>/<code>A</code>表示meta/alt), 然后再写出这个键本身.
+这些要一起按的键之间用<code>-</code>连接, 如果要依次按,
+就在两个这样的键序列之间加上空格))</p>
+<p>一般来说, 要从其它模式回到普通模式,
+按多几次Esc/<code>C-[</code>总是没错的.(</p></li>
 </ul>
 <h1 id="命令模式">命令模式</h1>
-<p>当然Vim的命令不止这点, 但是一开始的话这点大概已经算很多了(而且也够用了()); 用多了这些单字符的命令之后, 我们会发现, 一些操作用这些简单的命令来表示并不够, 比如字符串替换, 文件的打开和另存为之类的. 自然, 我们可以设计一些键绑定来完成这些, 但是在Vim的前身Vi被发明出来的时候, 世界上并没有弹出窗口这种设计, 所以我们必须找到一种方法来直观地完成这些交互式的操作.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
-<p>让我们来插播一些历史<del>(虽然能看到这篇文章的大概都了解这些)</del>: 现在被人们认为”理所当然”的GUI, 实际上并不是一开始就存在的, 在Vim/Emacs那个年代, 操作系统的”界面”只是shell(shell这个词”壳”的意思本来就是用来指”界面”的). 所以, 我们上面问题的解决方案就很明显了: 加入一个命令模式, 用类似shell的命令来执行这些不好用单字母命令表示的操作.</p>
-<p>进入命令模式的命令是<code>:</code>(<code>S-;</code>), 光标会移到Vim窗口的下端用于输入命令, 这个冒号也会随着命令一起显示. 这里是一些命令模式下常用的命令(列出命令的时候, 一般的习惯是连冒号一起列出, 这样就不会与普通模式下的命令混淆):</p>
+<p>当然Vim的命令不止这点,
+但是一开始的话这点大概已经算很多了(而且也够用了());
+用多了这些单字符的命令之后, 我们会发现,
+一些操作用这些简单的命令来表示并不够, 比如字符串替换,
+文件的打开和另存为之类的. 自然, 我们可以设计一些键绑定来完成这些,
+但是在Vim的前身Vi被发明出来的时候, 世界上并没有弹出窗口这种设计,
+所以我们必须找到一种方法来直观地完成这些交互式的操作.<a href="#fn3"
+class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<p>让我们来插播一些历史<del>(虽然能看到这篇文章的大概都了解这些)</del>:
+现在被人们认为”理所当然”的GUI, 实际上并不是一开始就存在的,
+在Vim/Emacs那个年代,
+操作系统的”界面”只是shell(shell这个词”壳”的意思本来就是用来指”界面”的).
+所以, 我们上面问题的解决方案就很明显了: 加入一个命令模式,
+用类似shell的命令来执行这些不好用单字母命令表示的操作.</p>
+<p>进入命令模式的命令是<code>:</code>(<code>S-;</code>),
+光标会移到Vim窗口的下端用于输入命令, 这个冒号也会随着命令一起显示.
+这里是一些命令模式下常用的命令(列出命令的时候,
+一般的习惯是连冒号一起列出, 这样就不会与普通模式下的命令混淆):</p>
 <ul>
-<li><p><code>:w file</code>, 其中<code>file</code>是一个文件名. 将当前文件另存为<code>file</code>, 如果还没有打开文件, 那就在保存之后也打开<code>file</code>(或者说, 将当前文件设为<code>file</code>). <code>file</code>也可以不写, 这时候就只是保存当前文件.</p></li>
-<li><p><code>:e file</code>, 其中<code>file</code>是一个文件名. 打开<code>file</code>, 如果不加<code>file</code>, 重新打开当前文件.</p></li>
-<li><p><code>:q</code>: 退出Vim; <code>:wq</code>保存并退出Vim; <code>:q!</code>强行退出(不保存);</p>
-<p>(不要看<code>:wq</code>似乎是<code>:w</code>和<code>:q</code>的组合就以为Vim的命令可以这么组合了: 它只是Vim给这两个命令连用加的糖而已, <code>:qw</code>和<code>:qwq</code>就都不能用())</p></li>
+<li><p><code>:w file</code>, 其中<code>file</code>是一个文件名.
+将当前文件另存为<code>file</code>, 如果还没有打开文件,
+那就在保存之后也打开<code>file</code>(或者说,
+将当前文件设为<code>file</code>). <code>file</code>也可以不写,
+这时候就只是保存当前文件.</p></li>
+<li><p><code>:e file</code>, 其中<code>file</code>是一个文件名.
+打开<code>file</code>, 如果不加<code>file</code>,
+重新打开当前文件.</p></li>
+<li><p><code>:q</code>: 退出Vim; <code>:wq</code>保存并退出Vim;
+<code>:q!</code>强行退出(不保存);</p>
+<p>(不要看<code>:wq</code>似乎是<code>:w</code>和<code>:q</code>的组合就以为Vim的命令可以这么组合了:
+它只是Vim给这两个命令连用加的糖而已,
+<code>:qw</code>和<code>:qwq</code>就都不能用())</p></li>
 </ul>
 <p>替换的命令稍微有点复杂… 所以… 为什么不自己查文档呢(bushi(((</p>
-<p>要从命令模式回到插入模式, 除了按Esc之外, 也可以把那行命令连着前面的冒号整个删光, 虽然听起来很麻烦, 但是在只按了一个冒号的时候, 至少退格比Esc近了很多, 不是吗:)</p>
+<p>要从命令模式回到插入模式, 除了按Esc之外,
+也可以把那行命令连着前面的冒号整个删光, 虽然听起来很麻烦,
+但是在只按了一个冒号的时候, 至少退格比Esc近了很多, 不是吗:)</p>
 <h1 id="文本对象和可视模式">文本对象和可视模式</h1>
-<p>我们一开始用”快捷键”来引入模式的时候, 是说过要删除操作的. 一件可以注意到的事情是, 文本本身并不是”字符的集合”, 很多情况下, 字符都会以一定的逻辑组合成一个”对象”, 比如, 自然语言文本里的词, 句子, 段落; 程序中的定义, 语句块. 因为是出现在文本中的, 我们称这些对象为文本对象(((; Vim中的删除, 替换等操作, 正是基于这些对象进行的. 首先介绍一些命令以便进行下面的讨论:</p>
+<p>我们一开始用”快捷键”来引入模式的时候, 是说过要删除操作的.
+一件可以注意到的事情是, 文本本身并不是”字符的集合”, 很多情况下,
+字符都会以一定的逻辑组合成一个”对象”, 比如, 自然语言文本里的词, 句子,
+段落; 程序中的定义, 语句块. 因为是出现在文本中的,
+我们称这些对象为文本对象(((; Vim中的删除, 替换等操作,
+正是基于这些对象进行的. 首先介绍一些命令以便进行下面的讨论:</p>
 <ul>
-<li><p>删除: <code>d</code>, <code>c</code>, 删除一个文本对象, 区别在于<code>d</code>删除一个文本对象之后仍然留在普通模式, 而<code>c</code>删除之后会进入插入模式. (所以后者一般被叫做修改)</p></li>
-<li><p>复制: <code>y</code>, 将一个文本对象复制到Vim自己的剪贴板, <strong>与系统的剪贴板不通用</strong>. (其实删除命令删除的文本也会进入Vim的剪贴板, 但是<code>y</code>是不删除内容的)</p></li>
-<li><p>粘贴: <code>p</code>, 将(Vim的)剪贴板里的内容粘贴到光标下.</p></li>
+<li><p>删除: <code>d</code>, <code>c</code>, 删除一个文本对象,
+区别在于<code>d</code>删除一个文本对象之后仍然留在普通模式,
+而<code>c</code>删除之后会进入插入模式.
+(所以后者一般被叫做修改)</p></li>
+<li><p>复制: <code>y</code>, 将一个文本对象复制到Vim自己的剪贴板,
+<strong>与系统的剪贴板不通用</strong>.
+(其实删除命令删除的文本也会进入Vim的剪贴板,
+但是<code>y</code>是不删除内容的)</p></li>
+<li><p>粘贴: <code>p</code>,
+将(Vim的)剪贴板里的内容粘贴到光标下.</p></li>
 <li><p>一些移动命令:</p>
 <ul>
-<li><code>f</code>, <code>F</code>: 后面加一个字符, 向行尾/行首方向找到, 并移动到这个字符, 如果没有找到, 则不移动.</li>
-<li><code>w</code>, <code>b</code>: 移动到下一个单词/前一个单词(<code>b</code>的规则要稍微复杂一点: 如果光标不在当前单词的开头, 则移动到开头; 如果在, 则移动到上一个单词的开头) (因为这里的单词是按照标点/空格 (实际上是由一个配置中的选项控制, 反正都做不好中文分词就是了) 来划分的, 所以在中文环境里, 这个命令实际上会按照分句来跳转)</li>
+<li><code>f</code>, <code>F</code>: 后面加一个字符, 向行尾/行首方向找到,
+并移动到这个字符, 如果没有找到, 则不移动.</li>
+<li><code>w</code>, <code>b</code>:
+移动到下一个单词/前一个单词(<code>b</code>的规则要稍微复杂一点:
+如果光标不在当前单词的开头, 则移动到开头; 如果在,
+则移动到上一个单词的开头) (因为这里的单词是按照标点/空格
+(实际上是由一个配置中的选项控制, 反正都做不好中文分词就是了) 来划分的,
+所以在中文环境里, 这个命令实际上会按照分句来跳转)</li>
 </ul></li>
 </ul>
-<p>实际上, Vim中的每个移动都可以被视作一个文本对象(因为实际上并不是): <code>dl</code>会删除当前光标下的字符, <code>df)</code>会删除从当前光标下的字符到<code>)</code>之间(包括<code>)</code>)的所有字符. 要解释这一行为, 首先要知道, Vim中的移动操作是有包含和不包含两种(inclusive &amp; exclusive)的, 对于包含的移动, 光标开始移动和最后移动到的位置都包含在了文本对象中; 而对于不包含的移动, 最靠后(i.e. 靠近文件结尾)的那个字符是不包含在文本对象中的.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> <code>h</code>, <code>l</code>就属于不包含的移动, 而<code>f</code>是包含的<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>. 一般来说, 向后跳转的命令是包含的, 而向前跳转的命令是不包含的. 操纵整行的命令都包含了它们开始和结束的行.</p>
-<p>然后是一些真正的文本对象(i.e. 在Vim的文档中也被定义成了文本对象). 这些文本对象都以<code>i</code>或<code>a</code>开头, 用以提示这个操作的范围(其实这种说法并不合适: 真正的”对象”是<code>i</code>或<code>a</code>之后的那个字符所表示的, <code>i</code>和<code>a</code>只是用来表示”这是个文本对象”). <code>i</code>表示对象的”内部”, 而<code>a</code>表示整个对象(inner和”an”, 这是文档里的说法):</p>
+<p>实际上, Vim中的每个移动都可以被视作一个文本对象(因为实际上并不是):
+<code>dl</code>会删除当前光标下的字符,
+<code>df)</code>会删除从当前光标下的字符到<code>)</code>之间(包括<code>)</code>)的所有字符.
+要解释这一行为, 首先要知道,
+Vim中的移动操作是有包含和不包含两种(inclusive &amp; exclusive)的,
+对于包含的移动, 光标开始移动和最后移动到的位置都包含在了文本对象中;
+而对于不包含的移动,
+最靠后(i.e. 靠近文件结尾)的那个字符是不包含在文本对象中的.<a href="#fn4"
+class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>
+<code>h</code>, <code>l</code>就属于不包含的移动,
+而<code>f</code>是包含的<a href="#fn5" class="footnote-ref" id="fnref5"
+role="doc-noteref"><sup>5</sup></a>. 一般来说, 向后跳转的命令是包含的,
+而向前跳转的命令是不包含的.
+操纵整行的命令都包含了它们开始和结束的行.</p>
+<p>然后是一些真正的文本对象(i.e. 在Vim的文档中也被定义成了文本对象).
+这些文本对象都以<code>i</code>或<code>a</code>开头,
+用以提示这个操作的范围(其实这种说法并不合适:
+真正的”对象”是<code>i</code>或<code>a</code>之后的那个字符所表示的,
+<code>i</code>和<code>a</code>只是用来表示”这是个文本对象”).
+<code>i</code>表示对象的”内部”,
+而<code>a</code>表示整个对象(inner和”an”, 这是文档里的说法):</p>
 <ul>
-<li><p><code>i(</code>, <code>i)</code>, <code>a[</code>, <code>a&gt;</code>之类的: 对所有的括号式结构都适用(当然rust closure的<code>|x|</code>不行), 表示最近的一层括号扩住的内容/包括括号在内的内容. 开括号(<code>(</code>, <code>[</code>之类)和闭括号(<code>)</code>, <code>]</code>之类)的作用是相同的.</p>
-<p>这是一个例子:对于<code>(hello(world)hi)</code>, 假设当前光标在<code>world</code>里的字母<code>o</code>上, 那么<code>da(</code>会删除<code>(world)</code>, 但<code>di(</code>只会删除<code>world</code>; 如果光标在<code>hi</code>的字母<code>i</code>上, 那么<code>da(</code>会删除这整个字符串(但不会删掉更多东西), <code>di(</code>会删剩两边的<code>()</code>.</p></li>
-<li><p><code>iw</code>, <code>aw</code>: 表示当前的单词(同样, 在中文语境下大多其实都指的是当前分句).<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a></p></li>
+<li><p><code>i(</code>, <code>i)</code>, <code>a[</code>,
+<code>a&gt;</code>之类的: 对所有的括号式结构都适用(当然rust
+closure的<code>|x|</code>不行),
+表示最近的一层括号扩住的内容/包括括号在内的内容. 开括号(<code>(</code>,
+<code>[</code>之类)和闭括号(<code>)</code>,
+<code>]</code>之类)的作用是相同的.</p>
+<p>这是一个例子:对于<code>(hello(world)hi)</code>,
+假设当前光标在<code>world</code>里的字母<code>o</code>上,
+那么<code>da(</code>会删除<code>(world)</code>,
+但<code>di(</code>只会删除<code>world</code>;
+如果光标在<code>hi</code>的字母<code>i</code>上,
+那么<code>da(</code>会删除这整个字符串(但不会删掉更多东西),
+<code>di(</code>会删剩两边的<code>()</code>.</p></li>
+<li><p><code>iw</code>, <code>aw</code>: 表示当前的单词(同样,
+在中文语境下大多其实都指的是当前分句).<a href="#fn6"
+class="footnote-ref" id="fnref6"
+role="doc-noteref"><sup>6</sup></a></p></li>
 </ul>
-<p>很明显, 只有这些文本对象是肯定不够的: 我们需要有能够选中更复杂的文本的能力. 诚然, 这可以通过插件添加更多的文本对象<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>来实现; 但是我们总是会有选中各种奇形怪状的文本的需求的. 这时候, 我们就需要一个能够动态根据自己的需要来决定文本对象的模式了. 在Vim里, 这个模式叫可视模式(当然如果愿意的话, 叫选择模式似乎也没有什么不行的), 进入的命令是<code>v</code>. 因为在可视模式里我们已经有了一个文本对象了(就是当前选中的文本), 所以<code>c</code>, <code>d</code>这样需要一个对象的命令会直接执行在选中的文本上, 不需要任何额外参数.</p>
+<p>很明显, 只有这些文本对象是肯定不够的:
+我们需要有能够选中更复杂的文本的能力. 诚然,
+这可以通过插件添加更多的文本对象<a href="#fn7" class="footnote-ref"
+id="fnref7" role="doc-noteref"><sup>7</sup></a>来实现;
+但是我们总是会有选中各种奇形怪状的文本的需求的. 这时候,
+我们就需要一个能够动态根据自己的需要来决定文本对象的模式了. 在Vim里,
+这个模式叫可视模式(当然如果愿意的话, 叫选择模式似乎也没有什么不行的),
+进入的命令是<code>v</code>.
+因为在可视模式里我们已经有了一个文本对象了(就是当前选中的文本),
+所以<code>c</code>,
+<code>d</code>这样需要一个对象的命令会直接执行在选中的文本上,
+不需要任何额外参数.</p>
 <h1 id="寄存器和宏">寄存器和宏</h1>
-<p>我们上面说过, Vim的复制命令会复制到Vim自己的剪贴板而不是系统的剪贴板. 这么做大概是有些历史原因的: Vi的年代里还不存在系统剪贴板这回事, 毕竟在shell里我们可以用变量/文件来保存一段文本, 然后再在任何地方使用它们. 这确实不方便, 但是要是命令行界面确实做什么都能比GUI方便的话, 为什么还会有那么多GUI下的生产力软件呢:) 不好揣测Vi作者的心思, 但是Vi里于是有了一套类似shell变量的寄存器系统.<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a> 有些命令, 比如<code>y</code>, <code>d</code>, 可以用默认寄存器, 也可以在命令之前指定<code>"x</code>(其中<code>x</code>是一个单键盘按键对应的字符)来指定一个寄存器.<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a> 寄存器有这么几类(同样, 寄存器名之前加上了<code>"</code>来与命令区分):</p>
+<p>我们上面说过, Vim的复制命令会复制到Vim自己的剪贴板而不是系统的剪贴板.
+这么做大概是有些历史原因的: Vi的年代里还不存在系统剪贴板这回事,
+毕竟在shell里我们可以用变量/文件来保存一段文本,
+然后再在任何地方使用它们. 这确实不方便,
+但是要是命令行界面确实做什么都能比GUI方便的话,
+为什么还会有那么多GUI下的生产力软件呢:) 不好揣测Vi作者的心思,
+但是Vi里于是有了一套类似shell变量的寄存器系统.<a href="#fn8"
+class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>
+有些命令, 比如<code>y</code>, <code>d</code>, 可以用默认寄存器,
+也可以在命令之前指定<code>"x</code>(其中<code>x</code>是一个单键盘按键对应的字符)来指定一个寄存器.<a
+href="#fn9" class="footnote-ref" id="fnref9"
+role="doc-noteref"><sup>9</sup></a> 寄存器有这么几类(同样,
+寄存器名之前加上了<code>"</code>来与命令区分):</p>
 <ul>
-<li><p><code>""</code>: 默认寄存器; <code>"+</code>: 系统剪贴板; <code>"*</code>: 系统选区(就是当前选中的内容).</p></li>
-<li><p><code>"1</code>到<code>"9</code>: 由新(<code>"1</code>)到旧(<code>"9</code>)保存了最近删除的内容(如果没有指定其它寄存器). 每次删除文本之后, 原有寄存器里的内容会被移到”下一个”寄存器, 而<code>"9</code>里的内容被删除. <code>"0</code>保存了最近复制的内容.</p></li>
-<li><p><code>"a"</code>到<code>"z</code>: 这些寄存器没有任何特殊意义, 可以自由使用. 对于这些寄存器, 大小写是有意义的: 小写时覆盖寄存器里原有的内容, 而大写时会添加到原有的内容之后.</p></li>
+<li><p><code>""</code>: 默认寄存器; <code>"+</code>: 系统剪贴板;
+<code>"*</code>: 系统选区(就是当前选中的内容).</p></li>
+<li><p><code>"1</code>到<code>"9</code>:
+由新(<code>"1</code>)到旧(<code>"9</code>)保存了最近删除的内容(如果没有指定其它寄存器).
+每次删除文本之后, 原有寄存器里的内容会被移到”下一个”寄存器,
+而<code>"9</code>里的内容被删除.
+<code>"0</code>保存了最近复制的内容.</p></li>
+<li><p><code>"a"</code>到<code>"z</code>: 这些寄存器没有任何特殊意义,
+可以自由使用. 对于这些寄存器, 大小写是有意义的:
+小写时覆盖寄存器里原有的内容, 而大写时会添加到原有的内容之后.</p></li>
 </ul>
 <h2 id="宏">宏</h2>
-<p>我们总是会遇到一些需要机械重复的场景, 这时候, 一个能够自动帮我们敲键盘的机器人就显得很有用了. 而键盘宏就是Vim自带的这么个机器人.</p>
-<p>录制宏的命令是<code>qx</code>, 其中<code>x</code>是一个寄存器; 停止录制的命令是<code>q</code>. 自然, 录制到<code>"8</code>这样的寄存器里虽然也可以, 但意义似乎并不是很大… 如果用<code>"ap</code>粘贴出一个录制了宏的寄存器, 我们会发现录制宏其实只是把我们的键盘操作放到了寄存器里而已. 因此, 我们可以用<code>qA</code>这样的方式, 在一个已经录制好的宏里加入一些内容. 也可以<code>"ap</code>来查看和编辑一个宏, 并且<code>"ad</code>来把它保存回去. (顺便说一句, <code>:reg</code>命令可以查看寄存器)</p>
-<p>执行宏的命令是<code>@x</code>, 其中<code>x</code>是一个寄存器 <del>(这种时候其实按着shift不放也没事, 并且会更方便一点)</del>. 如果要执行上一个执行的宏的话, 还有一个更方便的糖: <code>@@</code>.</p>
+<p>我们总是会遇到一些需要机械重复的场景, 这时候,
+一个能够自动帮我们敲键盘的机器人就显得很有用了.
+而键盘宏就是Vim自带的这么个机器人.</p>
+<p>录制宏的命令是<code>qx</code>, 其中<code>x</code>是一个寄存器;
+停止录制的命令是<code>q</code>. 自然,
+录制到<code>"8</code>这样的寄存器里虽然也可以, 但意义似乎并不是很大…
+如果用<code>"ap</code>粘贴出一个录制了宏的寄存器,
+我们会发现录制宏其实只是把我们的键盘操作放到了寄存器里而已. 因此,
+我们可以用<code>qA</code>这样的方式, 在一个已经录制好的宏里加入一些内容.
+也可以<code>"ap</code>来查看和编辑一个宏,
+并且<code>"ad</code>来把它保存回去. (顺便说一句,
+<code>:reg</code>命令可以查看寄存器)</p>
+<p>执行宏的命令是<code>@x</code>, 其中<code>x</code>是一个寄存器
+<del>(这种时候其实按着shift不放也没事, 并且会更方便一点)</del>.
+如果要执行上一个执行的宏的话, 还有一个更方便的糖: <code>@@</code>.</p>
 <h1 id="更多">更多</h1>
-<p>为了叙述方便, Senioria在上面没有列出很多东西, 这里列一下. 正如很多文章里都说的, Vim的很多东西都要背呢&gt;&lt;</p>
+<p>为了叙述方便, Senioria在上面没有列出很多东西, 这里列一下.
+正如很多文章里都说的, Vim的很多东西都要背呢&gt;&lt;</p>
 <h2 id="normal模式命令">Normal模式命令</h2>
 <p><code>s</code>用于替换当前光标下的字符(等价于<code>cl</code>).</p>
-<p><code>r</code>也是替换当前光标下的字符, 但是不会进入插入模式. 相应的, <code>R</code>会进入一个替换(replace)模式, 键入的每一个字符都会替换之前已有的一个字符 (就像Windows下按了insert键之后的编辑器一样: 到了行尾的话就在行尾之后插入, 按回车开始下一行的话也不会替换下一行).</p>
-<p><code>gg</code>跳转到文件开头; <code>G</code>跳转到文件末尾; <code>nG</code>, 其中<code>n</code>是一个数字, 跳转到第<code>n</code>行. (不过更常用的大概是<code>:n</code>(见下文))</p>
-<p><code>0</code>跳转到当前行的开头, 是不包含的; <code>$</code>跳转到当前行的结尾, 是包含的. (因为<code>0</code>不会向后跳转, <code>$</code>不会向前跳转)</p>
-<p>很多命令都可以用重复命令自身的字符(如<code>cc</code>, <code>dd</code>)来操作整行, 比如<code>dd</code>是删掉整行(包括了换行符); 常用的这些命令大概有<code>cc</code>, <code>dd</code>, <code>yy</code>. 对于这些命令, 它们的大写版本(比如<code>C</code>, <code>D</code>)是从当前位置操作到当前行的结尾. (对于<code>Y</code>, 行末的换行符也会被复制)</p>
-<p><code>{</code>和<code>}</code>可以跳到上一段/下一段, 这里的”段”一般是按照空行来分隔的.</p>
-<p><code>I</code>, <code>A</code>可以在当前行的第一个非空白字符之前/最后一个非空白字符之后插入.</p>
-<p><code>q:</code>可以像编辑普通文件一样编辑命令及其历史. 按enter会(且仅会)执行当前这一行的命令.</p>
-<p><code>%</code>可以跳转到匹配的另一个括号(如果光标不在括号上, 就跳到最近的回括号(大概))</p>
+<p><code>r</code>也是替换当前光标下的字符, 但是不会进入插入模式. 相应的,
+<code>R</code>会进入一个替换(replace)模式,
+键入的每一个字符都会替换之前已有的一个字符
+(就像Windows下按了insert键之后的编辑器一样:
+到了行尾的话就在行尾之后插入, 按回车开始下一行的话也不会替换下一行).</p>
+<p><code>gg</code>跳转到文件开头; <code>G</code>跳转到文件末尾;
+<code>nG</code>, 其中<code>n</code>是一个数字, 跳转到第<code>n</code>行.
+(不过更常用的大概是<code>:n</code>(见下文))</p>
+<p><code>0</code>跳转到当前行的开头, 是不包含的;
+<code>$</code>跳转到当前行的结尾, 是包含的.
+(因为<code>0</code>不会向后跳转, <code>$</code>不会向前跳转)</p>
+<p>很多命令都可以用重复命令自身的字符(如<code>cc</code>,
+<code>dd</code>)来操作整行, 比如<code>dd</code>是删掉整行(包括了换行符);
+常用的这些命令大概有<code>cc</code>, <code>dd</code>, <code>yy</code>.
+对于这些命令, 它们的大写版本(比如<code>C</code>,
+<code>D</code>)是从当前位置操作到当前行的结尾. (对于<code>Y</code>,
+行末的换行符也会被复制)</p>
+<p><code>{</code>和<code>}</code>可以跳到上一段/下一段,
+这里的”段”一般是按照空行来分隔的.</p>
+<p><code>I</code>,
+<code>A</code>可以在当前行的第一个非空白字符之前/最后一个非空白字符之后插入.</p>
+<p><code>q:</code>可以像编辑普通文件一样编辑命令及其历史.
+按enter会(且仅会)执行当前这一行的命令.</p>
+<p><code>%</code>可以跳转到匹配的另一个括号(如果光标不在括号上,
+就跳到最近的回括号(大概))</p>
 <hr />
-<p>命令前还可以加一个数字<code>n</code>来表示重复这个命令<code>n</code>次, 一个例外是<code>nG</code>( 对于插入命令, “重复”就是把插入的内容插入<code>n</code>遍((( (实际上这个功能用来画分割线还蛮好用的())</p>
+<p>命令前还可以加一个数字<code>n</code>来表示重复这个命令<code>n</code>次,
+一个例外是<code>nG</code>( 对于插入命令,
+“重复”就是把插入的内容插入<code>n</code>遍(((
+(实际上这个功能用来画分割线还蛮好用的())</p>
 <h2 id="命令">命令</h2>
-<p><code>:n</code>, 其中<code>n</code>是一个行号, 会跳转到这一行.(和<code>nG</code>)一样</p>
-<p><code>:help topic</code>, <code>:h topic</code>, 其中topic是一个… 帮助话题, 用来查询帮助, 可以用tab来补全. (不带参数的话, 也会打开一个默认的帮助页面)</p>
-<p><code>:!shell</code>, 其中shell是一个shell命令, 用来执行shell命令. 需要注意的是Vim会对其中的一些字符转义. (其实很多时候不如直接用<code>:term</code>开一个shell好用)</p>
-<p><code>:cd</code>, <code>:pwd</code>切换和输出当前工作目录, 和shell里的用法一样.</p>
+<p><code>:n</code>, 其中<code>n</code>是一个行号,
+会跳转到这一行.(和<code>nG</code>)一样</p>
+<p><code>:help topic</code>, <code>:h topic</code>, 其中topic是一个…
+帮助话题, 用来查询帮助, 可以用tab来补全. (不带参数的话,
+也会打开一个默认的帮助页面)</p>
+<p><code>:!shell</code>, 其中shell是一个shell命令, 用来执行shell命令.
+需要注意的是Vim会对其中的一些字符转义.
+(其实很多时候不如直接用<code>:term</code>开一个shell好用)</p>
+<p><code>:cd</code>, <code>:pwd</code>切换和输出当前工作目录,
+和shell里的用法一样.</p>
 <h2 id="搜索替换">搜索/替换</h2>
-<p>Vim的所有搜索/替换几乎都是默认使用正则表达式的. 正则表达式的语法… 大概还算平凡, 可以用<code>:help regexp</code>来查看.</p>
-<p>用于搜索的命令是<code>/</code>, 会进入命令模式, <code>/</code>之后的字符都是搜索正则, 不过<code>/</code>这个字符本身要转义: Vim提供了一些控制选项, 可以用<code>/exp/opt</code>(其中<code>exp</code>是正则, <code>opt</code>是选项)来控制. <code>?</code>命令基本类似, 不过是向前搜索. 如果只是<code>/</code>或者<code>?</code>, 那么会使用和上次相同的正则. 可以用<code>n</code>和<code>N</code>命令来快速向后(方向相同)/向前(方向相反)重复上次的搜索. 类似于<code>q:</code>, 也可以用<code>q/</code>和<code>q?</code>来像操作普通文件一样操作搜索历史, 这两个命令共享同一个历史记录.</p>
-<p>替换的命令是<code>:s</code>(完整的命令名称是<code>:substitute</code>), 语法是<code>:s/reg/replace/opt</code>, 其中<code>reg</code>是搜索的正则, <code>replace</code>是要替换成的文本, <code>opt</code>是一些选项. 默认情况下, <code>:s</code>只会在当前行执行替换, 并且只会替换第一个搜索结果; 可以用<code>g</code>选项来替换所有搜索结果, 用可视模式选择一些行之后按<code>:s</code>可以在这些行上执行替换. 多说一句: 选择一些行之后再按<code>:</code>, 命令行里会出现<code>:'&lt;,'&gt;</code>而非<code>:</code>, 这是Vi的range语法, 用于在某个范围里执行一个命令, <code>'&lt;</code>和<code>'&gt;</code>表示可视模式开始和结束的行, <code>,</code>是范围下界和上界的分隔符, 可以用行号来代替它们, 用<code>%</code>表示整个文件.</p>
-<p>进一步的, 替换中还有另一些正则细节可以用: <code>\(</code>和<code>\)</code>在正则表达式里被用作匹配的子表达式的选择 (i.e. 把括号里括住的表达式匹配到的内容保存为一个”匹配”以后使用) (除了Vim正则之外还有另一些其它正则也一样), 在只有查找的情况下, 这个功能比较少用, 但是在替换的情况下, 可以在替换文本里用<code>\n</code>, 其中<code>n</code>是一个数字, 来引用第<code>n</code>个匹配.</p>
+<p>Vim的所有搜索/替换几乎都是默认使用正则表达式的. 正则表达式的语法…
+大概还算平凡, 可以用<code>:help regexp</code>来查看.</p>
+<p>用于搜索的命令是<code>/</code>, 会进入命令模式,
+<code>/</code>之后的字符都是搜索正则,
+不过<code>/</code>这个字符本身要转义: Vim提供了一些控制选项,
+可以用<code>/exp/opt</code>(其中<code>exp</code>是正则,
+<code>opt</code>是选项)来控制. <code>?</code>命令基本类似,
+不过是向前搜索. 如果只是<code>/</code>或者<code>?</code>,
+那么会使用和上次相同的正则.
+可以用<code>n</code>和<code>N</code>命令来快速向后(方向相同)/向前(方向相反)重复上次的搜索.
+类似于<code>q:</code>,
+也可以用<code>q/</code>和<code>q?</code>来像操作普通文件一样操作搜索历史,
+这两个命令共享同一个历史记录.</p>
+<p>替换的命令是<code>:s</code>(完整的命令名称是<code>:substitute</code>),
+语法是<code>:s/reg/replace/opt</code>, 其中<code>reg</code>是搜索的正则,
+<code>replace</code>是要替换成的文本, <code>opt</code>是一些选项.
+默认情况下, <code>:s</code>只会在当前行执行替换,
+并且只会替换第一个搜索结果; 可以用<code>g</code>选项来替换所有搜索结果,
+用可视模式选择一些行之后按<code>:s</code>可以在这些行上执行替换.
+多说一句: 选择一些行之后再按<code>:</code>,
+命令行里会出现<code>:'&lt;,'&gt;</code>而非<code>:</code>,
+这是Vi的range语法, 用于在某个范围里执行一个命令,
+<code>'&lt;</code>和<code>'&gt;</code>表示可视模式开始和结束的行,
+<code>,</code>是范围下界和上界的分隔符, 可以用行号来代替它们,
+用<code>%</code>表示整个文件.</p>
+<p>进一步的, 替换中还有另一些正则细节可以用:
+<code>\(</code>和<code>\)</code>在正则表达式里被用作匹配的子表达式的选择
+(i.e. 把括号里括住的表达式匹配到的内容保存为一个”匹配”以后使用)
+(除了Vim正则之外还有另一些其它正则也一样), 在只有查找的情况下,
+这个功能比较少用, 但是在替换的情况下, 可以在替换文本里用<code>\n</code>,
+其中<code>n</code>是一个数字, 来引用第<code>n</code>个匹配.</p>
 <p>下一篇肯定会有的!</p>
-<section class="footnotes" role="doc-endnotes">
+<section class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1" role="doc-endnote"><p>事实上是无法链接所有任何64位dll, 这里只是举了两个例子.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2" role="doc-endnote"><p>唔好吧, 大概只能算差不多(((<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3" role="doc-endnote"><p>事实上, Vi本身的前身是一个基于命令的编辑器Ex(和dos中的editline(似乎?)很像), 所以准确来说, Vi中的命令不是被”引入”的, 而是因为兼容原因不得不存在的.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4" role="doc-endnote"><p>(翻译文档(((<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn5" role="doc-endnote"><p>与此同时, 一个看起来有点迷惑但其实不难理解的事情是, <code>F</code>是不包含的<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn6" role="doc-endnote"><p>(其实只是为了凑”一些”才介绍这个的(((<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn7" role="doc-endnote"><p>当然实际上Vim似乎不支持添加文本对象… 但是通过operation-pending模式的键绑定模拟的和真正添加似乎并没有什么区别.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn8" role="doc-endnote"><p>自然只是类似: shell支持的变量数目当然远大于26个, 但是一般人也不会同时想要贴26个内容/录26个宏不是(<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn9" role="doc-endnote"><p>事实上, 指定寄存器这种操作对任何命令都是可以的, 但是对其它命令没什么意义<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1" role="doc-endnote"><p>事实上是无法链接所有任何64位dll,
+这里只是举了两个例子.<a href="#fnref1" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p>唔好吧, 大概只能算差不多(((<a
+href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3" role="doc-endnote"><p>事实上,
+Vi本身的前身是一个基于命令的编辑器Ex(和dos中的editline(似乎?)很像),
+所以准确来说, Vi中的命令不是被”引入”的, 而是因为兼容原因不得不存在的.<a
+href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4" role="doc-endnote"><p>(翻译文档(((<a href="#fnref4"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5" role="doc-endnote"><p>与此同时,
+一个看起来有点迷惑但其实不难理解的事情是, <code>F</code>是不包含的<a
+href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"
+role="doc-endnote"><p>(其实只是为了凑”一些”才介绍这个的(((<a
+href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7" role="doc-endnote"><p>当然实际上Vim似乎不支持添加文本对象…
+但是通过operation-pending模式的键绑定模拟的和真正添加似乎并没有什么区别.<a
+href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8" role="doc-endnote"><p>自然只是类似:
+shell支持的变量数目当然远大于26个,
+但是一般人也不会同时想要贴26个内容/录26个宏不是(<a href="#fnref8"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9" role="doc-endnote"><p>事实上,
+指定寄存器这种操作对任何命令都是可以的, 但是对其它命令没什么意义<a
+href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section></main>
         <footer>

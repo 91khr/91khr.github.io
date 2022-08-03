@@ -1,6 +1,6 @@
 # Temp files
 .*.swp
-# Indices
+# Indices and target files
 index/*
 # Build executable
 build

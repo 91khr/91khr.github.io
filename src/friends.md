@@ -73,7 +73,11 @@ description: 就是一些朋友的blog之类的?(
 
   是日常发情的可爱猫猫 x (超小声(被打死(((((((((((((
 
-- [Willie](https://www.wll.moe/)
+- [某只小朋友](https://wantahug.github.io)
+
+  是强强又可爱的小朋友 (超小声(
+
+- [Willie](https://ity.moe/)
 
   ll的bb姬 (!) (超小声(
 
