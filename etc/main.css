@@ -56,11 +56,22 @@ a:hover {
 /* }}} End links */
 
 /* {{{ Headers */
-main h1 {
-    border-bottom: 3px solid lightgray;
-}
 main h2 {
+    border-bottom: 3px solid lightgray;
+    font-size: 2em;
+}
+main h3 {
     border-bottom: 1.7px solid lightgray;
+    font-size: 1.5em;
+}
+main h4 {
+    font-size: 1.17em;
+}
+main h5 {
+    font-size: 1em;
+}
+main h6 {
+    font-size: 0.83em;
 }
 /* }}} End headers */
 
