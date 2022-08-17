@@ -18,7 +18,7 @@ fi
 using std::string_literals::operator""s;
 namespace fs = std::filesystem;
 
-#if __cplusplus < 200704L
+#if __cplusplus < 202002L
 // Implement hash for fs::path
 namespace std
 {

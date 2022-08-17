@@ -2,5 +2,6 @@
 .*.swp
 # Indices and target files
 index/*
+out/
 # Build executable
 build
