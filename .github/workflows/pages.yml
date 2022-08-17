@@ -32,6 +32,8 @@ jobs:
         uses: actions/checkout@v3
       - name: Setup Pages
         uses: actions/configure-pages@v1
+      - name: Setup pandoc
+        uses: nikeee/setup-pandoc@v1
       - run: ./build.cpp -i
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
