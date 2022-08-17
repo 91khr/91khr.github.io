@@ -35,7 +35,7 @@ function Pandoc(elem)
     -- Write to index
     local nowdesc = string.format("<article><span class='article-title'><a href=\"%s\">%s</a></span>\n" ..
         "<span class='article-description'>%s</span></article>\n",
-        "/out/" .. basePath,
+        "/" .. basePath,
         pandoc.write(pandoc.Pandoc(meta.title), 'html'),
         pandoc.write(pandoc.Pandoc(meta.description), 'html'))
     io.output("index/" .. basePath):write(nowdesc)
