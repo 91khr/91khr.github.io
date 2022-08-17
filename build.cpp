@@ -2,7 +2,10 @@
 g++ -std=c++20 -E -x c++ /dev/null > /dev/null && std=c++20 || std=c++17
 if make -f - <<<"build: build.cpp; g++ -std=${std} $0 -o build -g"; then
     echo End compilation
-    exec ./build $@
+    for f in $(find src -type f); do
+        echo "$(git log -1 --format="%at" -- $f) $f";
+    done | ./build $@
+    exit $?
 else
     exit $?
 fi
@@ -118,6 +121,7 @@ bool is_force = false;
 
 namespace helper {
 void clean();
+std::unordered_map<std::string, unsigned long long> read_dates();
 }
 
 int main(int, char **argv)
@@ -191,9 +195,10 @@ int main(int, char **argv)
             std::remove_if(indices.begin(), indices.end(),
                 [] (const auto &p) { return p.extension() != ".md" || env::ignored_files.count(p); }),
             indices.end());
+    auto dates = helper::read_dates();
     std::sort(indices.begin(), indices.end(),
-            [] (const auto &a, const auto &b) {
-                return fs::last_write_time(a) > fs::last_write_time(b);
+            [&dates] (const auto &a, const auto &b) {
+                return dates[a] > dates[b];
             });
     proc_file.init();
     for (const auto &nowpath : indices)
@@ -204,6 +209,23 @@ int main(int, char **argv)
 }
 
 namespace helper {
+std::unordered_map<std::string, unsigned long long> read_dates()
+{
+    std::unordered_map<std::string, unsigned long long> res;
+    size_t len;
+    char *buf = nullptr;
+    while (!feof(stdin))
+    {
+        unsigned long long time;
+        scanf("%llu ", &time);
+        len = getline(&buf, &len, stdin);
+        buf[len - 1] = 0;
+        res[buf] = time;
+    }
+    free(buf);
+    return res;
+}
+
 void clean()
 {
     const std::set<fs::path> reserves = {
