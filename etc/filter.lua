@@ -22,6 +22,8 @@ function Pandoc(elem)
             meta.title = 'Senioria的刺猬洞'
         elseif os.getenv("alterIndex") then  -- Alternative index
             meta.title = basePath:gsub('[^/]*$', '')
+        else
+            meta.title = "无题"
         end
     end
     for k, v in pairs(defaultVars) do
