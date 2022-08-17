@@ -1,5 +1,6 @@
 #if 0  // Self compile
-if make -f - <<<"build: build.cpp; g++ -std=c++17 $0 -o build -g"; then
+g++ -std=c++20 -E -x c++ /dev/null > /dev/null && std=c++20 || std=c++17
+if make -f - <<<"build: build.cpp; g++ -std=${std} $0 -o build -g"; then
     echo End compilation
     exec ./build $@
 else
@@ -101,11 +102,13 @@ const auto ignored_files = ([] () -> std::set<fs::path> {
 })();
 const auto unindexed_files = ([] () -> std::set<fs::path> {
     std::vector<fs::path> res = {
-        "friends",
-        "test",
+        "friends.md",
+        "test.md",
+        "out",
+        "out/index.md",
     };
     for (auto &i : res)
-        i = ("src" / i).replace_extension(".md");
+        i = "src" / i;
     return std::set(res.begin(), res.end());
 })();
 

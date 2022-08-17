@@ -34,12 +34,14 @@ jobs:
         uses: actions/configure-pages@v1
       - name: Setup pandoc
         uses: nikeee/setup-pandoc@v1
-      - run: ./build.cpp -i
+      - name: Build page
+        run: ./build.cpp -i
+      - name: Copy assets
+        run: cp -r etc 404.html out
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
-          # Upload entire repository
-          path: '.'
+          path: 'out' # Only upload the target files
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@main
