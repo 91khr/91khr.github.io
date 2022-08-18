@@ -1,15 +1,3 @@
-#if 0  // Self compile
-g++ -std=c++20 -E -x c++ /dev/null > /dev/null && std=c++20 || std=c++17
-if make -f - <<<"build: build.cpp; g++ -std=${std} $0 -o build -g"; then
-    echo End compilation
-    for f in $(find src -type f); do
-        echo "$(git log -1 --format="%at" -- $f) $f";
-    done | ./build $@
-    exit $?
-else
-    exit $?
-fi
-#endif
 #include <cstdio>
 #include <string>
 #include <cstdlib>
@@ -19,6 +7,7 @@ fi
 #include <set>
 #include <unordered_map>
 #include <functional>
+#include "helpers.hpp"
 using std::string_literals::operator""s;
 namespace fs = std::filesystem;
 
@@ -33,34 +22,6 @@ struct hash<fs::path>
 };
 }
 #endif  // __cplusplus
-
-struct FileIO
-{
-    FILE *handle;
-    FileIO() : handle(nullptr) {}
-    FileIO(FileIO&) = delete;
-    FileIO(FileIO&&) = delete;
-    FileIO(const std::string &fname, const char *type) : handle(fopen(fname.c_str(), type)) {}
-    ~FileIO() { close(); }
-    void close() { if (handle) fclose(handle); handle = nullptr; }
-    void reopen(const std::string &fname, const char *type)
-    {
-        if (handle) fclose(handle);
-        handle = fopen(fname.c_str(), type);
-    }
-    int printf(const char *fmt, ...)
-    {
-        va_list arg;
-        va_start(arg, fmt);
-        return vfprintf(handle, fmt, arg);
-    }
-    int scanf(const char *fmt, ...)
-    {
-        va_list arg;
-        va_start(arg, fmt);
-        return vfscanf(handle, fmt, arg);
-    }
-};
 
 struct ProcFileHandle
 {
@@ -92,7 +53,7 @@ output compiled result and other generated information to out/.
 -f, --force    forcely regenerate all files
 -h, --help     print this message
 )";
-const std::string build_args = R"(--toc --standalone --lua-filter=etc/filter.lua -t html --katex --template=etc/)";
+const std::string build_args = R"(--toc --standalone --lua-filter=dev/filter.lua -t html --katex --template=dev/)";
 const int max_index_size = 1926;
 const auto ignored_files = ([] () -> std::set<fs::path> {
     std::vector<fs::path> res = {
@@ -121,13 +82,10 @@ bool is_force = false;
 
 namespace helper {
 void clean();
-std::unordered_map<std::string, unsigned long long> read_dates();
 }
 
 int main(int, char **argv)
 {
-    // cd to base path
-    fs::current_path(fs::path(argv[0]).remove_filename());
     // Process arguments
     {
         const auto help = [argv] { printf(env::helpmsg, argv[0]); };
@@ -209,23 +167,6 @@ int main(int, char **argv)
 }
 
 namespace helper {
-std::unordered_map<std::string, unsigned long long> read_dates()
-{
-    std::unordered_map<std::string, unsigned long long> res;
-    size_t len;
-    char *buf = nullptr;
-    while (!feof(stdin))
-    {
-        unsigned long long time;
-        scanf("%llu ", &time);
-        len = getline(&buf, &len, stdin);
-        buf[len - 1] = 0;
-        res[buf] = time;
-    }
-    free(buf);
-    return res;
-}
-
 void clean()
 {
     const std::set<fs::path> reserves = {

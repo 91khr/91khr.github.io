@@ -4,4 +4,6 @@
 /index
 /out
 # Build executable
-/build
+/dev/build
+/dev/tmstamp
+*.gch

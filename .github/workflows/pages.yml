@@ -35,9 +35,7 @@ jobs:
       - name: Setup pandoc
         uses: nikeee/setup-pandoc@v1
       - name: Build page
-        run: ./build.cpp -i
-      - name: Copy assets
-        run: cp -r etc 404.html out
+        run: ./build.sh deploy -i
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
