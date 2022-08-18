@@ -27,7 +27,7 @@ fi
 if runmake dev/build; then
     echo End compilation
     mkdir -p out
-    cp -r etc/* out
+    cp -rf etc/* out
     exec ./dev/build $@
 else
     exit $?
