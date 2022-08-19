@@ -25,6 +25,8 @@ async function updateindex() {
     let ctnt = await fetch(`${get_index_path()}${nowindex}.html`);
     if (ctnt.ok)
         indexctnt.innerHTML = await ctnt.text();
+    else
+        indexctnt.innerHTML = "";
 }
 
 function nextindex() {

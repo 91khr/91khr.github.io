@@ -34,16 +34,16 @@ html, body {
     font-size: 1.8em;
     color: inherit;
 }
+#index-content > article > *:last-child::after {
+    content: ")";
+    color: #666;
+}
 #index-content .article-title::before {
     content: "'(#:title ";
     color: #666;
 }
 #index-content .article-description::before {
     content: "#:description ";
-    color: #666;
-}
-#index-content .article-description::after {
-    content: ")";
     color: #666;
 }
 

@@ -27,7 +27,8 @@ int main()
     for (auto [name, time]: dates)
     {
         auto stamp = chrono::duration_cast<chrono::seconds>(time - epoch).count();
-        sorted.push_back({ stamp, name });
+        if (fs::exists(name))
+            sorted.push_back({ stamp, name });
     }
     std::sort(sorted.begin(), sorted.end());
     FileIO out("timestamp.txt", "w");

@@ -10,6 +10,10 @@
     </head>
     <body>
         <header><h1>$title$</h1></header>
+        $if(description)$
+        <pre><code class="repl-frame">(display description)</code></pre>
+        <span>$for(description)$$description$$sep$, $endfor$</span>
+        $endif$
         <pre><code class="repl-frame">(display introduction)</code></pre>
         <section id="introduction" class="replized-content">$body$</section>
         <pre><code class="repl-frame">(for ([l '(<button class="page-control" onclick="set_index_type('index')" id=control-set-to-index>timeline</button> <button class="page-control" onclick="set_index_type('catalog')" id=control-set-to-catalog>catalog</button>)]) (display l))</code></pre>

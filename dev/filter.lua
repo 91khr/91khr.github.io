@@ -3,11 +3,6 @@ local os = require('os')
 
 local basePath = os.getenv("basePath")
 local defaultVars = {
-    description = (function()
-        local elem = pandoc.Span({pandoc.Str(' ')})
-        elem.classes = { "replized-content" }
-        return pandoc.MetaInlines({elem})
-    end)(),
     content_prompt = pandoc.MetaInlines({ pandoc.Str("(display content)") }),
 }
 -- }}} End premable
@@ -20,9 +15,9 @@ function Pandoc(elem)
         if basePath == 'index.html' then  -- Main index
             meta.main = true
             meta.title = 'Senioria的刺猬洞'
-        elseif os.getenv("alterIndex") then  -- Alternative index
+        elseif os.getenv("alterIndex") or basePath:match('index.html$') then  -- Index
             meta.title = basePath:gsub('[^/]*$', '')
-        else
+        else  -- Normal article
             meta.title = "无题"
         end
     end
@@ -33,11 +28,17 @@ function Pandoc(elem)
     end
 
     -- Write to index
-    local nowdesc = string.format("<article><span class='article-title'><a href=\"%s\">%s</a></span>\n" ..
-        "<span class='article-description'>%s</span></article>\n",
+    local desctag = ''
+    if meta.description then
+        desctag = "<span class='article-description'>" ..
+                  pandoc.write(pandoc.Pandoc(meta.description or ''), 'html') ..
+                  "</span>"
+    end
+    local nowdesc = string.format(
+        "<article><span class='article-title'><a href=\"%s\">%s</a></span>\n%s</article>\n",
         "/" .. basePath,
         pandoc.write(pandoc.Pandoc(meta.title), 'html'),
-        pandoc.write(pandoc.Pandoc(meta.description), 'html'))
+        desctag)
     io.output("index/" .. basePath):write(nowdesc)
 
     return elem
