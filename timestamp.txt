@@ -13,3 +13,5 @@
 1660286744 src/tech/code_spec.md
 1660763609 src/out/index.md
 1660838033 src/tech/logs/blog_log.md
+1660849357 src/math/index.md
+1660924978 src/math/plfa.md
