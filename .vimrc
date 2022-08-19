@@ -12,10 +12,10 @@ def OpenBuf()
             hidden: true,
         })
     endif
-    exec "!xdg-open http://localhost:8000/" .. fnamemodify(expand("%"), ":s/^src/out/:r") .. ".html"
+    exec "!xdg-open http://localhost:8000/" .. fnamemodify(expand("%"), ":s/^src//:r") .. ".html"
 enddef
 def InitBuf()
-    command! -bar -buffer Compile w | exec 'AsyncRun ./build -i'
+    command! -bar -buffer Compile w | exec 'AsyncRun ./build.sh -i'
     command! -bar -buffer Run Compile | au User AsyncRunStop ++once OpenBuf()
 enddef
 augroup vimrc

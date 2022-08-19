@@ -27,7 +27,7 @@ int main()
     for (auto [name, time]: dates)
     {
         auto stamp = chrono::duration_cast<chrono::seconds>(time - epoch).count();
-        if (fs::exists(name))
+        if (fs::exists(name) && fs::is_regular_file(name))
             sorted.push_back({ stamp, name });
     }
     std::sort(sorted.begin(), sorted.end());

@@ -5,6 +5,10 @@ local basePath = os.getenv("basePath")
 local defaultVars = {
     content_prompt = pandoc.MetaInlines({ pandoc.Str("(display content)") }),
 }
+
+local toc = pandoc.BulletList({})
+local toclevels = { 1 }
+local tocptr = { toc }
 -- }}} End premable
 
 -- {{{ main
@@ -26,6 +30,7 @@ function Pandoc(elem)
             meta[k] = v
         end
     end
+    meta.toc = toc
 
     -- Write to index
     local desctag = ''
@@ -56,7 +61,26 @@ end
 
 -- {{{ Header translations
 function Header(elem)
+    -- Increase its level to avoid collapse with the topmost h1
     elem.level = elem.level + 1
+    -- Insert into toc
+    local anchor = "#" .. elem.identifier
+    while elem.level <= toclevels[#toclevels] do
+        table.remove(toclevels, #toclevels)
+        table.remove(tocptr, #tocptr)
+    end
+    local function copyList(l) return table.pack(table.unpack(l)) end
+    local tocitem = { pandoc.Link(copyList(elem.content), anchor), pandoc.BulletList({}) }
+    table.insert(tocptr[#tocptr].content, tocitem)
+    table.insert(toclevels, elem.level)
+    table.insert(tocptr, tocitem[2])
+    -- Add link before the header
+    local link = pandoc.Link(utf8.char(128279), anchor, "", pandoc.Attr("", {"header-link"}))
+    if type(elem.content) == "table" then
+        table.insert(elem.content, link)
+    else
+        elem.content = { link, elem.content }
+    end
     return elem
 end
 -- }}} End header translations

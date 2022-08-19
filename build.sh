@@ -17,7 +17,7 @@ else
     extargs=-g
     # Run timestamp updater
     if runmake dev/tmstamp; then
-        git status -s --no-renames src | ./dev/tmstamp || exit $?
+        git status -s --no-renames --untracked-files src | ./dev/tmstamp || exit $?
     else
         exit $?
     fi

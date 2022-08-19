@@ -53,7 +53,7 @@ output compiled result and other generated information to out/.
 -f, --force    forcely regenerate all files
 -h, --help     print this message
 )";
-const std::string build_args = R"(--toc --standalone --lua-filter=dev/filter.lua -t html --katex --template=dev/)";
+const std::string build_args = R"(--standalone --lua-filter=dev/filter.lua -t html --katex --template=dev/)";
 const int max_index_size = 1926;
 const auto ignored_files = ([] () -> std::set<fs::path> {
     std::vector<fs::path> res = {
