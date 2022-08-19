@@ -58,17 +58,24 @@ a:hover {
 /* {{{ Header links */
 @media screen {
     .header-link {
-        display: none;
         position: relative;
-        left: 0.4em;
+        display: none;
         width: 0;
-        font-size: 0.7em;
     }
     main h2:hover > .header-link,
     main h3:hover > .header-link,
     main h4:hover > .header-link,
     main h5:hover > .header-link,
     main h6:hover > .header-link {
+        display: inline;
+    }
+    .header-link::before {
+        content: "\1f517";
+        font-size: 0.7em;
+        left: -1.2em;
+        position: absolute;
+        bottom: 0;
+        width: 1.3em;
         display: inline-block;
     }
 }

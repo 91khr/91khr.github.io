@@ -75,9 +75,10 @@ function Header(elem)
     table.insert(toclevels, elem.level)
     table.insert(tocptr, tocitem[2])
     -- Add link before the header
-    local link = pandoc.Link(utf8.char(128279), anchor, "", pandoc.Attr("", {"header-link"}))
+    --local link = pandoc.Link(utf8.char(128279), anchor, "", pandoc.Attr("", {"header-link"}))
+    local link = pandoc.Link("", anchor, "", pandoc.Attr("", {"header-link"}))
     if type(elem.content) == "table" then
-        table.insert(elem.content, link)
+        table.insert(elem.content, 1, link)
     else
         elem.content = { link, elem.content }
     end
