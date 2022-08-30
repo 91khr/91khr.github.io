@@ -3,7 +3,7 @@ title: 测试文档
 author: [Virginia, Senioria]
 keywords: [markdown, 测试]
 description: 用来测试生成器是否正常的文档
----
+...
 
 这是一个测试文档, 用来检测我的这个生成器~~发育得正不正常~~是否工作正常.
 
@@ -14,6 +14,19 @@ description: 用来测试生成器是否正常的文档
 - First
 - Second
 - Third
+
+稀疏列表:
+
+- Sparse Lists
+
+  Paragraphs in sparse lists.
+
+- Another Item
+
+  - Embedded lists
+  - Another item
+
+- Last item...
 
 # 在第一个标题之后的内容应该不会被加入brief
 

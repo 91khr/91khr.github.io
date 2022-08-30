@@ -26,7 +26,8 @@
             $if(keywords)$<span class="meta-info" name=keywords>$for(keywords)$$keywords$$sep$, $endfor$</span>$endif$
             $if(description)$<span class="meta-info" name=description>$for(description)$$description$$sep$, $endfor$</span>$endif$
         </div>
-        <pre><code class="repl-frame">(display table-of-contents)</code></pre>$if(toc)$$toc$$endif$
+        <pre><code class="repl-frame">(display table-of-contents)</code></pre>
+        <div id="table-of-contents" class="replized-content">$if(toc)$$toc$$endif$</div>
         <pre><code class="repl-frame">$content_prompt$</code></pre>
         <main>$body$</main>
         <footer>

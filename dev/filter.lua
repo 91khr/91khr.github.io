@@ -30,7 +30,9 @@ function Pandoc(elem)
             meta[k] = v
         end
     end
-    meta.toc = toc
+    if #toc.content > 0 then
+        meta.toc = toc
+    end
 
     -- Write to index
     local desctag = ''

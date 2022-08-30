@@ -76,6 +76,7 @@ a:hover {
         position: absolute;
         bottom: 0;
         width: 1.3em;
+        height: 1.42em;
         display: inline-block;
     }
 }
@@ -110,6 +111,10 @@ hr {
     width: 70%;
     height: 0;
     border: 1px solid pink;
+}
+
+ul {
+    padding-left: 3.5ch;
 }
 
 /* {{{ Blockquote */

@@ -4,11 +4,29 @@ title: plfa笔记
 description: 大概是读plfa时候qwq到的一点东西
 ...
 
+# 杂项
+
+就是一些可能用到但也不知道放哪的东西, 索性都丢这算了. (超小声(
+
+## 启用Agda的输入法
+
+senioria是用的fcitx5做全局的输入法, 然后在各个编辑器里都稍微配置了下.
+但要输入Agda里的众多Unicode字符的话, 那自然还是直接用agda-mode自带的输入法香.
+
+当然, 这两个并不冲突, 在Emacs中配置fcitx5属于其它话题, 在非Agda的文件里启用Agda的输入法的话:
+
+``` { .text .number-lines }
+M-: (require 'agda-input)
+(insert mode) C-\ Agda
+```
+
+(senioria某种程度上把Emacs当Vim在用: 要用的时候拉起一个进程, 写完了就关掉... (超小声(
+
 # `double-subst` at Part2.More
 
 题面:
 
-```agda
+``` agda
 double-subst : ∀ {Γ A B C} {V : Γ ⊢ A} {W : Γ ⊢ B} (N : Γ , A , B ⊢ C)
                → N [ V ][ W ] ≡ (N [ rename S_ W ]) [ V ]
 ```
