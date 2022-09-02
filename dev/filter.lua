@@ -54,6 +54,7 @@ end
 
 -- {{{ Auto add line numbers
 function CodeBlock(elem)
+    elem.classes[#elem.classes + 1] = "numberLines"
     local len = select(2, string.gsub(elem.text, '\n', '')) + 1
     elem.attributes['style'] = (elem.attributes['style'] or '') ..
         "--linenumber-len: " .. tostring(tostring(len):len()) .. ';'
