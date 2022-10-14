@@ -2,7 +2,7 @@
 local os = require('os')
 
 local basePath = os.getenv("basePath")
-local defaultVars = {
+local defaultMeta = {
     content_prompt = pandoc.MetaInlines({ pandoc.Str("(display content)") }),
 }
 
@@ -15,6 +15,7 @@ local tocptr = { toc }
 function Pandoc(elem)
     local meta = elem.meta
 
+    -- Fill in the meta values
     if not meta.title then
         if basePath == 'index.html' then  -- Main index
             meta.main = true
@@ -25,7 +26,7 @@ function Pandoc(elem)
             meta.title = "无题"
         end
     end
-    for k, v in pairs(defaultVars) do
+    for k, v in pairs(defaultMeta) do
         if not meta[k] then
             meta[k] = v
         end
@@ -78,7 +79,6 @@ function Header(elem)
     table.insert(toclevels, elem.level)
     table.insert(tocptr, tocitem[2])
     -- Add link before the header
-    --local link = pandoc.Link(utf8.char(128279), anchor, "", pandoc.Attr("", {"header-link"}))
     local link = pandoc.Link("", anchor, "", pandoc.Attr("", {"header-link"}))
     if type(elem.content) == "table" then
         table.insert(elem.content, 1, link)
