@@ -201,6 +201,13 @@ struct DirHandler
             return 1;
         });
         lua_setglobal(Lua, "list_dir");
+        lua_pushcfunction(Lua, [](lua_State *Lua) -> int {
+            fs::path inpath = lua_tostring(Lua, 1);
+            auto outpath = lua_gettop(Lua) < 2 ? "out" / inpath.lexically_relative("src").replace_extension(".html")
+                                               : lua_tostring(Lua, 2);
+            return need_rebuild(inpath, outpath);
+        });
+        lua_setglobal(Lua, "need_rebuild");
     }
     ~DirHandler() { lua_close(Lua); }
     // }}} End lua
@@ -304,6 +311,11 @@ struct DirHandler
     }
     // }}} End write_index
 
+    static bool need_rebuild(fs::path inpath, fs::path outpath)
+    {
+        return env::is_force || !fs::exists(outpath) || fs::last_write_time(inpath) > fs::last_write_time(outpath);
+    }
+
     SubdirInfo walk_dir(fs::path dir)
     {
         SubdirInfo res;
@@ -321,8 +333,7 @@ struct DirHandler
                     bool is_index = art.filename() == "index.md";
                     has_index = std::max(has_index, is_index);
                     auto outpath = "out" / art.lexically_relative("src").replace_extension(".html");
-                    if (env::is_force || !fs::exists(outpath) ||
-                        fs::last_write_time(art) > fs::last_write_time(outpath))
+                    if (need_rebuild(art, outpath))
                     {
                         logger.log(Logger::Progress, "Compile %s\n", art.c_str());
                         res.last_mod = std::max(res.last_mod, fs::last_write_time(art));
