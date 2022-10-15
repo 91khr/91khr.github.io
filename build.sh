@@ -3,7 +3,7 @@
 cd $(readlink -f $(dirname $0))
 
 # Check standard support
-g++ -std=c++20 -E -x c++ /dev/null >/dev/null 2>&1 && std=c++20 || std=c++17
+g++ -std=c++20 -E -x c++ /dev/null >/dev/null 2>&1 && std=c++20 || std="c++17 -fconcepts"
 
 function runmake() {
     f="$1"; shift
@@ -25,7 +25,7 @@ else
 fi
 
 # Run build executable
-if runmake dev/build -llua; then
+if runmake dev/build -I/usr/include/lua5.3 -llua5.3; then
     echo End compilation
     mkdir -p out
     cp -r etc/* out
