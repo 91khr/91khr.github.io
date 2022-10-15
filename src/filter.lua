@@ -9,4 +9,4 @@ for _, file in pairs(files) do
         subdirs[#subdirs + 1] = file.path
     end
 end
-return { articles = articles, subdirs = subdirs }
+return { articles = articles, subdirs = subdirs, unindiced = { "src/test.md", "src/friends.md" } }
