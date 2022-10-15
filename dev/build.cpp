@@ -347,7 +347,7 @@ struct DirHandler
                 auto filter = info.unindiced.begin();
                 for (; front != info.articles.end(); ++front)
                 {
-                    while (filter != info.unindiced.end() && *filter < *front)
+                    while (filter != info.unindiced.end() && art_comp(*filter, *front))
                         ++filter;
                     if (front->filename() != "index.md" &&
                         (filter == info.unindiced.end() || !fs::equivalent(*filter, *front)))
