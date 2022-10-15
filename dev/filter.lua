@@ -17,7 +17,7 @@ function Pandoc(elem)
 
     -- Fill in the meta values
     if not meta.title then
-        if basePath == 'index.html' then  -- Main index
+        if basePath == './index.html' then  -- Main index
             meta.main = true
             meta.title = 'Senioria的刺猬洞'
         elseif os.getenv("alterIndex") or basePath:match('index.html$') then  -- Index

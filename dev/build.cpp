@@ -1,18 +1,31 @@
-#include <cstdio>
-#include <string>
-#include <cstdlib>
-#include <cstdarg>
-#include <filesystem>
-#include <vector>
-#include <set>
-#include <unordered_map>
-#include <functional>
+// vim: fdm=marker
+// {{{ Premable
 #include "helpers.hpp"
+
+#include <algorithm>
+#include <chrono>
+#include <cstdarg>
+#include <cstdio>
+#include <cstdlib>
+#include <filesystem>
+#include <functional>
+#include <iterator>
+#include <lua.hpp>
+#include <set>
+#include <string>
+#include <unordered_map>
+#include <vector>
+#if __cplusplus >= 202002L
+#include <concepts>
+#endif  // __cplusplus
+#include <optional>
 using std::string_literals::operator""s;
 namespace fs = std::filesystem;
+// }}} End premable
 
+// {{{ Workaround and helpers
+// {{{ Workaround for compilers without implementation to hash<fs::path>
 #if __cplusplus < 202002L
-// Implement hash for fs::path
 namespace std
 {
 template<>
@@ -22,27 +35,11 @@ struct hash<fs::path>
 };
 }
 #endif  // __cplusplus
-
-struct ProcFileHandle
-{
-    enum class IndexType {
-        article, index,
-    };
-    void operator()(const fs::path &inpath);
-    void write_index(const fs::path &basepath, IndexType type);
-    void init();
-    void finish();
-    struct IndexInfo
-    {
-        int index_size = 0, index_count = 0;
-        FileIO out;
-    };
-    std::unordered_map<fs::path, IndexInfo> indices;
-    std::unordered_map<fs::path, IndexInfo> catalogs;
-} proc_file;
+// }}} End hash workaround
 
 // Constants and options
-namespace env {
+namespace env
+{
 const char helpmsg[] = R"(
 Usage: %s [OPTION]...
 A site generator that read markdown source file from src/,
@@ -55,38 +52,363 @@ output compiled result and other generated information to out/.
 )";
 const std::string build_args = R"(--standalone --lua-filter=dev/filter.lua -t html --katex --template=dev/)";
 const int max_index_size = 1926;
-const auto ignored_files = ([] () -> std::set<fs::path> {
-    std::vector<fs::path> res = {
-        "novel/parallelized_trans",
-        "novel/sol_midnight",
-    };
-    for (auto &i : res)
-        i = ("src" / i).replace_extension(".md");
-    return std::set(res.begin(), res.end());
-})();
-const auto unindexed_files = ([] () -> std::set<fs::path> {
-    std::vector<fs::path> res = {
-        "friends.md",
-        "test.md",
-        "out",
-        "out/index.md",
-    };
-    for (auto &i : res)
-        i = "src" / i;
-    return std::set(res.begin(), res.end());
-})();
+#ifdef _WIN32
+const char devnull[] = "nul";
+#else
+const char devnull[] = "/dev/null";
+#endif
 
 bool is_index = false;
 bool is_force = false;
 }
 
-namespace helper {
-void clean();
-}
+// {{{ Logger
+struct Logger
+{
+    enum Level : unsigned
+    {
+        Error,
+        Output,    // Required output
+        Progress,  // The main progress of a process
+        Debug,     // Used for debugging
+        LV_MAX_,
+    };
+    unsigned curlv = LV_MAX_, depth = 0;
+    inline static const char *LevelMsg[] = {
+        "[ERROR] ",  // Error message
+        ":: ",       // Required output shouldn't be logged
+        "=> ",       // Progress separator
+        "[DBG] ",    // Debugging message
+    };
+    static_assert(sizeof(LevelMsg) / sizeof(*LevelMsg) == Level::LV_MAX_,
+                  "There should be exactly one message for each of the log levels");
 
+    void log(Level lv, const char *fmt, const auto &...args)
+    {
+        if (lv > curlv)
+            return;
+        auto target = lv == Error ? stderr : stdout;
+        fprintf(target, "%s%s", std::string(depth * 2, ' ').c_str(), LevelMsg[lv]);
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wformat-security"
+        fprintf(target, fmt, args...);
+#pragma GCC diagnostic pop
+        fflush(target);
+    }
+
+    auto withstage(Level lv, const char *fmt, const auto &...args)
+    {
+        log(lv, fmt, args...);
+        return [this](auto f) {
+            ++depth;
+            f();
+            --depth;
+        };
+    }
+} logger;
+// }}} End logger
+
+namespace helper
+{
+// {{{ clean
+void clean()
+{
+    const std::set<fs::path> reserves = {};
+    // Walk output and remove unnessary files
+    auto walkpath = [&reserves](const char *base) {
+        for (auto &it : fs::recursive_directory_iterator(base))
+            if (!it.is_directory() && !reserves.count(it.path()))
+            {
+                printf("removing %s\n", it.path().c_str());
+                fs::remove(it.path());
+            }
+    };
+    walkpath("out");
+    walkpath("index");
+}
+// }}} end clean
+
+// {{{ pandoc
+int pandoc(const std::string &in, const std::string &out, const std::string &args,
+           const std::vector<std::pair<std::string, std::string>> env)
+{
+    std::string cmd;
+#ifdef _WIN32
+    for (const auto &it : env)
+        cmd += "set " + it.first + "=" + it.second + ";";
+#else
+    cmd = "env ";
+    for (const auto &it : env)
+        cmd += it.first + "=" + it.second + " ";
+#endif
+    cmd += "pandoc " + in + " -o " + out + " " + args;
+    return system(cmd.c_str());
+}
+// }}} end pandoc
+
+void ensure_path(const fs::path &path) { fs::create_directories(path); }
+}
+// }}} End workaround and helpers
+
+// {{{ Workers
+struct DirHandler
+{
+    // The generated HTML files of the articles and catalogs of the subdir,
+    // where 'catalogs' refers to the `index.html` file.
+    // The entries should be sorted by descending order
+    struct SubdirInfo
+    {
+        struct CatInfo
+        {
+            fs::path index;
+            fs::file_time_type time;
+            friend bool operator<(const CatInfo &a, const CatInfo &b) { return a.time > b.time; }
+        };
+        std::vector<fs::path> articles = {};
+        std::vector<CatInfo> catalogs = {};
+        fs::file_time_type last_mod = {};
+    };
+    struct FilterInfo
+    {
+        std::vector<fs::path> articles = {};
+        std::vector<fs::path> subdirs = {};
+        std::vector<fs::path> unindiced = {};
+        std::string build_args = {};
+    };
+
+    decltype(helper::read_dates()) artdates = helper::read_dates();
+
+    // {{{ Lua script operation
+    lua_State *Lua = nullptr;
+    void init()
+    {
+        Lua = luaL_newstate();
+        luaL_openlibs(Lua);
+        // Default arguments of pandoc
+        lua_pushstring(Lua, env::build_args.c_str());
+        lua_setglobal(Lua, "default_build_args");
+        lua_pushcfunction(Lua, [](lua_State *Lua) -> int {
+            lua_newtable(Lua);
+            for (auto f : fs::directory_iterator(lua_tostring(Lua, 1)))
+            {
+                lua_createtable(Lua, 0, 2);
+                lua_pushstring(Lua, f.path().c_str());
+                lua_setfield(Lua, -2, "path");
+                lua_pushstring(Lua, f.is_directory() ? "dir" : "file");
+                lua_setfield(Lua, -2, "type");
+                lua_seti(Lua, -2, luaL_len(Lua, -2) + 1);
+            }
+            return 1;
+        });
+        lua_setglobal(Lua, "list_dir");
+    }
+    ~DirHandler() { lua_close(Lua); }
+    // }}} End lua
+
+    // {{{ filter_dir: Filter out files, subdirs, and other info of the directory
+    FilterInfo filter_dir(fs::path dir)
+    {
+        if (auto luafilter = dir / "filter.lua"; fs::exists(luafilter))
+        {
+            logger.log(Logger::Progress, "Executing lua filter...\n");
+            if (luaL_loadfile(Lua, luafilter.c_str()) != LUA_OK)
+            {
+                logger.log(Logger::Error, "Failed to load lua filter: %s\n", luaL_tolstring(Lua, -1, NULL));
+                return {};
+            }
+            lua_pushstring(Lua, luafilter.remove_filename().c_str());
+            if (lua_pcall(Lua, 1, 1, 0) != LUA_OK)
+            {
+                logger.log(Logger::Error, "Failed to execute lua filter: %s\n", luaL_tolstring(Lua, -1, NULL));
+                return {};
+            }
+            auto get_content = [this]() -> std::vector<fs::path> {
+                if (lua_isnil(Lua, -1))
+                    return {};
+                std::vector<fs::path> ctnt;
+                lua_pushnil(Lua);
+                while (lua_next(Lua, -2) != 0)
+                {
+                    ctnt.push_back(lua_tostring(Lua, -1));
+                    lua_pop(Lua, 1);
+                }
+                return ctnt;
+            };
+            auto with_field = [this](auto name, auto f) {
+                lua_getfield(Lua, -1, name);
+                f();
+                lua_pop(Lua, 1);
+            };
+            FilterInfo res;
+            with_field("articles", [&] { res.articles = get_content(); });
+            with_field("subdirs", [&] { res.subdirs = get_content(); });
+            with_field("unindiced", [&] { res.unindiced = get_content(); });
+            with_field("build_args", [&] {
+                if (!lua_isnil(Lua, -1))
+                    res.build_args = lua_tostring(Lua, -1);
+                else
+                    res.build_args = env::build_args;
+            });
+            lua_pop(Lua, 1);
+            return res;
+        }
+        else
+        {
+            FilterInfo res;
+            res.build_args = env::build_args;
+            for (auto f : fs::directory_iterator(dir))
+                if (f.is_directory())
+                    res.subdirs.push_back(f);
+                else if (f.path().extension() == ".md")
+                    res.articles.push_back(f);
+            return res;
+        }
+    }
+    // }}} End filter_dir
+
+    // {{{ write_index: Write index files
+    template<class IterF>
+#if __cplusplus >= 202002L
+        // clang-format off
+        requires requires(IterF f) { { f() } -> std::same_as<std::optional<fs::path>>; }
+        // clang-format on
+#endif  // __cplusplus
+    void write_index(fs::path base, const char *prefix, IterF fn)
+    {
+        thread_local struct CtntBuf
+        {
+            char *data = nullptr;
+            size_t len = 0;
+            ~CtntBuf() { free(data); }
+        } buf;
+        size_t cursize = 0;
+        int count = 0;
+        helper::ensure_path("out/index" / base);
+        FileIO dstf { "out/index" / base / (prefix + "."s + std::to_string(++count) + ".html"), "w" };
+        for (decltype(fn()) cur_o; (cur_o = fn());)
+        {
+            fs::path cur = cur_o.value();
+            auto fname = "index" / cur.lexically_relative("src").replace_extension(".html");
+            FileIO src { fname, "r" };
+            size_t incsize = getdelim(&buf.data, &buf.len, EOF, src.handle);
+            if (cursize + incsize > env::max_index_size)
+            {
+                dstf.reopen("out/index" / base / (prefix + "."s + std::to_string(++count) + ".html"), "w");
+                cursize = 0;
+            }
+            cursize += incsize;
+            dstf.printf("%s\n", buf.data);
+        }
+        dstf.reopen("out/index" / base / (prefix + ".count.txt"s), "w");
+        dstf.printf("%d", count);
+    }
+    // }}} End write_index
+
+    SubdirInfo walk_dir(fs::path dir)
+    {
+        SubdirInfo res;
+        auto srcrelpath = dir.lexically_relative("src");
+        auto art_comp = [&](auto a, auto b) { return artdates[a] > artdates[b]; };
+        logger.withstage(Logger::Output, "Process %s\n", dir.c_str())([&] {
+            FilterInfo info = filter_dir(dir);
+            // {{{2 Compile articles
+            {
+                helper::ensure_path("out" / srcrelpath);
+                helper::ensure_path("index" / srcrelpath);
+                bool has_index = false;
+                for (auto art : info.articles)
+                {
+                    bool is_index = art.filename() == "index.md";
+                    has_index = std::max(has_index, is_index);
+                    auto outpath = "out" / art.lexically_relative("src").replace_extension(".html");
+                    if (env::is_force || !fs::exists(outpath) ||
+                        fs::last_write_time(art) > fs::last_write_time(outpath))
+                    {
+                        logger.log(Logger::Progress, "Compile %s\n", art.c_str());
+                        res.last_mod = std::max(res.last_mod, fs::last_write_time(art));
+                        helper::pandoc(art.string(), outpath.string(),
+                                       info.build_args + (is_index ? "index_template.html" : "template.html"),
+                                       { { "basePath", srcrelpath / outpath.filename() } });
+                    }
+                }
+                // Generate alternative index
+                if (auto index_out = "out" / srcrelpath / "index.html"; env::is_index && !has_index)
+                {
+                    logger.log(Logger::Progress, "Generate alternative index\n");
+                    helper::pandoc(env::devnull, index_out, info.build_args + "index_template.html -f markdown",
+                                   { { "basePath", srcrelpath / "index.html" }, { "alterIndex", "1" } });
+                }
+            }
+            // {{{2 Filter out unindiced files, set result articles
+            {
+                std::sort(info.articles.begin(), info.articles.end(), art_comp);
+                std::sort(info.unindiced.begin(), info.unindiced.end(), art_comp);
+                auto elem = info.articles.begin(), front = elem;
+                auto filter = info.unindiced.begin();
+                for (; front != info.articles.end(); ++front)
+                {
+                    while (filter != info.unindiced.end() && *filter < *front)
+                        ++filter;
+                    if (front->filename() != "index.md" &&
+                        (filter == info.unindiced.end() || !fs::equivalent(*filter, *front)))
+                        *elem++ = *front;
+                }
+                info.articles.erase(elem, info.articles.end());
+                res.articles = std::move(info.articles);
+            }
+            // {{{2 Process subdirs
+            for (auto subdir : info.subdirs)
+            {
+                auto sub = walk_dir(subdir);
+                auto origsize = res.articles.size();
+                res.articles.reserve(res.articles.size() + sub.articles.size());
+                std::move(sub.articles.begin(), sub.articles.end(), std::back_inserter(res.articles));
+                std::inplace_merge(res.articles.begin(), res.articles.begin() + origsize, res.articles.end(), art_comp);
+                origsize = res.catalogs.size();
+                res.catalogs.reserve(res.catalogs.size() + sub.catalogs.size());
+                std::move(sub.catalogs.begin(), sub.catalogs.end(), std::back_inserter(res.catalogs));
+                std::inplace_merge(res.catalogs.begin(), res.catalogs.begin() + origsize, res.catalogs.end(),
+                                   [&](auto a, auto b) { return artdates[a.index] > artdates[b.index]; });
+            }
+            // {{{2 Write indices
+            if (env::is_index)
+            {
+                logger.log(Logger::Progress, "Writing indices\n");
+                auto artit = res.articles.begin();
+                write_index(srcrelpath, "index",
+                            [&] { return artit == res.articles.end() ? std::nullopt : std::optional(*artit++); });
+                logger.log(Logger::Progress, "Writing catalogs\n");
+                auto catit = res.catalogs.begin();
+                write_index(srcrelpath, "catalog",
+                            [&] { return catit == res.catalogs.end() ? std::nullopt : std::optional(catit++->index); });
+            }
+            // {{{2 Insert current index
+            if (env::is_index)
+            {
+                std::error_code ec;
+                SubdirInfo::CatInfo curindex = { dir / "index.md", fs::last_write_time(dir / "index.md", ec) };
+                bool inserted = false;
+                for (auto ins = res.catalogs.begin(); ins != res.catalogs.end(); ++ins)
+                    if (curindex < *ins)
+                    {
+                        res.catalogs.insert(ins, curindex);
+                        inserted = true;
+                        break;
+                    }
+                if (!inserted)
+                    res.catalogs.push_back(curindex);
+            }
+            // }}}2 End processing
+        });
+        return res;
+    }
+};
+// }}} End workers
+
+// {{{ main
 int main(int, char **argv)
 {
-    // Process arguments
+    // {{{ Process arguments
     {
         const auto help = [argv] { printf(env::helpmsg, argv[0]); };
         const auto index = [] { env::is_index = true; };
@@ -144,182 +466,10 @@ int main(int, char **argv)
                         }
             }
     }
+    // }}} End processing arguments
 
-    // walk the source and build them
-    std::vector<fs::path> indices(
-            fs::recursive_directory_iterator("src"),
-            fs::recursive_directory_iterator());
-    indices.erase(
-            std::remove_if(indices.begin(), indices.end(),
-                [] (const auto &p) { return p.extension() != ".md" || env::ignored_files.count(p); }),
-            indices.end());
-    auto dates = helper::read_dates();
-    std::sort(indices.begin(), indices.end(),
-            [&dates] (const auto &a, const auto &b) {
-                return dates[a] > dates[b];
-            });
-    proc_file.init();
-    for (const auto &nowpath : indices)
-        proc_file(nowpath);
-    proc_file.finish();
-
-    return 0;
+    DirHandler dir;
+    dir.init();
+    dir.walk_dir("src");
 }
-
-namespace helper {
-void clean()
-{
-    const std::set<fs::path> reserves = {
-    };
-    // Walk output and remove unnessary files
-    auto walkpath = [&reserves] (const char *base) {
-        for (auto &it : fs::recursive_directory_iterator(base))
-            if (!it.is_directory() && !reserves.count(it.path()))
-            {
-                printf("removing %s\n", it.path().c_str());
-                fs::remove(it.path());
-            }
-    };
-    walkpath("out");
-    walkpath("index");
-}
-
-int pandoc(
-        const std::string &in,
-        const std::string &out,
-        const std::string &args,
-        const std::vector<std::pair<std::string, std::string>> env)
-{
-    std::string cmd;
-#ifdef _WIN32
-    for (const auto &it : env)
-        cmd += "set " + it.first + "=" + it.second + ";";
-#else
-    cmd = "env ";
-    for (const auto &it : env)
-        cmd += it.first + "=" + it.second + " ";
-#endif
-    cmd += "pandoc " + in + " -o " + out + " " + args;
-    return system(cmd.c_str());
-}
-
-void ensure_path(const fs::path &path) { fs::create_directories(path); }
-}
-
-void ProcFileHandle::operator()(const fs::path &inpath)
-{
-    bool logged = false;
-    fs::path basepath = inpath.lexically_relative("src").replace_extension(".html");
-    fs::path outpath = "out" / basepath;
-    bool is_index = inpath.filename() == "index.md";
-    // Make directory for output & index
-    helper::ensure_path(fs::path(outpath).remove_filename());
-    helper::ensure_path(fs::path("index" / basepath).remove_filename());
-    // Build file itself
-    if (env::is_force || !fs::exists(outpath) ||
-            fs::last_write_time(inpath) > fs::last_write_time(outpath))
-    {
-        printf("Building %s\n", inpath.c_str());
-        logged = true;
-        helper::pandoc(inpath.string(), outpath.string(), env::build_args +
-                (is_index ? "index_template.html" : "template.html"),
-                { { "basePath", basepath.string() } });
-    }
-    // Generate index
-    if (env::is_index && !env::unindexed_files.count(inpath))
-    {
-        if (!logged)
-            printf("Generating index for %s\n", inpath.c_str());
-        write_index(basepath, is_index ? IndexType::index : IndexType::article);
-    }
-}
-
-void ProcFileHandle::init() {}
-
-void ProcFileHandle::write_index(const fs::path &basepath, IndexType type)
-{
-    const std::string prefix = type == IndexType::article ? "index" : "catalog";
-    // Get index content
-    char *buf = nullptr;
-    size_t len = 0;
-    FileIO in("index" / basepath, "r");
-    size_t nowsize = getdelim(&buf, &len, EOF, in.handle);
-    // Write to all timelines of parent catalogs
-    auto nowpath = ("." / basepath).remove_filename().lexically_normal();
-    auto get_index_path = [prefix] (int index, const fs::path &path) -> fs::path {
-        return "out/index" / path / (prefix + '.' + std::to_string(index) + ".html");
-    };
-    auto touch_collection = [prefix] (auto &collection, const fs::path &path) -> auto & {
-        auto &index = collection[path];
-        auto outpath = "out/index" / path;
-        helper::ensure_path(outpath);
-        index.out.reopen(outpath / (prefix + ".1.html"), "w");
-        index.index_count = 1;
-        return index;
-    };
-    if (type == IndexType::index)
-    {
-        // Touch the catalog in order not to have no catalog content
-        if (!fs::exists(get_index_path(1, nowpath)))
-            touch_collection(catalogs, nowpath);
-        nowpath = (nowpath / "..").lexically_normal();
-    }
-    for (; nowpath != ".."; nowpath = (nowpath / "..").lexically_normal())
-    {
-        // Get/create index handler according to the directory
-        IndexInfo &nowindex = ([nowpath, prefix, touch_collection] (auto &collection) -> auto & {
-            if (auto it = collection.find(nowpath); it != collection.end())
-                return it->second;
-            else
-                return touch_collection(collection, nowpath);
-        })(type == IndexType::article ? indices : catalogs);
-        // Accumulate size of index file
-        if (nowsize + nowindex.index_size > env::max_index_size)
-        {
-            nowindex.index_size = 0;
-            ++nowindex.index_count;
-            nowindex.out.reopen(get_index_path(nowindex.index_count, nowpath), "w");
-        }
-        else
-            nowindex.index_size += nowsize;
-        // Write actual content
-        nowindex.out.printf("%s\n", buf);
-    }
-    free(buf);
-}
-
-void ProcFileHandle::finish()
-{
-#ifdef _WIN32
-    const char devnull[] = "nul";
-#else
-    const char devnull[] = "/dev/null";
-#endif
-    if (!env::is_index)
-        return;
-    // Create indices
-    for (const auto &it : indices)
-    {
-        FileIO(fs::path("out/index") / it.first / "index.count.txt", "w")
-            .printf("%d\n", it.second.index_count);
-        // Create index for directories without index.md
-        if (auto index_file = "src" / it.first / "index.md"; !fs::exists(index_file))
-        {
-            printf("Creating alternative index for %s\n", it.first.c_str());
-            auto index_out = "out" / it.first / "index.html";
-            if (!fs::exists(index_out) || env::is_force)
-                helper::pandoc(devnull, index_out,
-                        env::build_args + "index_template.html -f markdown",
-                        { { "basePath", it.first / "index.html" }, { "alterIndex", "1" } });
-            write_index(index_out.lexically_relative("out"), IndexType::index);
-        }
-    }
-    printf("Creating catalog...\n");
-    // Create catalogs
-    for (const auto &it : catalogs)
-    {
-        FileIO(fs::path("out/index") / it.first / "catalog.count.txt", "w")
-            .printf("%d\n", it.second.index_count);
-    }
-}
-
+// }}} End main

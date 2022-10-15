@@ -12,8 +12,10 @@ struct FileIO
 {
     FILE *handle;
     FileIO() : handle(nullptr) {}
-    FileIO(FileIO &) = delete;
+    FileIO(const FileIO &) = delete;
     FileIO(FileIO &&) = delete;
+    FileIO &operator=(const FileIO &) = delete;
+    FileIO &operator=(FileIO &&) = delete;
     FileIO(FILE *f) : handle(f) {}
     FileIO(const std::string &fname, const char *type) : handle(fopen(fname.c_str(), type)) {}
     ~FileIO() { close(); }
@@ -58,19 +60,18 @@ struct FileIO
 
 namespace helper
 {
-std::unordered_map<std::string, chrono::system_clock::time_point> read_dates()
+inline std::unordered_map<std::string, chrono::system_clock::time_point> read_dates()
 {
     std::unordered_map<std::string, chrono::system_clock::time_point> res;
     auto f = FileIO("timestamp.txt", "r");
     while (!f.eof())
     {
         long long time;
-        fscanf(f.handle, "%llu ", &time);
+        fscanf(f.handle, "%lld ", &time);
         res[f.getline()] = chrono::system_clock::time_point(chrono::seconds(time));
     }
     return res;
 }
-
 }  // End namespace helper
 
 #endif  // HELPERS_HPP_INCLUDED
