@@ -179,19 +179,19 @@ pre.sourceCode {
 }
 /* }}} End line numbers */
 
-.sourceCode .kw { color: #2876AC; }
-.sourceCode .dt { color: #A84F57; }
-.sourceCode .pp { color: #9C6600; }
-.sourceCode .st, .sourceCode .ch { color: #217E77; }
+code.sourceCode .kw { color: #2876AC; }
+code.sourceCode .dt { color: #A84F57; }
+code.sourceCode .pp { color: #9C6600; }
+code.sourceCode .st, code.sourceCode .ch { color: #217E77; }
 
-.sourceCode .dv, .sourceCode .bn, .sourceCode .fl { color: #B32469; }
-.sourceCode .ch { color: #DC322F; }
-.sourceCode .co { color: #0B7373; }
-.sourceCode .ot { color: #A57800; }
-.sourceCode .al { color: #CB4B16; font-weight: bold; }
-.sourceCode .fu { color: #286997; }
-.sourceCode .re { }
-.sourceCode .er { color: #D30102; font-weight: bold; }
+code.sourceCode .dv, code.sourceCode .bn, code.sourceCode .fl { color: #B32469; }
+code.sourceCode .ch { color: #DC322F; }
+code.sourceCode .co { color: #0B7373; }
+code.sourceCode .ot { color: #A57800; }
+code.sourceCode .al { color: #CB4B16; font-weight: bold; }
+code.sourceCode .fu { color: #286997; }
+code.sourceCode .re { }
+code.sourceCode .er { color: #D30102; font-weight: bold; }
 /* }}} End code themes */
 
 /* {{{ Repl-styled themes */
