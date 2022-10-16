@@ -20,11 +20,13 @@ function RawBlock(elem)
                       Datatype = "dt",
                       Number = "fl",
                       InductiveConstructor = "fu",
+                      Function = "fu",
                       Operator = "op",
-                  })[class] or '') .. '">'
+                      Comment = "co",
+                  })[class] or class) .. '">'
               end):
-              gsub('href="([%w._-]*).html#(%d+)"', function(fname, id)
-                  return 'href="' .. fname .. '.output.html#' .. tostring(id) .. '"'
+              gsub('href="([%w._-]*).html(#?%d*)"', function(fname, id)
+                  return 'href="' .. fname .. '.output.html' .. id .. '"'
               end) .. "</span>\n"
     end
     res = string.format([[<div class="sourceCode" id="cb%d" style="--linenumber-len: %d;">]],
