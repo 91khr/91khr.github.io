@@ -9,7 +9,6 @@ description: 在命题的各个形式之间变换的系统
 module pc where
 
 open import base
-open import Data.Nat using (ℕ)
 ```
 
 # 表达式的变换
@@ -20,7 +19,6 @@ open import Data.Nat using (ℕ)
 infix 15 _↝_
 data _↝_ : Term → Term → Set where
   ↝var : ∀ {a} → ` a ↝ ` a
-  ↝⊥ : t⊥ ↝ t⊥
   ↝∧ : ∀ {a b a′ b′} → a ↝ a′ → b ↝ b′ → (a ∧ b) ↝ (a′ ∧ b′)
   ↝∨ : ∀ {a b a′ b′} → a ↝ a′ → b ↝ b′ → (a ∨ b) ↝ (a′ ∨ b′)
   ↝¬ : ∀ {a a′} → a ↝ a′ → ¬ a ↝ ¬ a′
@@ -46,7 +44,6 @@ data _↝_ : Term → Term → Set where
 ↝refl {¬ x} = ↝¬ ↝refl
 ↝refl {x ⇒ x₁} = ↝⇒ ↝refl ↝refl
 ↝refl {x ⇔ x₁} = ↝⇔ ↝refl ↝refl
-↝refl {t⊥} = ↝⊥
 ```
 
 # 上下文
@@ -66,7 +63,7 @@ data _∋_ : Context → Term → Set where
   S_ : ∀ {Γ x y} → Γ ∋ y → Γ , x ∋ y
 
 module lookup where
-  open import Data.Nat using (suc; _≤_; _≤?_; z≤n; s≤s)
+  open import Data.Nat using (ℕ; suc; _≤_; _≤?_; z≤n; s≤s)
   open import Relation.Nullary.Decidable using (True; toWitness)
   length : Context → ℕ
   length ∅ = 0

@@ -23,6 +23,7 @@ function RawBlock(elem)
                       Function = "fu",
                       Operator = "op",
                       Comment = "co",
+                      Hole = "pp",
                   })[class] or class) .. '">'
               end):
               gsub('href="([%w._-]*).html(#?%d*)"', function(fname, id)
