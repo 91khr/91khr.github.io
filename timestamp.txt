@@ -13,17 +13,5 @@
 1660976976 src/test.md
 1662110217 src/math/plfa.md
 1663068624 src/tech/logs/dotfile_log.md
-1665829171 src/math/arith_logic/.gitignore
 1665831479 src/tech/logs/blog_log.md
 1665832352 src/filter.lua
-1665845768 src/math/arith_logic/index.md
-1665893176 src/math/arith_logic/semantics.lagda.md
-1665893188 src/math/arith_logic/semantics.output.md
-1665995856 src/math/arith_logic/pc.lagda.md
-1665995877 src/math/arith_logic/pc.output.md
-1665996422 src/math/arith_logic/base.lagda.md
-1665996438 src/math/arith_logic/base.output.md
-1665996623 src/math/arith_logic/filter.lua
-1665996854 src/math/arith_logic/preproc.lua
-1665996867 src/math/arith_logic/fpc.lagda.md
-1665996874 src/math/arith_logic/fpc.output.md
