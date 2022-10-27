@@ -1,0 +1,6 @@
+# Intermediate files
+*.agdai
+inter
+# The library: git@github.com:agda/agda-categories.git
+agda-categories
+basic_cat.agda-lib

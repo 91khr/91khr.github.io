@@ -15,3 +15,10 @@
 1663068624 src/tech/logs/dotfile_log.md
 1665832352 src/filter.lua
 1666080155 src/tech/logs/blog_log.md
+1666686234 src/math/basic_cat/preproc.lua
+1666686645 src/math/basic_cat/.gitignore
+1666690135 src/math/basic_cat/basic_cat.agda-lib
+1666772217 src/math/basic_cat/filter.lua
+1666886649 src/math/basic_cat/chap-1-3.lagda.md
+1666886658 src/math/basic_cat/chap-1-3.output.md
+1666886865 src/math/basic_cat/index.md
