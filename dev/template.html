@@ -2,34 +2,34 @@
 <html>
     <head>
         <meta charset="utf-8" />
-        $for(author-meta)$
-        <meta name="author" content="$author-meta$" />
-        $endfor$
-        $if(keywords)$
-        <meta name="keywords" content="$for(keywords)$$keywords$$sep$, $endfor$" />
-        $endif$
-        <title>$title$ - Senioria的刺猬洞</title>
+        ${for(author-meta)}
+        <meta name="author" content="${author-meta}" />
+        ${endfor}
+        ${if(keywords)}
+        <meta name="keywords" content="${for(keywords)}${keywords}${sep}, ${endfor}" />
+        ${endif}
+        <title>${title} - Senioria的刺猬洞</title>
         <link rel="stylesheet" type="text/css" href="/etc/highlight.css" />
         <link rel="stylesheet" type="text/css" href="/etc/main.css" />
-        $for(css)$
-        <link rel="stylesheet" type="text/css" href="$css$" />
-        $endfor$
-        $if(math)$$math$$endif$
-        $if(linenumber-len)$<style>body { --linenumber-len: $linenumber-len$; }</style>$endif$
-        $if(extra-script)$<script>$extra-script$</script>$endif$
+        ${for(css)}
+        <link rel="stylesheet" type="text/css" href="${css}" />
+        ${endfor}
+        ${if(math)}${math}${endif}
+        ${if(linenumber-len)}<style>body { --linenumber-len: ${linenumber-len}; }</style>${endif}
+        ${if(extra-script)}<script>${extra-script}</script>${endif}
     </head>
     <body>
-        <header> <h1>$title$</h1> </header>
+        <header> <h1>${title}</h1> </header>
         <pre><code class="repl-frame">(display meta-info)</code></pre>
         <div class="replized-content quoted-content">
-            $if(author)$<span class="meta-info" name=author>$for(author)$$author$$sep$, $endfor$</span>$endif$
-            $if(keywords)$<span class="meta-info" name=keywords>$for(keywords)$$keywords$$sep$, $endfor$</span>$endif$
-            $if(description)$<span class="meta-info" name=description>$for(description)$$description$$sep$, $endfor$</span>$endif$
+            ${if(author)}<span class="meta-info" name=author>${for(author)}${author}${sep}, ${endfor}</span>${endif}
+            ${if(keywords)}<span class="meta-info" name=keywords>${for(keywords)}${keywords}${sep}, ${endfor}</span>${endif}
+            ${if(description)}<span class="meta-info" name=description>${for(description)}${description}${sep}, ${endfor}</span>${endif}
         </div>
         <pre><code class="repl-frame">(display table-of-contents)</code></pre>
-        <div id="table-of-contents" class="replized-content">$if(toc)$$toc$$endif$</div>
-        <pre><code class="repl-frame">$content_prompt$</code></pre>
-        <main>$body$</main>
+        <div id="table-of-contents" class="replized-content">${if(toc)}${toc}${endif}</div>
+        <pre><code class="repl-frame">${content_prompt}</code></pre>
+        <main>${body}</main>
         <footer>
             <span>
                 <a href="/index.html">主页</a>

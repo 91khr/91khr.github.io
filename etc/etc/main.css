@@ -221,6 +221,17 @@ code.sourceCode .er { color: #D30102; font-weight: bold; }
     content: ")";
     color: #666;
 }
+
+.outputized-content {
+    display: flex;
+    font-family: Monaco, Consolas, 'Courier New', Courier, monospace;
+    flex-direction: row;
+}
+
+.repl-quote {
+    color: #666;
+    user-select: none;
+}
 /* }}} End repl-styled themes */
 /* }}} End general themes */
 

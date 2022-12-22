@@ -26,6 +26,14 @@ function Pandoc(elem)
             meta.title = "无题"
         end
     end
+    if (os.getenv("alterIndex") or basePath:match("index.html$")) and not meta.main then  -- Indices, set path
+        meta.path_components = { { href = "/", name = "(Top)" } }
+        local prev = "/"
+        for part in basePath:gmatch("(.-)/") do
+            prev = prev .. part .. "/"
+            table.insert(meta.path_components, { href = prev, name = part })
+        end
+    end
     for k, v in pairs(defaultMeta) do
         if not meta[k] then
             meta[k] = v

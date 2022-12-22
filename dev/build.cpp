@@ -19,7 +19,7 @@
 #include <concepts>
 #endif  // __cplusplus
 #include <optional>
-using std::string_literals::operator""s;
+using std::string_literals::operator""s;  // NOLINT
 namespace fs = std::filesystem;
 // }}} End premable
 
@@ -205,9 +205,15 @@ struct DirHandler
             fs::path inpath = lua_tostring(Lua, 1);
             auto outpath = lua_gettop(Lua) < 2 ? "out" / inpath.lexically_relative("src").replace_extension(".html")
                                                : lua_tostring(Lua, 2);
-            return need_rebuild(inpath, outpath);
+            lua_pushboolean(Lua, need_rebuild(inpath, outpath));
+            return 1;
         });
         lua_setglobal(Lua, "need_rebuild");
+        lua_pushcfunction(Lua, [](lua_State *Lua) -> int {
+            lua_pushboolean(Lua, fs::exists(lua_tostring(Lua, 1)));
+            return 1;
+        });
+        lua_setglobal(Lua, "file_exists");
     }
     ~DirHandler() { lua_close(Lua); }
     // }}} End lua

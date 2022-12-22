@@ -3,34 +3,40 @@
     <head>
         <meta charset="utf-8" />
         <meta name="author" content="Senioria" />
-        <title>$title$$if(main)$$else$ - Senioria的刺猬洞$endif$</title>
+        <title>${title}${if(main)}${else} - Senioria的刺猬洞${endif}</title>
         <link rel="stylesheet" type="text/css" href="/etc/main.css" />
         <link rel="stylesheet" type="text/css" href="/etc/index.css" />
         <script src="/etc/index.js" onload="initindex()"></script>
     </head>
     <body>
-        <header><h1>$title$</h1></header>
-        $if(description)$
+        <header><h1>${title}</h1></header>
+        ${if(description)}
         <pre><code class="repl-frame">(display description)</code></pre>
-        <span>$for(description)$$description$$sep$, $endfor$</span>
-        $endif$
+        <span>${for(description)}${description}${sep}, ${endfor}</span>
+        ${endif}
         <pre><code class="repl-frame">(display introduction)</code></pre>
-        <section id="introduction" class="replized-content">$body$</section>
+        <section id="introduction" class="replized-content">${body}</section>
         <pre><code class="repl-frame">(for ([l '(<button class="page-control" onclick="set_index_type('index')" id=control-set-to-index>timeline</button> <button class="page-control" onclick="set_index_type('catalog')" id=control-set-to-catalog>catalog</button>)]) (display l))</code></pre>
         <div id="index-content" class="replized-content">
         </div>
         <pre><code class="repl-frame">(display controls max-pages)</code></pre>
-        <div id="index-control" class="replized-content">
-            '(<button class="page-control" onclick="previndex()">prev</button> &nbsp;
-            <button class="page-control" onclick="nextindex()">next</button>) &nbsp;
-            <span id="temp-index-hint"></span>
+        <div class="replized-content outputized-content">
+            <span class="repl-quote">'(</span><button class="page-control" onclick="previndex()">prev</button> &nbsp;
+            <button class="page-control" onclick="nextindex()">next</button><span class="repl-quote">)</span> &nbsp;
+            <span class="repl-quote">'(</span><span id="temp-index-hint"></span><span class="repl-quote">)</span>
         </div>
         <pre><code class="repl-frame">(display links)</code></pre>
         <div class="replized-content quoted-content">
-            <a href="/">主页</a>
             <a href="/friends.html">Friends</a>
-            $if(main)$$else$<a href="..">上一页</a>$endif$
         </div>
+        ${if(main)}${else}
+        <pre><code class="repl-frame">(display path)</code></pre>
+        <div class="replized-content outputized-content">
+            <span class="repl-quote">(</span><span id="path-components">path
+                ${for(path_components)}<a href="${it.href}">${it.name}</a>${sep} / ${endfor}
+            </span><span class="repl-quote">)</span>
+        </div>
+        ${endif}
         <pre><code class="repl-frame"></code></pre>
     </body>
 </html>

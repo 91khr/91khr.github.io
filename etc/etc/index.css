@@ -4,13 +4,8 @@ html, body {
     margin-bottom: 2em;
 }
 
-#index-control {
-    display: flex;
-    font-family: Monaco, Consolas, 'Courier New', Courier, monospace;
-    flex-direction: row;
-}
 .page-control {
-    cursor: default;
+    font-size: 1em;
     background-color: rgba(255, 192, 203, 0.4);
     border: none;
     padding: 0;

@@ -1,4 +1,5 @@
 "use strict";
+// vim: set fdm=marker
 
 let indexctnt, tmp_indexhint;
 let nowindex = 0, maxindex;
@@ -21,7 +22,7 @@ function set_index_type(type) {
 }
 
 async function updateindex() {
-    tmp_indexhint.innerHTML = `'(${nowindex} #:in ${maxindex})`;
+    tmp_indexhint.innerHTML = `${nowindex} <span class="repl-quote">#:in</span> ${maxindex}`;
     let ctnt = await fetch(`${get_index_path()}${nowindex}.html`);
     if (ctnt.ok)
         indexctnt.innerHTML = await ctnt.text();
@@ -71,4 +72,3 @@ function initindex() {
         document.addEventListener('DOMContentLoaded', init);
     }
 }
-
