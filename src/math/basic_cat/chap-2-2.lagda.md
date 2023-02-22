@@ -109,7 +109,7 @@ module prob-2-2-12 {A B : Category l-o l-l l-e} {F : Functor A B} {G : Functor B
     module unit = adj.unit
     module counit = adj.counit
     module counit⁻¹ = NaturalTransformation ni.F⇐G
-    module iso {a} = Morphism.Iso (ni.F⇒G-iso a)
+    module iso {a} = Morphism.Iso (ni.iso a)
     faithful : ∀ {a b} {f g : a B.⇒ b} → G.₁ f A.≈ G.₁ g → f B.≈ g
     faithful {a} {b} {f} {g} Gf≈g = begin
              f ≈˘⟨ cancelʳ iso.isoʳ ⟩
